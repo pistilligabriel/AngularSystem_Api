@@ -43,7 +43,7 @@ public class IntegranteEntity {
     private String nome;
 
     @Column(name = "SEGUNDO_NOME")
-    private String segundoNome;
+    private String sobrenome;
 
     @Column(name = "TELEFONE")
     private String telefone;
@@ -52,8 +52,7 @@ public class IntegranteEntity {
     private String email;
 
     @Column(name = "TIPO_DOCUMENTO")
-    @Enumerated(EnumType.STRING)
-    private TipoDocumento tipoDocumento;
+    private String tipoDocumento;
 
     @Column(name = "DOCUMENTO", unique = true)
     private String documento;
@@ -68,14 +67,11 @@ public class IntegranteEntity {
     @Column(name = "CEP")
     private String cep;
 
-    @Column(name = "TIPO_LOGRADOURO")
-    private TipoLogradouro tipoLogradouro;
-
     @Column(name = "LOGRADOURO")
     private String logradouro;
 
     @Column(name = "NUMERO")
-    private int numero;
+    private Integer numero;
 
     @Column(name = "BAIRRO")
     private String bairro;
@@ -99,7 +95,7 @@ public class IntegranteEntity {
     public IntegranteEntity(IntegranteDto dadosIntegrante) {
         this.tipoIntegrante = TipoIntegrante.CLIENTE;
         this.nome = dadosIntegrante.nome();
-        this.segundoNome = dadosIntegrante.segundoNome();
+        this.sobrenome = dadosIntegrante.sobrenome();
         this.telefone = dadosIntegrante.telefone();
         this.email = dadosIntegrante.email();
         this.tipoDocumento = dadosIntegrante.tipoDocumento();
@@ -107,7 +103,6 @@ public class IntegranteEntity {
         this.dataCriacao = LocalDateTime.now();
         this.status = Status.ATIVO;
         this.cep = dadosIntegrante.cep();
-        this.tipoLogradouro = dadosIntegrante.tipoLogradouro();
         this.logradouro = dadosIntegrante.logradouro();
         this.numero = dadosIntegrante.numero();
         this.bairro = dadosIntegrante.bairro();
@@ -131,8 +126,8 @@ public class IntegranteEntity {
         if (dadosIntegrante.nome() != null) {
             this.nome = dadosIntegrante.nome();
         }
-        if (dadosIntegrante.segundoNome() != null) {
-            this.segundoNome = dadosIntegrante.segundoNome();
+        if (dadosIntegrante.sobrenome() != null) {
+            this.sobrenome = dadosIntegrante.sobrenome();
         }
         if (dadosIntegrante.telefone() != null) {
             this.telefone = dadosIntegrante.telefone();

@@ -26,7 +26,7 @@ public class SysSellAplication {
 						.allowedHeaders("Origin","X-Requested-With", "Content-Type", "Accept", "Authorization")
 						.allowedOrigins("http://localhost:4200");
 			}
-		};
+		};	
 	}
 
 

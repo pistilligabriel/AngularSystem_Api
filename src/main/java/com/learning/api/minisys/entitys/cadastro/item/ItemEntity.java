@@ -66,9 +66,6 @@ public class ItemEntity {
     @Column(name = "PRECO_VENDA")
     private Double precoVenda;
 
-    @Column(name = "MARGEM_LUCRO")
-    private Double margemLucro;
-
     @Column(name = "ESTOQUE")
     private Double estoque;
 
@@ -97,7 +94,6 @@ public class ItemEntity {
         this.codigoOriginal = dadosItem.codigoOriginal();
         this.precoCusto = dadosItem.precoCusto();
         this.precoVenda = dadosItem.precoVenda();
-        this.margemLucro = dadosItem.margemLucro();
         this.empresa = dadosItem.empresa();
         this.status = Status.ATIVO;
         this.versao = LocalDateTime.now();
@@ -132,9 +128,6 @@ public class ItemEntity {
         }
         if (dadosItem.precoVenda() != null) {
             this.precoVenda = dadosItem.precoVenda();
-        }
-        if( dadosItem.margemLucro() != null){
-            this.margemLucro = dadosItem.margemLucro();
         }
         if (dadosItem.status() != null) {
             this.status = dadosItem.status();

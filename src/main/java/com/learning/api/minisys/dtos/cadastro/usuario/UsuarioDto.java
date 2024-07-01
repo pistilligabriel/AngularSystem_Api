@@ -13,9 +13,19 @@ public record UsuarioDto(
 
         Long CODIGO,
 
-        NewIntegranteDto funcionario,
-
         @NotBlank(message = "O campo nome é obrigatório")
+        String nome,
+
+        String sobrenome,
+
+        String telefone,
+
+        String email,
+
+        @NotBlank(message = "O campo documento é obrigatório")
+        String documento,
+
+        @NotBlank(message = "O campo login é obrigatório")
         String login,
 
         @NotBlank(message = "O campo senha é obrigatório")
@@ -32,7 +42,11 @@ public record UsuarioDto(
 
     public UsuarioDto(UsuarioEntity usuarioEntity) {
         this(usuarioEntity.getCODIGO(),
-                new NewIntegranteDto(usuarioEntity.getFuncionario().getCODIGO()),
+                usuarioEntity.getNome(),
+                usuarioEntity.getSobrenome(),
+                usuarioEntity.getTelefone(),
+                usuarioEntity.getEmail(),
+                usuarioEntity.getDocumento(),
                 usuarioEntity.getLogin(),
                 usuarioEntity.getPassword(),
                 usuarioEntity.getStatus(),

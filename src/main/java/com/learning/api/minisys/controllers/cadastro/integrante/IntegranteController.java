@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/integrantes")
+@RequestMapping("/api/v1/clientes")
 public class IntegranteController {
 
     @Autowired
@@ -76,7 +76,7 @@ public class IntegranteController {
 
     @PostMapping("/desativar/{CODIGO}")
     @Transactional
-    public ResponseEntity<IntegranteDto> ativarIntegrante(@PathVariable Long CODIGO) {
+    public ResponseEntity<IntegranteDto> desativarIntegrante(@PathVariable Long CODIGO) {
         var integrante = integranteRepository.getReferenceById(CODIGO);
 
         if (integrante.getStatus().equals(Status.ATIVO)) {

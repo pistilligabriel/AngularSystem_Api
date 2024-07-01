@@ -2,7 +2,6 @@ package com.learning.api.minisys.controllers.cadastro.usuario;
 
 import com.learning.api.minisys.dtos.cadastro.usuario.UsuarioDto;
 import com.learning.api.minisys.dtos.cadastro.usuario.table.UsuarioTableDto;
-import com.learning.api.minisys.entitys.cadastro.integrante.IntegranteEntity;
 import com.learning.api.minisys.entitys.cadastro.usuario.UsuarioEntity;
 import com.learning.api.minisys.enums.Status;
 import com.learning.api.minisys.repositories.cadastro.integrante.IntegranteRepository;
@@ -37,12 +36,6 @@ public class UsuarioController {
         // Cria uma nova instância de UsuarioEntity a partir do DTO
         UsuarioEntity usuarioEntity = new UsuarioEntity(usuarioDto);
 
-        // Associa o usuário a um funcionário, se fornecido no DTO
-        if (usuarioDto.funcionario() != null) {
-            integranteRepository.findById(usuarioDto.funcionario().getCODIGO())
-                    .ifPresent(usuarioEntity::setFuncionario);
-        }
-
         // Salva o usuário no banco de dados
         usuarioRepository.save(usuarioEntity);
 
@@ -73,11 +66,6 @@ public class UsuarioController {
             // Atualiza os dados da entidade existente com base nos dados recebidos no DTO
             usuario.atualizarUsuario(usuarioDto);
 
-            // Associa o usuário ao funcionário fornecido no DTO
-            IntegranteEntity funcionario = integranteRepository.findById(usuarioDto.funcionario().getCODIGO())
-                    .orElseThrow(() -> new RuntimeException("Funcionário não encontrado"));
-            usuario.setFuncionario(funcionario);
-
             // Salva as alterações no banco de dados
             usuarioRepository.save(usuario);
 
@@ -107,5 +95,7 @@ public class UsuarioController {
 
         return ResponseEntity.ok(new UsuarioDto(usuario));
     }
+
+
 
 }

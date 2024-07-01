@@ -18,23 +18,21 @@ public record IntegranteDto(
 
         String nome,
 
-        String segundoNome,
+        String sobrenome,
 
         String telefone,
 
         String email,
 
-        TipoDocumento tipoDocumento,
+        String tipoDocumento,
 
         String documento,
 
         String cep,
 
-        TipoLogradouro tipoLogradouro,
-
         String logradouro,
 
-        int numero,
+        Integer numero,
 
         String bairro,
 
@@ -57,13 +55,12 @@ public record IntegranteDto(
         this(integranteEntity.getCODIGO(),
                 integranteEntity.getTipoIntegrante(),
                 integranteEntity.getNome(),
-                integranteEntity.getSegundoNome(),
+                integranteEntity.getSobrenome(),
                 integranteEntity.getTelefone(),
                 integranteEntity.getEmail(),
                 integranteEntity.getTipoDocumento(),
                 integranteEntity.getDocumento(),
                 integranteEntity.getCep(),
-                integranteEntity.getTipoLogradouro(),
                 integranteEntity.getLogradouro(),
                 integranteEntity.getNumero(),
                 integranteEntity.getBairro(),

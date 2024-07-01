@@ -1,5 +1,6 @@
 package com.learning.api.minisys.entitys.cadastro.usuario;
 
+import com.learning.api.minisys.dtos.cadastro.usuario.AlterarSenhaDto;
 import com.learning.api.minisys.dtos.cadastro.usuario.UsuarioDto;
 import com.learning.api.minisys.dtos.cadastro.usuario.table.UsuarioTableDto;
 import com.learning.api.minisys.entitys.cadastro.integrante.IntegranteEntity;
@@ -37,9 +38,20 @@ public class UsuarioEntity implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long CODIGO;
 
-    @JoinColumn(name = "funcionario")
-    @ManyToOne
-    private IntegranteEntity funcionario;
+    @Column(name="NOME")
+    private String nome;
+
+    @Column(name="SOBRENOME")
+    private String sobrenome;
+
+    @Column(name="TELEFONE")
+    private String telefone;
+
+    @Column(name="EMAIL")
+    private String email;
+
+    @Column(name="DOCUMENTO")
+    private String documento;
 
     @Column(name = "LOGIN", unique = true)
     private String login;
@@ -58,6 +70,11 @@ public class UsuarioEntity implements UserDetails {
     private LocalDateTime versao;
 
     public UsuarioEntity(UsuarioDto dadosUsuario) {
+        this.nome = dadosUsuario.nome();
+        this.sobrenome = dadosUsuario.sobrenome();
+        this.telefone = dadosUsuario.telefone();
+        this.email = dadosUsuario.email();
+        this.documento = dadosUsuario.documento();
         this.login = dadosUsuario.login();
         this.password = new BCryptPasswordEncoder().encode(dadosUsuario.password());
         this.empresa = Long.valueOf(1);
@@ -73,6 +90,21 @@ public class UsuarioEntity implements UserDetails {
     }
 
     public void atualizarUsuario(UsuarioDto dadosUsuario) {
+        if (dadosUsuario.nome() != null) {
+            this.nome = dadosUsuario.nome();
+        }   
+        if (dadosUsuario.sobrenome() != null) {
+            this.sobrenome = dadosUsuario.sobrenome();
+        }
+        if (dadosUsuario.telefone() != null) {
+            this.telefone = dadosUsuario.telefone();
+        }
+        if (dadosUsuario.email() != null) {
+            this.email = dadosUsuario.email();
+        }
+        if (dadosUsuario.documento() != null) {
+            this.documento = dadosUsuario.documento();
+        }
         if (dadosUsuario.login() != null) {
             this.login = dadosUsuario.login();
         }
