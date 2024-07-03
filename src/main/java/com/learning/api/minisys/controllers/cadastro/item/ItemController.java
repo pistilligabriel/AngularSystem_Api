@@ -43,16 +43,19 @@ public class ItemController {
             itemGrupoRepository.findById(itemDto.grupoItem().getCODIGO())
                     .ifPresent(itemEntity::setGrupoItem);
         }
-        if (itemDto.fabricante() != null) {
-            fabricanteRepository.findById(itemDto.fabricante().getCODIGO())
-                    .ifPresent(itemEntity::setFabricante);
-        }
+        // if (itemDto.fabricante() != null) {
+        //     fabricanteRepository.findById(itemDto.fabricante().getCODIGO())
+        //             .ifPresent(itemEntity::setFabricante);
+        // }
         if (itemDto.unidadeVenda() != null) {
             unidadeMedidaRepository.findById(itemDto.unidadeVenda().getCODIGO())
                     .ifPresent(itemEntity::setUnidadeVenda);
         }
 
+        itemEntity.calcularMargemLucro();
+
         itemRepository.save(itemEntity);
+
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -83,12 +86,12 @@ public class ItemController {
         } else {
             item.setGrupoItem(null);
         }
-        if (itemDto.fabricante() != null) {
-            fabricanteRepository.findById(itemDto.fabricante().getCODIGO())
-                    .ifPresent(item::setFabricante);
-        } else {
-            item.setFabricante(null);
-        }
+        // if (itemDto.fabricante() != null) {
+        //     fabricanteRepository.findById(itemDto.fabricante().getCODIGO())
+        //             .ifPresent(item::setFabricante);
+        // } else {
+        //     item.setFabricante(null);
+        // }
         if (itemDto.unidadeVenda() != null) {
             unidadeMedidaRepository.findById(itemDto.unidadeVenda().getCODIGO())
                     .ifPresent(item::setUnidadeVenda);
@@ -96,8 +99,11 @@ public class ItemController {
             item.setUnidadeVenda(null);
         }
 
+        
         itemRepository.save(item);
-
+        
+        item.calcularMargemLucro();
+        
         return ResponseEntity.ok(new ItemDto(item));
     }
 

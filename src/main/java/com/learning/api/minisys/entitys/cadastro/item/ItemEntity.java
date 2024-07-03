@@ -50,9 +50,11 @@ public class ItemEntity {
     @ManyToOne
     private UnidadeMedidaEntity unidadeVenda;
 
-    @JoinColumn(name = "FABRICANTE")
-    @ManyToOne
-    private FabricanteEntity fabricante;
+    //@JoinColumn(name = "FABRICANTE")
+    //@ManyToOne
+    @Column(name = "FABRICANTE")
+    String fabricante;
+    //private FabricanteEntity fabricante;
 
     @Column(name = "CODIGO_BARRAS", unique = true)
     private String codigoBarras;
@@ -65,6 +67,9 @@ public class ItemEntity {
 
     @Column(name = "PRECO_VENDA")
     private Double precoVenda;
+
+    @Column(name = "MARGEM_LUCRO")
+    private Double margemLucro;
 
     @Column(name = "ESTOQUE")
     private Double estoque;
@@ -88,12 +93,13 @@ public class ItemEntity {
         this.observacao = dadosItem.observacao();
         this.unidadeVenda = dadosItem.unidadeVenda() != null ?
                 new UnidadeMedidaEntity(dadosItem.unidadeVenda()) : null;
-        this.fabricante = dadosItem.fabricante() != null ?
-                new FabricanteEntity(dadosItem.fabricante()) : null;
+        //this.fabricante = dadosItem.fabricante() != null ? new FabricanteEntity(dadosItem.fabricante()) : null;
+        this.fabricante = dadosItem.fabricante();
         this.codigoBarras = dadosItem.codigoBarras();
         this.codigoOriginal = dadosItem.codigoOriginal();
         this.precoCusto = dadosItem.precoCusto();
         this.precoVenda = dadosItem.precoVenda();
+        this.margemLucro = calcularMargemLucro();
         this.empresa = dadosItem.empresa();
         this.status = Status.ATIVO;
         this.versao = LocalDateTime.now();
@@ -114,8 +120,9 @@ public class ItemEntity {
         if (dadosItem.unidadeVenda() != null) {
             this.unidadeVenda = new UnidadeMedidaEntity(dadosItem.unidadeVenda());
         }
-        if (dadosItem.fabricante() != null) {
-            this.fabricante = new FabricanteEntity(dadosItem.fabricante());
+        //if (dadosItem.fabricante() != null) {this.fabricante = new FabricanteEntity(dadosItem.fabricante());}
+        if (dadosItem.fabricante() != null){
+            this.fabricante = dadosItem.fabricante();
         }
         if (dadosItem.codigoBarras() != null) {
             this.codigoBarras = dadosItem.codigoBarras();
@@ -146,6 +153,12 @@ public class ItemEntity {
     public void setStatusInativo() {
         this.status = Status.DESATIVADO;
         this.versao = LocalDateTime.now();
+    }
+
+    public Double calcularMargemLucro(){
+        precoCusto = getPrecoCusto();
+        precoVenda = getPrecoVenda();
+        return ((precoVenda - precoCusto) / precoCusto) * 100;
     }
 
 }

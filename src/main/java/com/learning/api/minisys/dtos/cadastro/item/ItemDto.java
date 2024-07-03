@@ -23,7 +23,8 @@ public record ItemDto(
 
         NewUnidadeMedidaDto unidadeVenda,
 
-        NewFabricanteDto fabricante,
+        //NewFabricanteDto fabricante Utilizar quando transformar fabricante cadastravel e naõ inserido via string no cadastro do item,
+        String fabricante,
 
         String codigoBarras,
 
@@ -34,6 +35,8 @@ public record ItemDto(
         Double precoVenda,
 
         Double estoque,
+
+        Double margemLucro,
 
         @Enumerated
         Status status,
@@ -53,13 +56,14 @@ public record ItemDto(
                 itemEntity.getObservacao(),
                 itemEntity.getUnidadeVenda() != null ?
                         new NewUnidadeMedidaDto(itemEntity.getUnidadeVenda().getCODIGO()) : null,
-                itemEntity.getFabricante() != null ?
-                        new NewFabricanteDto(itemEntity.getFabricante().getCODIGO()) : null,
+                //itemEntity.getFabricante() != null ? new NewFabricanteDto(itemEntity.getFabricante().getCODIGO()) : null Utilizar posterior a criação do modulo fabricante,
+                itemEntity.getFabricante(),
                 itemEntity.getCodigoBarras(),
                 itemEntity.getCodigoOriginal(),
                 itemEntity.getPrecoCusto(),
                 itemEntity.getPrecoVenda(),
                 itemEntity.getEstoque(),
+                itemEntity.getMargemLucro(),
                 itemEntity.getStatus(),
                 itemEntity.getEmpresa(),
                 itemEntity.getVersao());
