@@ -1,7 +1,7 @@
-# Minisys - Aplicação Spring Boot
+# AngularSystem - Aplicação Spring Boot
 
 ## Descrição
-Este repositório contém o código-fonte de uma aplicação Spring Boot chamada Minisys. A aplicação utiliza diversas dependências gerenciadas pelo Maven e tem como objetivo proporcionar uma estrutura básica para o desenvolvimento de sistemas.
+Este repositório contém o código-fonte de uma aplicação Spring Boot chamada AngularSystem. A aplicação utiliza diversas dependências gerenciadas pelo Maven e tem como objetivo proporcionar uma estrutura básica para o desenvolvimento de sistemas.
 
 ## Dependências
 
