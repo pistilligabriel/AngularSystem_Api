@@ -44,6 +44,7 @@ public record IntegranteDto(
         @Enumerated
         Status status,
 
+        Long empresa,
 
         LocalDateTime versao
 ) {
@@ -66,6 +67,7 @@ public record IntegranteDto(
                 integranteEntity.getComplemento(),
                 integranteEntity.getDataCriacao(),
                 integranteEntity.getStatus(),
+                integranteEntity.getEmpresa(),
                 integranteEntity.getVersao());
     }
 }

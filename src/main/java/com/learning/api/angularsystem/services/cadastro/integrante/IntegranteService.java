@@ -38,7 +38,7 @@ public class IntegranteService {
     public IntegranteEntity alterarStatus(Long codigo ){
         IntegranteEntity integrante = getIntegranteById(codigo);
 
-        if(integrante.getStatus().equals(Status.NORMAL)){
+        if(integrante.getStatus().equals(Status.ATIVO)){
             integrante.setStatusInativo();
         }else{
             integrante.setStatusAtivo();

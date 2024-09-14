@@ -32,7 +32,7 @@ public class IntegranteEntity {
 
     @Column(name = "TIPO")
     @Enumerated(EnumType.STRING)
-    TipoIntegrante tipoIntegrante;
+    private TipoIntegrante tipoIntegrante = TipoIntegrante.CLIENTE;
 
     @Column(name = "NOME")
     private String nome;
@@ -81,14 +81,14 @@ public class IntegranteEntity {
     private String complemento;
 
     @Column(name = "EMPRESA")
-    private Long empresa;
+    private Long empresa = 1L;
 
     @Column(name = "VERSAO")
     private LocalDateTime versao;
 
 
     public IntegranteEntity(IntegranteDto dadosIntegrante) {
-        this.tipoIntegrante = TipoIntegrante.CLIENTE;
+        this.tipoIntegrante = dadosIntegrante.tipoIntegrante();
         this.nome = dadosIntegrante.nome();
         this.sobrenome = dadosIntegrante.sobrenome();
         this.telefone = dadosIntegrante.telefone();
@@ -104,17 +104,13 @@ public class IntegranteEntity {
         this.municipio = dadosIntegrante.municipio();
         this.uf = dadosIntegrante.uf();
         this.complemento = dadosIntegrante.complemento();
-        this.empresa = Long.valueOf(1);
+        this.empresa = dadosIntegrante.empresa();
         this.versao = LocalDateTime.now();
     }
 
     public IntegranteEntity(NewIntegranteDto integrante) {
     }
 
-    public IntegranteEntity(IntegranteTableDto integranteTableDto) {
-        this.CODIGO = integranteTableDto.CODIGO();
-        this.nome = integranteTableDto.nome();
-    }
 
     public void atualizarIntegrante(IntegranteDto dadosIntegrante) {
 

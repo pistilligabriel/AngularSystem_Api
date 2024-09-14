@@ -4,8 +4,6 @@ public enum TipoIntegrante {
 
     CLIENTE,
     FUNCIONARIO,
-    FORNECEDOR,
-    TRANSPORTADORA,
-    CONTADOR,
+    FORNECEDOR
 
 }
