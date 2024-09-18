@@ -1,8 +1,6 @@
 package com.learning.api.angularsystem.entitys.cadastro.integrante;
 
 import com.learning.api.angularsystem.dtos.cadastro.integrante.IntegranteDto;
-import com.learning.api.angularsystem.dtos.cadastro.integrante.NewIntegranteDto;
-import com.learning.api.angularsystem.dtos.cadastro.integrante.table.IntegranteTableDto;
 import com.learning.api.angularsystem.enums.Status;
 import com.learning.api.angularsystem.enums.integrante.TipoIntegrante;
 import jakarta.persistence.Column;
@@ -108,8 +106,6 @@ public class IntegranteEntity {
         this.versao = LocalDateTime.now();
     }
 
-    public IntegranteEntity(NewIntegranteDto integrante) {
-    }
 
 
     public void atualizarIntegrante(IntegranteDto dadosIntegrante) {

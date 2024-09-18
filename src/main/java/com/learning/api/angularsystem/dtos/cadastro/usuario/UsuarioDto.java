@@ -4,51 +4,41 @@ import com.learning.api.angularsystem.entitys.cadastro.usuario.UsuarioEntity;
 import com.learning.api.angularsystem.enums.Status;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
+import lombok.*;
 
 import java.time.LocalDateTime;
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+public class UsuarioDto {
 
-public record UsuarioDto(
+    private Long codigo;
 
-        Long CODIGO,
+    @NotBlank(message = "O campo nome é obrigatório")
+    private String nome;
 
-        @NotBlank(message = "O campo nome é obrigatório")
-        String nome,
+    private String sobrenome;
 
-        String sobrenome,
+    private String telefone;
 
-        String telefone,
+    private String email;
 
-        String email,
+    @NotBlank(message = "O campo documento é obrigatório")
+    private String documento;
 
-        @NotBlank(message = "O campo documento é obrigatório")
-        String documento,
+    @NotBlank(message = "O campo login é obrigatório")
+    private String login;
 
-        @NotBlank(message = "O campo login é obrigatório")
-        String login,
+    @NotBlank(message = "O campo senha é obrigatório")
+    private String password;
 
-        @NotBlank(message = "O campo senha é obrigatório")
-        String password,
+    private String status;
 
-        @Enumerated
-        Status status,
+    private Long empresa;
 
-        Long empresa,
+    private LocalDateTime versao;
 
-        LocalDateTime versao
 
-) {
-
-    public UsuarioDto(UsuarioEntity usuarioEntity) {
-        this(usuarioEntity.getCODIGO(),
-                usuarioEntity.getNome(),
-                usuarioEntity.getSobrenome(),
-                usuarioEntity.getTelefone(),
-                usuarioEntity.getEmail(),
-                usuarioEntity.getDocumento(),
-                usuarioEntity.getLogin(),
-                usuarioEntity.getPassword(),
-                usuarioEntity.getStatus(),
-                usuarioEntity.getEmpresa(),
-                usuarioEntity.getVersao());
-    }
 }

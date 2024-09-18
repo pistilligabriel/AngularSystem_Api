@@ -7,6 +7,8 @@ import com.learning.api.angularsystem.repositories.cadastro.item.FabricanteRepos
 import com.learning.api.angularsystem.repositories.cadastro.item.ItemGrupoRepository;
 import com.learning.api.angularsystem.repositories.cadastro.item.ItemRepository;
 import com.learning.api.angularsystem.repositories.cadastro.item.UnidadeMedidaRepository;
+import com.learning.api.angularsystem.services.cadastro.item.FabricanteService;
+import com.learning.api.angularsystem.services.cadastro.item.ItemService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,106 +28,40 @@ import org.springframework.web.bind.annotation.RestController;
 public class ItemController {
 
     @Autowired
-    private ItemRepository itemRepository;
-    @Autowired
-    private ItemGrupoRepository itemGrupoRepository;
-    @Autowired
-    private FabricanteRepository fabricanteRepository;
-    @Autowired
-    private UnidadeMedidaRepository unidadeMedidaRepository;
+    private ItemService itemService;
+
 
     @PostMapping
     @Transactional
     public ResponseEntity<Void> cadastrarItem(@RequestBody @Valid ItemDto itemDto) {
-        ItemEntity itemEntity = new ItemEntity(itemDto);
-
-        if (itemDto.grupoItem() != null) {
-            itemGrupoRepository.findById(itemDto.grupoItem().getCODIGO())
-                    .ifPresent(itemEntity::setGrupoItem);
-        }
-        // if (itemDto.fabricante() != null) {
-        //     fabricanteRepository.findById(itemDto.fabricante().getCODIGO())
-        //             .ifPresent(itemEntity::setFabricante);
-        // }
-        if (itemDto.unidadeVenda() != null) {
-            unidadeMedidaRepository.findById(itemDto.unidadeVenda().getCODIGO())
-                    .ifPresent(itemEntity::setUnidadeVenda);
-        }
-
-        itemEntity.calcularMargemLucro();
-
-        itemRepository.save(itemEntity);
-
-
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return null;
     }
 
     @GetMapping
     public Iterable<ItemDto> listarItens() {
-        return itemRepository.findAll().stream().map(ItemDto::new).toList();
+        return null;
     }
 
     @GetMapping("/{CODIGO}")
     public ResponseEntity<ItemDto> buscarItem(@PathVariable Long CODIGO) {
-        var item = itemRepository.getReferenceById(CODIGO);
-
-        return ResponseEntity.ok(new ItemDto(item));
+        return null;
     }
 
     @PutMapping
     @Transactional
     public ResponseEntity<ItemDto> atualizarItem(@RequestBody @Valid ItemDto itemDto) {
-        ItemEntity item = itemRepository.findById(itemDto.CODIGO())
-                .orElseThrow(() -> new RuntimeException("Item não encontrado"));
-
-        item.atualizarItem(itemDto);
-
-        if (itemDto.grupoItem() != null) {
-            itemGrupoRepository.findById(itemDto.grupoItem().getCODIGO())
-                    .ifPresent(item::setGrupoItem);
-        } else {
-            item.setGrupoItem(null);
-        }
-        // if (itemDto.fabricante() != null) {
-        //     fabricanteRepository.findById(itemDto.fabricante().getCODIGO())
-        //             .ifPresent(item::setFabricante);
-        // } else {
-        //     item.setFabricante(null);
-        // }
-        if (itemDto.unidadeVenda() != null) {
-            unidadeMedidaRepository.findById(itemDto.unidadeVenda().getCODIGO())
-                    .ifPresent(item::setUnidadeVenda);
-        } else {
-            item.setUnidadeVenda(null);
-        }
-
-        
-        itemRepository.save(item);
-        
-        item.calcularMargemLucro();
-        
-        return ResponseEntity.ok(new ItemDto(item));
+      return null;
     }
 
     @PostMapping("/desativar/{CODIGO}")
     @Transactional
     public ResponseEntity<ItemDto> desativarItem(@PathVariable Long CODIGO) {
-        var item = itemRepository.getReferenceById(CODIGO);
-
-        if (item.getStatus().equals(Status.ATIVO)) {
-            item.setStatusInativo();
-        } else {
-            item.setStatusAtivo();
-        }
-
-        return ResponseEntity.ok(new ItemDto(item));
+        return null;
     }
 
     @DeleteMapping("/{CODIGO}")
     @Transactional
     public ResponseEntity<Void> deletarItem(@PathVariable Long CODIGO) {
-        itemRepository.deleteById(CODIGO);
-
-        return ResponseEntity.noContent().build();
+        return null;
     }
 }

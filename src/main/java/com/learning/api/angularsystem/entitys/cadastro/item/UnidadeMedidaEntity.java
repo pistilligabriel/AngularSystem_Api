@@ -1,6 +1,5 @@
 package com.learning.api.angularsystem.entitys.cadastro.item;
 
-import com.learning.api.angularsystem.dtos.cadastro.item.NewUnidadeMedidaDto;
 import com.learning.api.angularsystem.dtos.cadastro.item.UnidadeMedidaDto;
 import com.learning.api.angularsystem.enums.Status;
 import jakarta.persistence.Column;

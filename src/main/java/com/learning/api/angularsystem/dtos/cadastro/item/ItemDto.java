@@ -1,71 +1,50 @@
 package com.learning.api.angularsystem.dtos.cadastro.item;
 
-import com.learning.api.angularsystem.entitys.cadastro.item.ItemEntity;
-import com.learning.api.angularsystem.enums.Status;
-import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
 import java.time.LocalDateTime;
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+public class ItemDto {
 
-public record ItemDto(
+    private Long codigo;
 
-        Long CODIGO,
+    private LocalDateTime dataCadastro;
 
-        LocalDateTime dataCadastro,
+    private String grupoItem;
 
-        NewItemGrupoDto grupoItem,
+    @NotBlank(message = "O campo descrição é obrigatório")
+    private String descricao;
 
-        @NotBlank(message = "O campo descrição é obrigatório")
-        String descricao,
+    private String observacao;
 
-        String observacao,
+    private String unidadeVenda;
 
-        NewUnidadeMedidaDto unidadeVenda,
+    private String fabricante;
 
-        //NewFabricanteDto fabricante Utilizar quando transformar fabricante cadastravel e naõ inserido via string no cadastro do item,
-        String fabricante,
+    private String codigoBarras;
 
-        String codigoBarras,
+    private String codigoOriginal;
 
-        String codigoOriginal,
+    private Double precoCusto;
 
-        Double precoCusto,
+    private Double precoVenda;
 
-        Double precoVenda,
+    private Double estoque;
 
-        Double estoque,
+    private Double margemLucro;
 
-        Double margemLucro,
 
-        @Enumerated
-        Status status,
+    private String status;
 
-        @NotNull(message = "O campo empresa é obrigatório")
-        Long empresa,
+    @NotNull(message = "O campo empresa é obrigatório")
+    private Long empresa;
 
-        LocalDateTime versao
-) {
+    private LocalDateTime versao;
 
-    public ItemDto(ItemEntity itemEntity) {
-        this(itemEntity.getCODIGO(),
-                itemEntity.getDataCadastro(),
-                itemEntity.getGrupoItem() != null ?
-                    new NewItemGrupoDto(itemEntity.getGrupoItem().getCODIGO()): null,
-                itemEntity.getDescricao(),
-                itemEntity.getObservacao(),
-                itemEntity.getUnidadeVenda() != null ?
-                        new NewUnidadeMedidaDto(itemEntity.getUnidadeVenda().getCODIGO()) : null,
-                //itemEntity.getFabricante() != null ? new NewFabricanteDto(itemEntity.getFabricante().getCODIGO()) : null Utilizar posterior a criação do modulo fabricante,
-                itemEntity.getFabricante(),
-                itemEntity.getCodigoBarras(),
-                itemEntity.getCodigoOriginal(),
-                itemEntity.getPrecoCusto(),
-                itemEntity.getPrecoVenda(),
-                itemEntity.getEstoque(),
-                itemEntity.getMargemLucro(),
-                itemEntity.getStatus(),
-                itemEntity.getEmpresa(),
-                itemEntity.getVersao());
-    }
 }

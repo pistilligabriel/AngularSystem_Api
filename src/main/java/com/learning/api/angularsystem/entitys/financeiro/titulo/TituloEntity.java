@@ -1,7 +1,6 @@
 package com.learning.api.angularsystem.entitys.financeiro.titulo;
 
 
-import com.learning.api.angularsystem.dtos.financeiro.titulo.NewTituloDto;
 import com.learning.api.angularsystem.dtos.financeiro.titulo.TituloDto;
 import com.learning.api.angularsystem.entitys.cadastro.integrante.IntegranteEntity;
 import com.learning.api.angularsystem.enums.Status;

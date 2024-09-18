@@ -1,34 +1,19 @@
 package com.learning.api.angularsystem.dtos.financeiro;
 
-import com.learning.api.angularsystem.dtos.faturamento.nota_fiscal.NewNotaFiscalDto;
-import com.learning.api.angularsystem.dtos.faturamento.ordem_servico.NewOrdemServicoDto;
-import com.learning.api.angularsystem.dtos.faturamento.pedido.NewPedidoDto;
-import com.learning.api.angularsystem.dtos.financeiro.titulo.NewTituloDto;
-import com.learning.api.angularsystem.entitys.financeiro.OrigemTituloFaturaEntity;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-public record OrigemTituloFaturaDto(
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+public class OrigemTituloFaturaDto {
 
-        Long CODIGO,
-        LocalDateTime dataCriacao,
-        NewPedidoDto pedido,
-        NewOrdemServicoDto ordemServico,
-        NewNotaFiscalDto notaFiscal,
-        NewTituloDto titulo
-) {
+    private Long codigo;
+    private LocalDateTime dataCriacao;
+    private Object pedido;
+    private Object titulo;
 
-    public OrigemTituloFaturaDto(OrigemTituloFaturaEntity origemTituloFaturaEntity){
-        this(origemTituloFaturaEntity.getCODIGO(),
-                origemTituloFaturaEntity.getDataCriacao(),
-                origemTituloFaturaEntity.getPedido() != null ?
-                        new NewPedidoDto(origemTituloFaturaEntity.getPedido().getCODIGO()) : null,
-                origemTituloFaturaEntity.getOrdemServico() != null ?
-                        new NewOrdemServicoDto(origemTituloFaturaEntity.getOrdemServico().getCODIGO()) : null,
-                origemTituloFaturaEntity.getNotaFiscal() != null ?
-                        new NewNotaFiscalDto(origemTituloFaturaEntity.getNotaFiscal().getCODIGO()) : null,
-                origemTituloFaturaEntity.getTitulo() != null ?
-                        new NewTituloDto(origemTituloFaturaEntity.getTitulo().getCODIGO()) : null
-        );
-    }
 }

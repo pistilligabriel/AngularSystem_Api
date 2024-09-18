@@ -4,6 +4,7 @@ import com.learning.api.angularsystem.dtos.cadastro.item.UnidadeMedidaDto;
 import com.learning.api.angularsystem.entitys.cadastro.item.UnidadeMedidaEntity;
 import com.learning.api.angularsystem.enums.Status;
 import com.learning.api.angularsystem.repositories.cadastro.item.UnidadeMedidaRepository;
+import com.learning.api.angularsystem.services.cadastro.item.UnidadeMedidaService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,54 +23,39 @@ import org.springframework.web.bind.annotation.RestController;
 public class UnidadeMedidaController {
 
     @Autowired
-    private UnidadeMedidaRepository unidadeMedidaRepository;
+    private UnidadeMedidaService unidadeMedidaService;
 
     @PostMapping
     @Transactional
-    public void cadastrarUnidadeMedida(@RequestBody @Valid UnidadeMedidaDto unidadeMedidaDto) {
-        unidadeMedidaRepository.save(new UnidadeMedidaEntity(unidadeMedidaDto));
+    public ResponseEntity<UnidadeMedidaEntity> cadastrarUnidadeMedida(@RequestBody @Valid UnidadeMedidaDto unidadeMedidaDto) {
+        return null;
     }
 
     @GetMapping
     public Iterable<UnidadeMedidaDto> listarUnidadeMedida() {
-        return unidadeMedidaRepository.findAll().stream().map(UnidadeMedidaDto::new).toList();
+        return null;
     }
 
     @GetMapping("/{CODIGO}")
     public ResponseEntity<UnidadeMedidaDto> buscarUnidadeMedida(@PathVariable Long CODIGO) {
-        var unidadeMedida = unidadeMedidaRepository.getReferenceById(CODIGO);
-
-        return ResponseEntity.ok(new UnidadeMedidaDto(unidadeMedida));
+        return null;
     }
 
     @PutMapping
     @Transactional
     public ResponseEntity<UnidadeMedidaDto> atualizarUnidadeMedida(@RequestBody @Valid UnidadeMedidaDto unidadeMedidaDto) {
-        var unidadeMedida = unidadeMedidaRepository.getReferenceById(unidadeMedidaDto.CODIGO());
-        unidadeMedida.atualizarUnidadeMedida(unidadeMedidaDto);
-
-        return ResponseEntity.ok(new UnidadeMedidaDto(unidadeMedida));
+        return null;
     }
 
     @PostMapping("/desativar/{CODIGO}")
     @Transactional
     public ResponseEntity<UnidadeMedidaDto> desativarUnidadeMedida(@PathVariable Long CODIGO) {
-        var unidadeMedida = unidadeMedidaRepository.getReferenceById(CODIGO);
-
-        if (unidadeMedida.getStatus().equals(Status.ATIVO)) {
-            unidadeMedida.setStatusInativo();
-        } else {
-            unidadeMedida.setStatusAtivo();
-        }
-
-        return ResponseEntity.ok(new UnidadeMedidaDto(unidadeMedida));
+        return null;
     }
 
     @DeleteMapping("/{CODIGO}")
     @Transactional
     public ResponseEntity<Void> deletarUnidadeMedida(@PathVariable Long CODIGO) {
-        unidadeMedidaRepository.deleteById(CODIGO);
-
-        return ResponseEntity.ok().build();
+        return null;
     }
 }

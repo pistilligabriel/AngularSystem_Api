@@ -1,7 +1,6 @@
 package com.learning.api.angularsystem.entitys.financeiro.movimentacao;
 
 import com.learning.api.angularsystem.dtos.financeiro.movimentacao.MovimentacaoDto;
-import com.learning.api.angularsystem.dtos.financeiro.movimentacao.NewMovimentacaoDto;
 import com.learning.api.angularsystem.entitys.cadastro.integrante.IntegranteEntity;
 import com.learning.api.angularsystem.entitys.financeiro.titulo.TituloEntity;
 import com.learning.api.angularsystem.enums.Status;

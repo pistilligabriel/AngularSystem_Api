@@ -4,6 +4,7 @@ import com.learning.api.angularsystem.dtos.cadastro.item.ItemGrupoDto;
 import com.learning.api.angularsystem.entitys.cadastro.item.ItemGrupoEntity;
 import com.learning.api.angularsystem.enums.Status;
 import com.learning.api.angularsystem.repositories.cadastro.item.ItemGrupoRepository;
+import com.learning.api.angularsystem.services.cadastro.item.ItemGrupoService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,54 +23,39 @@ import org.springframework.web.bind.annotation.RestController;
 public class ItemGrupoController {
 
     @Autowired
-    private ItemGrupoRepository itemGrupoRepository;
+    private ItemGrupoService itemGrupoService;
 
     @PostMapping
     @Transactional
     public void cadastrarItemGrupo(@RequestBody @Valid ItemGrupoDto itemGrupoDto) {
-        itemGrupoRepository.save(new ItemGrupoEntity(itemGrupoDto));
+
     }
 
     @GetMapping
     public Iterable<ItemGrupoDto> listarItemGrupos() {
-        return itemGrupoRepository.findAll().stream().map(ItemGrupoDto::new).toList();
+        return null;
     }
 
     @GetMapping("/{CODIGO}")
     public ResponseEntity<ItemGrupoDto> buscarItemGrupo(@PathVariable Long CODIGO) {
-        var itemGrupo = itemGrupoRepository.getReferenceById(CODIGO);
-
-        return ResponseEntity.ok(new ItemGrupoDto(itemGrupo));
+        return null;
     }
 
     @PutMapping
     @Transactional
     public ResponseEntity<ItemGrupoDto> atualizarItemGrupo(@RequestBody @Valid ItemGrupoDto itemGrupoDto) {
-        var itemGrupo = itemGrupoRepository.getReferenceById(itemGrupoDto.CODIGO());
-        itemGrupo.atualizarItemGrupo(itemGrupoDto);
-
-        return ResponseEntity.ok(new ItemGrupoDto(itemGrupo));
+        return null;
     }
 
     @PostMapping("/desativar/{CODIGO}")
     @Transactional
     public ResponseEntity<ItemGrupoDto> desativarItemGrupo(@PathVariable Long CODIGO) {
-        var itemGrupo = itemGrupoRepository.getReferenceById(CODIGO);
-
-        if (itemGrupo.getStatus().equals(Status.ATIVO)) {
-            itemGrupo.setStatusInativo();
-        } else {
-            itemGrupo.setStatusAtivo();
-        }
-
-        return ResponseEntity.ok(new ItemGrupoDto(itemGrupo));
+        return null;
     }
 
     @DeleteMapping("/{CODIGO}")
     @Transactional
     public ResponseEntity<Void> deletarItemGrupo(@PathVariable Long CODIGO) {
-        itemGrupoRepository.deleteById(CODIGO);
-
-        return ResponseEntity.noContent().build();
+        return null;
     }
 }

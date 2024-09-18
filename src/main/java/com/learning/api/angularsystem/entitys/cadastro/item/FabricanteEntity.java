@@ -1,7 +1,6 @@
 package com.learning.api.angularsystem.entitys.cadastro.item;
 
 import com.learning.api.angularsystem.dtos.cadastro.item.FabricanteDto;
-import com.learning.api.angularsystem.dtos.cadastro.item.NewFabricanteDto;
 import com.learning.api.angularsystem.enums.Status;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

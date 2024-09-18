@@ -1,6 +1,5 @@
 package com.learning.api.angularsystem.entitys.faturamento.pedido;
 
-import com.learning.api.angularsystem.dtos.faturamento.pedido.NewPedidoDetalheDto;
 import com.learning.api.angularsystem.dtos.faturamento.pedido.PedidoDetalheDto;
 import com.learning.api.angularsystem.entitys.cadastro.item.ItemEntity;
 import com.learning.api.angularsystem.entitys.cadastro.item.UnidadeMedidaEntity;

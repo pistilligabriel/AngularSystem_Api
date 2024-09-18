@@ -1,35 +1,27 @@
 package com.learning.api.angularsystem.dtos.financeiro.movimentacao;
 
 
-import com.learning.api.angularsystem.entitys.financeiro.movimentacao.FormaPagamentoEntity;
-import com.learning.api.angularsystem.enums.Status;
-import com.learning.api.angularsystem.enums.movimentacao.TipoFormaPagamento;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
 import java.time.LocalDateTime;
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+public class FormaPagamentoDto{
 
-public record FormaPagamentoDto(
-
-        Long CODIGO,
-        @NotBlank(message = "O campo descrição é obrigatório")
-        String descricao,
-        @Enumerated
-        TipoFormaPagamento tipo,
-        @Enumerated
-        Status status,
-        @NotNull(message = "O campo empresa é obrigatório")
-        Long empresa,
-        LocalDateTime versao
-) {
-
-    public FormaPagamentoDto(FormaPagamentoEntity formaPagamentoEntity) {
-        this(formaPagamentoEntity.getCODIGO(),
-                formaPagamentoEntity.getDescricao(),
-                formaPagamentoEntity.getTipo(),
-                formaPagamentoEntity.getStatus(),
-                formaPagamentoEntity.getEmpresa(),
-                formaPagamentoEntity.getVersao());
-    }
+    private Long CODIGO;
+    @NotBlank(message = "O campo descrição é obrigatório")
+    private String descricao;
+    @Enumerated
+    private String tipo;
+    @Enumerated
+    private String status;
+    @NotNull(message = "O campo empresa é obrigatório")
+    private Long empresa;
+    private LocalDateTime versao;
 }

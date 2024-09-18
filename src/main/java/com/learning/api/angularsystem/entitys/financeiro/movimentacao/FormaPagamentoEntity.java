@@ -1,7 +1,6 @@
 package com.learning.api.angularsystem.entitys.financeiro.movimentacao;
 
 import com.learning.api.angularsystem.dtos.financeiro.movimentacao.FormaPagamentoDto;
-import com.learning.api.angularsystem.dtos.financeiro.movimentacao.NewFormaPagamentoDto;
 import com.learning.api.angularsystem.enums.Status;
 import com.learning.api.angularsystem.enums.movimentacao.TipoFormaPagamento;
 import jakarta.persistence.Column;

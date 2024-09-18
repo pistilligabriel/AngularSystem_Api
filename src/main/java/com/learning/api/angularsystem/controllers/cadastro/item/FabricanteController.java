@@ -4,6 +4,7 @@ import com.learning.api.angularsystem.dtos.cadastro.item.FabricanteDto;
 import com.learning.api.angularsystem.entitys.cadastro.item.FabricanteEntity;
 import com.learning.api.angularsystem.enums.Status;
 import com.learning.api.angularsystem.repositories.cadastro.item.FabricanteRepository;
+import com.learning.api.angularsystem.services.cadastro.item.FabricanteService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,54 +23,39 @@ import org.springframework.web.bind.annotation.RestController;
 public class FabricanteController {
 
     @Autowired
-    private FabricanteRepository fabricanteRepository;
+    private FabricanteService fabricanteService;
 
     @PostMapping
     @Transactional
-    public void cadastrarFabricante(@RequestBody @Valid FabricanteDto fabricanteDto) {
-        fabricanteRepository.save(new FabricanteEntity(fabricanteDto));
+    public ResponseEntity<FabricanteEntity> cadastrarFabricante(@RequestBody @Valid FabricanteDto fabricanteDto) {
+        return null;
     }
 
     @GetMapping
     public Iterable<FabricanteDto> listarFabricantes() {
-        return fabricanteRepository.findAll().stream().map(FabricanteDto::new).toList();
+        return null;
     }
 
     @GetMapping("/{CODIGO}")
     public ResponseEntity<FabricanteDto> buscarFabricante(@PathVariable Long CODIGO) {
-        var fabricante = fabricanteRepository.getReferenceById(CODIGO);
-
-        return ResponseEntity.ok(new FabricanteDto(fabricante));
+        return null;
     }
 
     @PutMapping
     @Transactional
     public ResponseEntity<FabricanteDto> atualizarFabricante(@RequestBody @Valid FabricanteDto fabricanteDto) {
-        var fabricante = fabricanteRepository.getReferenceById(fabricanteDto.CODIGO());
-        fabricante.atualizarFabricante(fabricanteDto);
-
-        return ResponseEntity.ok(new FabricanteDto(fabricante));
+        return null;
     }
 
     @PostMapping("/desativar/{CODIGO}")
     @Transactional
     public ResponseEntity<FabricanteDto> desativarFabricante(@PathVariable Long CODIGO) {
-        var fabricante = fabricanteRepository.getReferenceById(CODIGO);
-
-        if (fabricante.getStatus().equals(Status.ATIVO)) {
-            fabricante.setStatusInativo();
-        } else {
-            fabricante.setStatusAtivo();
-        }
-
-        return ResponseEntity.ok(new FabricanteDto(fabricante));
+        return null;
     }
 
     @DeleteMapping("/{CODIGO}")
     @Transactional
     public ResponseEntity<Void> deletarFabricante(@PathVariable Long CODIGO) {
-        fabricanteRepository.deleteById(CODIGO);
-
-        return ResponseEntity.noContent().build();
+        return null;
     }
 }

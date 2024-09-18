@@ -1,38 +1,31 @@
 package com.learning.api.angularsystem.dtos.cadastro.item;
 
-import com.learning.api.angularsystem.entitys.cadastro.item.UnidadeMedidaEntity;
-import com.learning.api.angularsystem.enums.Status;
-import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-public record UnidadeMedidaDto(
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+public class UnidadeMedidaDto {
 
-        Long CODIGO,
+    private Long codigo;
 
-        @NotBlank(message = "O campo descrição é obrigatório")
-        String descricao,
+    @NotBlank(message = "O campo descrição é obrigatório")
+    private String descricao;
 
-        @NotBlank(message = "O campo simbolo é obrigatório")
-        String simbolo,
+    @NotBlank(message = "O campo simbolo é obrigatório")
+    private String simbolo;
 
-        @Enumerated
-        Status status,
+    private String status;
 
-        @NotNull(message = "O campo empresa é obrigatório")
-        Long empresa,
+    @NotNull(message = "O campo empresa é obrigatório")
+    private Long empresa;
 
-        LocalDateTime versao
-) {
+    private LocalDateTime versao;
 
-    public UnidadeMedidaDto(UnidadeMedidaEntity unidadeMedidaEntity) {
-        this(unidadeMedidaEntity.getCODIGO(),
-                unidadeMedidaEntity.getDescricao(),
-                unidadeMedidaEntity.getSimbolo(),
-                unidadeMedidaEntity.getStatus(),
-                unidadeMedidaEntity.getEmpresa(),
-                unidadeMedidaEntity.getVersao());
-    }
 }

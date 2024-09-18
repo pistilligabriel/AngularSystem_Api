@@ -7,67 +7,44 @@ import jakarta.persistence.Enumerated;
 
 import java.time.LocalDateTime;
 
-public record IntegranteDto(
+public class IntegranteDto {
 
-        Long CODIGO,
+    private Long CODIGO;
 
-        TipoIntegrante tipoIntegrante,
+    private String tipoIntegrante;
 
-        String nome,
+    private String nome;
 
-        String sobrenome,
+    private String sobrenome;
 
-        String telefone,
+    private String telefone;
 
-        String email,
+    private String email;
 
-        String tipoDocumento,
+    private String tipoDocumento;
 
-        String documento,
+    private String documento;
 
-        String cep,
+    private String cep;
 
-        String logradouro,
+    private String logradouro;
 
-        Integer numero,
+    private Integer numero;
 
-        String bairro,
+    private String bairro;
 
-        String municipio,
+    private String municipio;
 
-        String uf,
+    private String uf;
 
-        String complemento,
+    private String complemento;
 
-        LocalDateTime dataCriacao,
+    private LocalDateTime dataCriacao;
 
-        @Enumerated
-        Status status,
+    private String status;
 
-        Long empresa,
+    private Long empresa;
 
-        LocalDateTime versao
-) {
+    private LocalDateTime versao;
 
-    public IntegranteDto(IntegranteEntity integranteEntity) {
-        this(integranteEntity.getCODIGO(),
-                integranteEntity.getTipoIntegrante(),
-                integranteEntity.getNome(),
-                integranteEntity.getSobrenome(),
-                integranteEntity.getTelefone(),
-                integranteEntity.getEmail(),
-                integranteEntity.getTipoDocumento(),
-                integranteEntity.getDocumento(),
-                integranteEntity.getCep(),
-                integranteEntity.getLogradouro(),
-                integranteEntity.getNumero(),
-                integranteEntity.getBairro(),
-                integranteEntity.getMunicipio(),
-                integranteEntity.getUf(),
-                integranteEntity.getComplemento(),
-                integranteEntity.getDataCriacao(),
-                integranteEntity.getStatus(),
-                integranteEntity.getEmpresa(),
-                integranteEntity.getVersao());
-    }
 }

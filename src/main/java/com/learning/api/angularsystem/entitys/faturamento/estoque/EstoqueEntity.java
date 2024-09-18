@@ -1,7 +1,6 @@
 package com.learning.api.angularsystem.entitys.faturamento.estoque;
 
 import com.learning.api.angularsystem.dtos.faturamento.estoque.EstoqueDto;
-import com.learning.api.angularsystem.dtos.faturamento.estoque.NewEstoqueDto;
 import com.learning.api.angularsystem.entitys.cadastro.integrante.IntegranteEntity;
 import com.learning.api.angularsystem.entitys.cadastro.item.ItemEntity;
 import com.learning.api.angularsystem.entitys.cadastro.item.UnidadeMedidaEntity;

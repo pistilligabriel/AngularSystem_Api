@@ -1,38 +1,26 @@
 package com.learning.api.angularsystem.dtos.cadastro.usuario;
 
-import com.learning.api.angularsystem.entitys.cadastro.usuario.UsuarioEntity;
-import com.learning.api.angularsystem.enums.Status;
-import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-public record AlterarSenhaDto(
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+public class AlterarSenhaDto {
 
-        Long CODIGO,
+    private Long codigo;
+    @NotBlank(message = "O campo nome é obrigatório")
+    private String login;
+    @NotNull(message = "É necessário inserir nova senha")
+    private String password;
+    private String status;
+    private Long empresa;
+    private LocalDateTime versao;
 
-        @NotBlank(message = "O campo nome é obrigatório")
-        String login,
 
-        @NotNull(message = "É necessário inserir nova senha")
-        String password,
-
-        @Enumerated
-        Status status,
-
-        Long empresa,
-
-        LocalDateTime versao
-
-) {
-
-    public AlterarSenhaDto(UsuarioEntity usuarioEntity) {
-        this(usuarioEntity.getCODIGO(),
-                usuarioEntity.getLogin(),
-                usuarioEntity.getPassword(),
-                usuarioEntity.getStatus(),
-                usuarioEntity.getEmpresa(),
-                usuarioEntity.getVersao());
-    }
 }
