@@ -1,9 +1,12 @@
 package com.learning.api.angularsystem.enums.integrante;
 
+import lombok.Getter;
+
 /**
  * Enumeração que representa os tipos de logradouro.
  * Cada tipo de logradouro é representado por uma string de descrição.
  */
+@Getter
 public enum TipoLogradouro {
 
     RUA("Rua"),

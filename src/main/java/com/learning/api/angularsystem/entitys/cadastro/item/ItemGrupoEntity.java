@@ -1,27 +1,22 @@
 package com.learning.api.angularsystem.entitys.cadastro.item;
 
-import com.learning.api.angularsystem.dtos.cadastro.item.ItemGrupoDto;
+import com.learning.api.angularsystem.web.dtos.cadastro.item.ItemGrupoDto;
 import com.learning.api.angularsystem.enums.Status;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "item_grupo")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ItemGrupoEntity {
+public class ItemGrupoEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,34 +25,19 @@ public class ItemGrupoEntity {
     @Column(name = "DESCRICAO", unique = true)
     private String descricao;
 
+    @OneToMany(mappedBy = "grupoItem",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ItemEntity> produtos;
+
     @Column(name = "STATUS")
     @Enumerated(EnumType.STRING)
     private Status status;
 
     @Column(name = "EMPRESA")
-    private Long empresa;
+    private Long empresa = 1L;
 
     @Column(name = "VERSAO")
-    private LocalDateTime versao;
+    private LocalDateTime versao = LocalDateTime.now();
 
-    public ItemGrupoEntity(ItemGrupoDto itemGrupoDto) {
-        this.descricao = itemGrupoDto.descricao();
-        this.status = Status.ATIVO;
-        this.empresa = itemGrupoDto.empresa();
-        this.versao = LocalDateTime.now();
-    }
-
-    public ItemGrupoEntity(NewItemGrupoDto newItemGrupoDto) {}
-
-    public void atualizarItemGrupo(ItemGrupoDto itemGrupoDto) {
-        if(itemGrupoDto.descricao() != null) {
-            this.descricao = itemGrupoDto.descricao();
-        }
-        if(itemGrupoDto.empresa() != null) {
-            this.empresa = itemGrupoDto.empresa();
-        }
-            this.versao = LocalDateTime.now();
-    }
 
     public void setStatusAtivo() {
         this.status = Status.ATIVO;

@@ -1,10 +1,12 @@
 package com.learning.api.angularsystem.enums.titulo;
 
+import lombok.Getter;
+
+@Getter
 public enum StatusTitulo {
 
     ABERTO("Aberto"),
-    BAIXADO("Baixado"),
-    BAIXADO_PARCIAL("Baixado Parcial");
+    RECEBIDO("Recebido");
 
     private final String descricao;
 

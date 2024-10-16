@@ -1,28 +1,28 @@
 package com.learning.api.angularsystem.entitys.cadastro.integrante;
 
-import com.learning.api.angularsystem.dtos.cadastro.integrante.IntegranteDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.learning.api.angularsystem.entitys.cadastro.usuario.UsuarioEntity;
+import com.learning.api.angularsystem.entitys.faturamento.pedido.PedidoEntity;
+import com.learning.api.angularsystem.enums.integrante.TipoDocumento;
+import com.learning.api.angularsystem.web.dtos.cadastro.integrante.IntegranteDto;
 import com.learning.api.angularsystem.enums.Status;
 import com.learning.api.angularsystem.enums.integrante.TipoIntegrante;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "integrante")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class IntegranteEntity {
+public class IntegranteEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,7 +45,8 @@ public class IntegranteEntity {
     private String email;
 
     @Column(name = "TIPO_DOCUMENTO")
-    private String tipoDocumento;
+    @Enumerated(EnumType.STRING)
+    private TipoDocumento tipoDocumento;
 
     @Column(name = "DOCUMENTO", unique = true)
     private String documento;
@@ -75,8 +76,16 @@ public class IntegranteEntity {
     @Column(name = "UF")
     private String uf;
 
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "integrante", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Set<PedidoEntity> pedidos;
+
     @Column(name = "COMPLEMENTO")
     private String complemento;
+
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "integrante", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Set<UsuarioEntity> usuario;
 
     @Column(name = "EMPRESA")
     private Long empresa = 1L;
@@ -84,55 +93,6 @@ public class IntegranteEntity {
     @Column(name = "VERSAO")
     private LocalDateTime versao;
 
-
-    public IntegranteEntity(IntegranteDto dadosIntegrante) {
-        this.tipoIntegrante = dadosIntegrante.tipoIntegrante();
-        this.nome = dadosIntegrante.nome();
-        this.sobrenome = dadosIntegrante.sobrenome();
-        this.telefone = dadosIntegrante.telefone();
-        this.email = dadosIntegrante.email();
-        this.tipoDocumento = dadosIntegrante.tipoDocumento();
-        this.documento = dadosIntegrante.documento();
-        this.dataCriacao = LocalDateTime.now();
-        this.status = Status.ATIVO;
-        this.cep = dadosIntegrante.cep();
-        this.logradouro = dadosIntegrante.logradouro();
-        this.numero = dadosIntegrante.numero();
-        this.bairro = dadosIntegrante.bairro();
-        this.municipio = dadosIntegrante.municipio();
-        this.uf = dadosIntegrante.uf();
-        this.complemento = dadosIntegrante.complemento();
-        this.empresa = dadosIntegrante.empresa();
-        this.versao = LocalDateTime.now();
-    }
-
-
-
-    public void atualizarIntegrante(IntegranteDto dadosIntegrante) {
-
-        if (dadosIntegrante.nome() != null) {
-            this.nome = dadosIntegrante.nome();
-        }
-        if (dadosIntegrante.sobrenome() != null) {
-            this.sobrenome = dadosIntegrante.sobrenome();
-        }
-        if (dadosIntegrante.telefone() != null) {
-            this.telefone = dadosIntegrante.telefone();
-        }
-        if (dadosIntegrante.email() != null) {
-            this.email = dadosIntegrante.email();
-        }
-        if (dadosIntegrante.tipoDocumento() != null) {
-            this.tipoDocumento = dadosIntegrante.tipoDocumento();
-        }
-        if (dadosIntegrante.documento() != null) {
-            this.documento = dadosIntegrante.documento();
-        }
-        if (dadosIntegrante.status() != null) {
-            this.status = dadosIntegrante.status();
-        }
-        this.versao = LocalDateTime.now();
-    }
 
     public void setStatusAtivo() {
         this.status = Status.ATIVO;

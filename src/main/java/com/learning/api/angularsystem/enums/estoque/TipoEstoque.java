@@ -1,5 +1,8 @@
 package com.learning.api.angularsystem.enums.estoque;
 
+import lombok.Getter;
+
+@Getter
 public enum TipoEstoque {
 
     ENTRADA("Entrada"),

@@ -1,16 +1,10 @@
 package com.learning.api.angularsystem.services.faturamento.estoque;
 
-import com.learning.api.angularsystem.dtos.faturamento.estoque.EstoqueDto;
-import com.learning.api.angularsystem.entitys.faturamento.estoque.EstoqueEntity;
 import com.learning.api.angularsystem.repositories.cadastro.integrante.IntegranteRepository;
 import com.learning.api.angularsystem.repositories.cadastro.item.ItemRepository;
 import com.learning.api.angularsystem.repositories.cadastro.item.UnidadeMedidaRepository;
 import com.learning.api.angularsystem.repositories.faturamento.pedido.PedidoDetalheRepository;
-import com.learning.api.angularsystem.services.cadastro.integrante.IntegranteService;
-import com.learning.api.angularsystem.services.cadastro.item.ItemService;
-import com.learning.api.angularsystem.services.cadastro.item.UnidadeMedidaService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 

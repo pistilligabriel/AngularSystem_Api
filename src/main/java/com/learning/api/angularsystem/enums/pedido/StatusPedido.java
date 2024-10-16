@@ -1,13 +1,11 @@
 package com.learning.api.angularsystem.enums.pedido;
 
+import lombok.Getter;
+
+@Getter
 public enum StatusPedido {
 
     PEDIDO("Pedido"),
-    ORCAMENTO("Orçamento"),
-    FATURADO("Faturado"),
-    CONDICIONAL("Condicional"),
-    COTACAO("Cotação"),
-    CONCLUIDO("Concluído"),
     FINALIZADO("Finalizado");
 
 

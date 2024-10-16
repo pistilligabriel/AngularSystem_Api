@@ -1,17 +1,13 @@
 package com.learning.api.angularsystem.enums.pedido;
 
+import lombok.Getter;
+
+@Getter
 public enum FinalidadePedido {
 
-    BRINDE("Brinde"),
-    COMSUMO("Consumo"),
-    DEVOLUCAO("Devolução"),
-    DOACAO("Doação"),
-    NORMAL("Normal"),
-    REPOSICAO("Reposição"),
-    TROCA("Troca"),
-    GARANTIA("Garantia"),
-    AMOSTRA("Amostra"),
-    OUTROS("Outros");
+
+    NORMAL("Normal");
+
 
     private final String descricao;
 

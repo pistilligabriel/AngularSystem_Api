@@ -1,27 +1,22 @@
 package com.learning.api.angularsystem.entitys.cadastro.item;
 
-import com.learning.api.angularsystem.dtos.cadastro.item.UnidadeMedidaDto;
+import com.learning.api.angularsystem.web.dtos.cadastro.item.UnidadeMedidaDto;
 import com.learning.api.angularsystem.enums.Status;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "unidade_medida")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UnidadeMedidaEntity {
+public class UnidadeMedidaEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +28,9 @@ public class UnidadeMedidaEntity {
     @Column(name = "SIMBOLO", unique = true)
     private String simbolo;
 
+    @OneToMany(mappedBy = "unidadeVenda",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ItemEntity> produtos;
+
     @Column(name = "STATUS")
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -42,30 +40,6 @@ public class UnidadeMedidaEntity {
 
     @Column(name = "VERSAO")
     private LocalDateTime versao;
-
-
-    public UnidadeMedidaEntity(UnidadeMedidaDto unidadeMedidaDto) {
-        this.descricao = unidadeMedidaDto.descricao();
-        this.simbolo = unidadeMedidaDto.simbolo();
-        this.status = Status.ATIVO;
-        this.empresa = unidadeMedidaDto.empresa();
-        this.versao = LocalDateTime.now();
-    }
-
-    public UnidadeMedidaEntity(NewUnidadeMedidaDto newUnidadeMedidaDto) {}
-
-    public void atualizarUnidadeMedida(UnidadeMedidaDto unidadeMedidaDto) {
-        if(unidadeMedidaDto.descricao() != null) {
-            this.descricao = unidadeMedidaDto.descricao();
-        }
-        if(unidadeMedidaDto.simbolo() != null) {
-            this.simbolo = unidadeMedidaDto.simbolo();
-        }
-        if(unidadeMedidaDto.empresa() != null) {
-            this.empresa = unidadeMedidaDto.empresa();
-        }
-            this.versao = LocalDateTime.now();
-    }
 
     public void setStatusAtivo() {
         this.status = Status.ATIVO;

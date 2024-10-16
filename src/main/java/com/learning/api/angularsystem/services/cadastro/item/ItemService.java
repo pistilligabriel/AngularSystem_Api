@@ -1,9 +1,6 @@
 package com.learning.api.angularsystem.services.cadastro.item;
 
-import com.learning.api.angularsystem.dtos.cadastro.item.ItemDto;
 import com.learning.api.angularsystem.entitys.cadastro.item.ItemEntity;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -1,6 +1,6 @@
 package com.learning.api.angularsystem.entitys.cadastro.item;
 
-import com.learning.api.angularsystem.dtos.cadastro.item.ItemDto;
+import com.learning.api.angularsystem.web.dtos.cadastro.item.ItemDto;
 import com.learning.api.angularsystem.enums.Status;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -32,8 +32,9 @@ public class ItemEntity {
     @Column(name = "DATA_CADASTRO")
     private LocalDateTime dataCadastro;
 
-    @JoinColumn(name = "GRUPO_ITEM")
+
     @ManyToOne
+    @JoinColumn(name = "GRUPO_ITEM")
     private ItemGrupoEntity grupoItem;
 
     @Column(name = "DESCRICAO")
@@ -42,15 +43,13 @@ public class ItemEntity {
     @Column(name = "OBSERVACAO")
     private String observacao;
 
-    @JoinColumn(name = "UNIDADE_VENDA")
     @ManyToOne
+    @JoinColumn(name = "UNIDADE_VENDA")
     private UnidadeMedidaEntity unidadeVenda;
 
-    //@JoinColumn(name = "FABRICANTE")
-    //@ManyToOne
-    @Column(name = "FABRICANTE")
-    String fabricante;
-    //private FabricanteEntity fabricante;
+    @ManyToOne
+    @JoinColumn(name = "FABRICANTE")
+    private FabricanteEntity fabricante;
 
     @Column(name = "CODIGO_BARRAS", unique = true)
     private String codigoBarras;
@@ -72,74 +71,14 @@ public class ItemEntity {
 
     @Column(name = "STATUS")
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private Status status = Status.ATIVO;
 
     @Column(name = "EMPRESA")
-    private Long empresa;
+    private Long empresa = 1L;
 
     @Column(name = "VERSAO")
-    private LocalDateTime versao;
+    private LocalDateTime versao = LocalDateTime.now();
 
-
-    public ItemEntity(ItemDto dadosItem) {
-        this.dataCadastro = LocalDateTime.now();
-        this.grupoItem = dadosItem.grupoItem() != null ?
-                new ItemGrupoEntity(dadosItem.grupoItem()) : null;
-        this.descricao = dadosItem.descricao();
-        this.observacao = dadosItem.observacao();
-        this.unidadeVenda = dadosItem.unidadeVenda() != null ?
-                new UnidadeMedidaEntity(dadosItem.unidadeVenda()) : null;
-        //this.fabricante = dadosItem.fabricante() != null ? new FabricanteEntity(dadosItem.fabricante()) : null;
-        this.fabricante = dadosItem.fabricante();
-        this.codigoBarras = dadosItem.codigoBarras();
-        this.codigoOriginal = dadosItem.codigoOriginal();
-        this.precoCusto = dadosItem.precoCusto();
-        this.precoVenda = dadosItem.precoVenda();
-        this.margemLucro = calcularMargemLucro();
-        this.empresa = dadosItem.empresa();
-        this.status = Status.ATIVO;
-        this.versao = LocalDateTime.now();
-    }
-
-    public ItemEntity(NewItemDto item) {}
-
-    public void atualizarItem(ItemDto dadosItem) {
-        if (dadosItem.grupoItem() != null) {
-            this.grupoItem = new ItemGrupoEntity(dadosItem.grupoItem());
-        }
-        if (dadosItem.descricao() != null) {
-            this.descricao = dadosItem.descricao();
-        }
-        if (dadosItem.observacao() != null) {
-            this.observacao = dadosItem.observacao();
-        }
-        if (dadosItem.unidadeVenda() != null) {
-            this.unidadeVenda = new UnidadeMedidaEntity(dadosItem.unidadeVenda());
-        }
-        //if (dadosItem.fabricante() != null) {this.fabricante = new FabricanteEntity(dadosItem.fabricante());}
-        if (dadosItem.fabricante() != null){
-            this.fabricante = dadosItem.fabricante();
-        }
-        if (dadosItem.codigoBarras() != null) {
-            this.codigoBarras = dadosItem.codigoBarras();
-        }
-        if (dadosItem.codigoOriginal() != null) {
-            this.codigoOriginal = dadosItem.codigoOriginal();
-        }
-        if (dadosItem.precoCusto() != null) {
-            this.precoCusto = dadosItem.precoCusto();
-        }
-        if (dadosItem.precoVenda() != null) {
-            this.precoVenda = dadosItem.precoVenda();
-        }
-        if (dadosItem.status() != null) {
-            this.status = dadosItem.status();
-        }
-        if (dadosItem.empresa() != null) {
-            this.empresa = dadosItem.empresa();
-        }
-        this.versao = LocalDateTime.now();
-    }
 
     public void setStatusAtivo() {
         this.status = Status.ATIVO;

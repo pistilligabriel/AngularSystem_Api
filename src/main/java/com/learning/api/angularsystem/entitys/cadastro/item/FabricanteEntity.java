@@ -1,31 +1,27 @@
 package com.learning.api.angularsystem.entitys.cadastro.item;
 
-import com.learning.api.angularsystem.dtos.cadastro.item.FabricanteDto;
+import com.learning.api.angularsystem.web.dtos.cadastro.item.FabricanteDto;
 import com.learning.api.angularsystem.enums.Status;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "fabricante")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FabricanteEntity {
+public class FabricanteEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long CODIGO;
+
+    @OneToMany(mappedBy = "fabricante",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ItemEntity> produtos;
 
     @Column(name = "DESCRICAO", unique = true)
     private String descricao;
@@ -35,30 +31,10 @@ public class FabricanteEntity {
     private Status status;
 
     @Column(name = "EMPRESA")
-    private Long empresa;
+    private Long empresa = 1L;
 
     @Column(name = "VERSAO")
-    private LocalDateTime versao;
-
-
-    public FabricanteEntity(FabricanteDto fabricanteDto) {
-        this.descricao = fabricanteDto.descricao();
-        this.status = Status.ATIVO;
-        this.empresa = Long.valueOf(1);
-        this.versao = LocalDateTime.now();
-    }
-
-    public FabricanteEntity(NewFabricanteDto newFabricanteDto) {}
-
-    public void atualizarFabricante(FabricanteDto fabricanteDto) {
-        if(fabricanteDto.descricao() != null) {
-            this.descricao = fabricanteDto.descricao();
-        }
-        if(fabricanteDto.status() != null) {
-            this.status = fabricanteDto.status();
-        }
-            this.versao = LocalDateTime.now();
-    }
+    private LocalDateTime versao = LocalDateTime.now();
 
     public void setStatusAtivo() {
         this.status = Status.ATIVO;

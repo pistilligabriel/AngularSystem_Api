@@ -1,5 +1,8 @@
 package com.learning.api.angularsystem.enums.item;
 
+import lombok.Getter;
+
+@Getter
 public enum TipoMovimentacaoItem {
 
     COMPRA("Tipo Compra"),

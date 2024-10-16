@@ -1,7 +1,7 @@
 package com.learning.api.angularsystem.entitys.financeiro.titulo;
 
 
-import com.learning.api.angularsystem.dtos.financeiro.titulo.TituloDto;
+import com.learning.api.angularsystem.web.dtos.financeiro.titulo.TituloDto;
 import com.learning.api.angularsystem.entitys.cadastro.integrante.IntegranteEntity;
 import com.learning.api.angularsystem.enums.Status;
 import com.learning.api.angularsystem.enums.titulo.StatusTitulo;
@@ -18,6 +18,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.*;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
@@ -27,7 +28,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TituloEntity {
+public class TituloEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -73,12 +74,6 @@ public class TituloEntity {
     @Column(name = "VALOR_ACRESCIMO")
     private Double valorAcrescimo;
 
-    @Column(name = "VALOR_JUROS")
-    private Double valorJuros;
-
-    @Column(name = "VALOR_MULTA")
-    private Double valorMulta;
-
     @Column(name = "VALOR_PAGO")
     private Double valorPago;
 
@@ -90,99 +85,13 @@ public class TituloEntity {
 
     @Column(name = "STATUS")
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private Status status = Status.NORMAL;
 
     @Column(name = "EMPRESA")
-    private Long empresa;
+    private Long empresa = 1L;
 
     @Column(name = "VERSAO")
-    private LocalDateTime versao;
-
-
-    public TituloEntity(TituloDto tituloDto) {
-        this.statusTitulo = tituloDto.statusTitulo();
-        this.tipo = tituloDto.tipo();
-        this.descricao = tituloDto.descricao();
-        this.observacao = tituloDto.observacao();
-        this.integrante = tituloDto.integrante() != null ?
-                new IntegranteEntity(tituloDto.integrante()) : null;
-        this.funcionario = tituloDto.funcionario() != null ?
-                new IntegranteEntity(tituloDto.funcionario()) : null;
-        this.dataLancamento = tituloDto.dataLancamento();
-        this.dataVencimento = tituloDto.dataVencimento();
-        this.dataUltimoPagamento = tituloDto.dataUltimoPagamento();
-        this.valor = tituloDto.valor();
-        this.valorDesconto = tituloDto.valorDesconto();
-        this.valorAcrescimo = tituloDto.valorAcrescimo();
-        this.valorJuros = tituloDto.valorJuros();
-        this.valorMulta = tituloDto.valorMulta();
-        this.valorPago = tituloDto.valorPago();
-        this.valorEmAberto = tituloDto.valorEmAberto();
-        this.total = tituloDto.total();
-        this.empresa = tituloDto.empresa();
-        this.status = Status.NORMAL;
-        this.versao = LocalDateTime.now();
-    }
-
-    public TituloEntity(NewTituloDto newTituloDto) {}
-
-    public void atualizarTitulo(TituloDto tituloDto) {
-        if (tituloDto.statusTitulo() != null) {
-            this.statusTitulo = tituloDto.statusTitulo();
-        }
-        if (tituloDto.tipo() != null) {
-            this.tipo = tituloDto.tipo();
-        }
-        if (tituloDto.descricao() != null) {
-            this.descricao = tituloDto.descricao();
-        }
-        if (tituloDto.observacao() != null) {
-            this.observacao = tituloDto.observacao();
-        }
-        if (tituloDto.integrante() != null) {
-            this.integrante = new IntegranteEntity(tituloDto.integrante());
-        }
-        if (tituloDto.funcionario() != null) {
-            this.funcionario = new IntegranteEntity(tituloDto.funcionario());
-        }
-        if (tituloDto.dataLancamento() != null) {
-            this.dataLancamento = tituloDto.dataLancamento();
-        }
-        if (tituloDto.dataVencimento() != null) {
-            this.dataVencimento = tituloDto.dataVencimento();
-        }
-        if (tituloDto.dataUltimoPagamento() != null) {
-            this.dataUltimoPagamento = tituloDto.dataUltimoPagamento();
-        }
-        if (tituloDto.valor() != null) {
-            this.valor = tituloDto.valor();
-        }
-        if (tituloDto.valorDesconto() != null) {
-            this.valorDesconto = tituloDto.valorDesconto();
-        }
-        if (tituloDto.valorAcrescimo() != null) {
-            this.valorAcrescimo = tituloDto.valorAcrescimo();
-        }
-        if (tituloDto.valorJuros() != null) {
-            this.valorJuros = tituloDto.valorJuros();
-        }
-        if (tituloDto.valorMulta() != null) {
-            this.valorMulta = tituloDto.valorMulta();
-        }
-        if (tituloDto.valorPago() != null) {
-            this.valorPago = tituloDto.valorPago();
-        }
-        if (tituloDto.valorEmAberto() != null) {
-            this.valorEmAberto = tituloDto.valorEmAberto();
-        }
-        if (tituloDto.total() != null) {
-            this.total = tituloDto.total();
-        }
-        if (tituloDto.empresa() != null) {
-            this.empresa = tituloDto.empresa();
-        }
-        this.versao = LocalDateTime.now();
-    }
+    private LocalDateTime versao = LocalDateTime.now();
 
 
     public void setStatusNormal() {

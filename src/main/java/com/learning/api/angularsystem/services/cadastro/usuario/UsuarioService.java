@@ -1,7 +1,7 @@
 package com.learning.api.angularsystem.services.cadastro.usuario;
 
-import com.learning.api.angularsystem.dtos.cadastro.usuario.AuthenticationDto;
-import com.learning.api.angularsystem.dtos.cadastro.usuario.LoginResponseDto;
+import com.learning.api.angularsystem.web.dtos.cadastro.usuario.AuthenticationDto;
+import com.learning.api.angularsystem.web.dtos.cadastro.usuario.LoginResponseDto;
 import com.learning.api.angularsystem.entitys.cadastro.usuario.UsuarioEntity;
 import com.learning.api.angularsystem.infra.security.TokenService;
 import com.learning.api.angularsystem.repositories.cadastro.usuario.UsuarioRepository;

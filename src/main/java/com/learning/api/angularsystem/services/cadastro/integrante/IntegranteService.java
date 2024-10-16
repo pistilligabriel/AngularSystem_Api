@@ -1,6 +1,5 @@
 package com.learning.api.angularsystem.services.cadastro.integrante;
 
-import com.learning.api.angularsystem.dtos.cadastro.integrante.IntegranteDto;
 import com.learning.api.angularsystem.entitys.cadastro.integrante.IntegranteEntity;
 import com.learning.api.angularsystem.enums.Status;
 import com.learning.api.angularsystem.repositories.cadastro.integrante.IntegranteRepository;
