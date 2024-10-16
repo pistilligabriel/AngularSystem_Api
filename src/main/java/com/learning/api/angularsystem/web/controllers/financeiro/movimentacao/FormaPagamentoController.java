@@ -31,7 +31,6 @@ public class FormaPagamentoController {
     private FormaPagamentoService formaPagamentoService;
 
     @PostMapping
-    @Transactional
     public ResponseEntity<ResponseFormaPagamentoDto> cadastrarFormaPagamento(@RequestBody @Valid FormaPagamentoDto formaPagamentoDto) {
         FormaPagamentoEntity formaPagamento = formaPagamentoService.criarFormaPagamento(FormaPagamentoMapper.toFormaPagamento(formaPagamentoDto));
         return ResponseEntity.status(HttpStatus.CREATED).body(FormaPagamentoMapper.toDto(formaPagamento));
@@ -50,13 +49,11 @@ public class FormaPagamentoController {
     }
 
     @PutMapping
-    @Transactional
     public ResponseEntity<ResponseFormaPagamentoDto> atualizarFormaPagamento(@RequestBody @Valid FormaPagamentoDto formaPagamentoDto) {
         return null;
     }
 
     @PostMapping("/status/{codigo}")
-    @Transactional
     public ResponseEntity<ResponseFormaPagamentoDto> ativarFormaPagamento(@PathVariable Long codigo) {
         FormaPagamentoEntity formaPagamento = formaPagamentoService.alterarStatus(codigo);
 
@@ -64,7 +61,6 @@ public class FormaPagamentoController {
     }
 
     @DeleteMapping("/{codigo}")
-    @Transactional
     public ResponseEntity<ResponseFormaPagamentoDto> deletarFormaPagamento(@PathVariable Long codigo) {
         FormaPagamentoEntity formaPagamento = formaPagamentoService.deletarFormaPagamento(codigo);
         return ResponseEntity.status(HttpStatus.OK).body(FormaPagamentoMapper.toDto(formaPagamento));

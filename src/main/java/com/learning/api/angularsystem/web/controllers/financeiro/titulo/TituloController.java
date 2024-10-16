@@ -1,108 +1,54 @@
 package com.learning.api.angularsystem.web.controllers.financeiro.titulo;
 
+import com.learning.api.angularsystem.services.financeiro.TituloService;
 import com.learning.api.angularsystem.web.dtos.financeiro.titulo.TituloDto;
 import com.learning.api.angularsystem.entitys.financeiro.titulo.TituloEntity;
 import com.learning.api.angularsystem.enums.Status;
-import com.learning.api.angularsystem.repositories.cadastro.integrante.IntegranteRepository;
-import com.learning.api.angularsystem.repositories.financeiro.titulo.TituloRepository;
-import jakarta.transaction.Transactional;
+import com.learning.api.angularsystem.web.dtos.financeiro.titulo.TituloResponseDto;
+import com.learning.api.angularsystem.web.dtos.financeiro.titulo.mapper.TituloMapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/titulos")
 public class TituloController {
 
-
+    @Autowired
+    private TituloService tituloService;
 
     @PostMapping
-    @Transactional
-    public ResponseEntity<Void> cadastrarTitulo(@RequestBody @Valid TituloDto tituloDto) {
-        TituloEntity titulo = new TituloEntity(tituloDto);
-
-        if (tituloDto.integrante() != null) {
-            integranteRepository.findById(tituloDto.integrante().getCODIGO())
-                    .ifPresent(titulo::setIntegrante);
-        }
-
-        if (tituloDto.funcionario() != null) {
-            integranteRepository.findById(tituloDto.funcionario().getCODIGO())
-                    .ifPresent(titulo::setFuncionario);
-        }
-
-        tituloRepository.save(titulo);
-
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<TituloResponseDto> cadastrarTitulo(@RequestBody @Valid TituloDto tituloDto) {
+        TituloEntity titulo = tituloService.criarTitulo(TituloMapper.toTitulo(tituloDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(TituloMapper.toDto(titulo));
     }
 
     @GetMapping
-    public Iterable<TituloDto> listarTitulos() {
-        return tituloRepository.findAll().stream().map(TituloDto::new).toList();
+    public ResponseEntity<List<TituloResponseDto>> listarTitulos() {
+        List<TituloEntity> titulos = tituloService.buscarTitulos();
+        return ResponseEntity.status(HttpStatus.OK).body(TituloMapper.toListDto(titulos));
     }
 
-    @GetMapping("/{CODIGO}")
-    public ResponseEntity<TituloDto> buscarTitulo(Long CODIGO) {
-        var titulo = tituloRepository.getReferenceById(CODIGO);
-
-        return ResponseEntity.ok(new TituloDto(titulo));
+    @GetMapping("/{codigo}")
+    public ResponseEntity<TituloResponseDto> buscarTitulo(Long codigo) {
+        TituloEntity titulo = tituloService.buscarTituloPorId(codigo);
+        return ResponseEntity.status(HttpStatus.OK).body(TituloMapper.toDto(titulo));
     }
 
     @PutMapping
-    @Transactional
-    public ResponseEntity<TituloDto> atualizarTitulo(@RequestBody @Valid TituloDto tituloDto) {
-        TituloEntity titulo = tituloRepository.findById(tituloDto.CODIGO())
-                .orElseThrow(() -> new RuntimeException("Titulo não encontrado"));
-
-        titulo.atualizarTitulo(tituloDto);
-
-        if(tituloDto.integrante() != null) {
-            integranteRepository.findById(tituloDto.integrante().getCODIGO())
-                    .ifPresent(titulo::setIntegrante);
-        } else {
-            titulo.setIntegrante(null);
-        }
-
-        if(tituloDto.funcionario() != null) {
-            integranteRepository.findById(tituloDto.funcionario().getCODIGO())
-                    .ifPresent(titulo::setFuncionario);
-        } else {
-            titulo.setFuncionario(null);
-        }
-
-        tituloRepository.save(titulo);
-
-        return ResponseEntity.ok(new TituloDto(titulo));
+    public ResponseEntity<TituloResponseDto> atualizarTitulo(@RequestBody @Valid TituloDto tituloDto) {
+        return null;
     }
 
-    @PostMapping("/cancelar/{CODIGO}")
-    @Transactional
-    public ResponseEntity<Void> cancelarTitulo(@PathVariable Long CODIGO) {
-        var titulo = tituloRepository.getReferenceById(CODIGO);
-
-        if (titulo.getStatus().equals(Status.NORMAL)) {
-            titulo.setStatusCancelado();
-        } else {
-            titulo.setStatusNormal();
-        }
-
-        return ResponseEntity.noContent().build();
+    @PatchMapping("/cancelar/{codigo}")
+    public ResponseEntity<TituloResponseDto> cancelarTitulo(@PathVariable Long codigo) {
+        TituloEntity titulo = tituloService.cancelarTitulo(codigo);
+        return ResponseEntity.status(HttpStatus.OK).body(TituloMapper.toDto(titulo));
     }
 
-    @DeleteMapping("/{CODIGO}")
-    @Transactional
-    public ResponseEntity<Void> deletarTitulo(@PathVariable Long CODIGO) {
-        tituloRepository.deleteById(CODIGO);
 
-        return ResponseEntity.noContent().build();
-    }
 }

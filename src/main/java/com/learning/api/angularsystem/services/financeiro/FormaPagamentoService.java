@@ -6,6 +6,7 @@ import com.learning.api.angularsystem.repositories.financeiro.movimentacao.Forma
 import com.learning.api.angularsystem.web.dtos.financeiro.movimentacao.FormaPagamentoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,20 +16,24 @@ public class FormaPagamentoService {
     @Autowired
     private FormaPagamentoRepository formaPagamentoRepository;
 
+    @Transactional
     public FormaPagamentoEntity criarFormaPagamento(FormaPagamentoEntity formaPagamento){
         return formaPagamentoRepository.save(formaPagamento);
     }
 
+    @Transactional(readOnly = true)
     public List<FormaPagamentoEntity> buscarFormasPagamento(){
         return formaPagamentoRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public FormaPagamentoEntity buscarFormaPagamentoPorId(Long codigo){
         return formaPagamentoRepository.findById(codigo).orElseThrow(
                 () -> new RuntimeException("Forma Pagamento não encontrada!")
         );
     }
 
+    @Transactional
     public FormaPagamentoEntity alterarStatus(Long codigo){
         FormaPagamentoEntity formaPagamento = buscarFormaPagamentoPorId(codigo);
 
@@ -40,6 +45,7 @@ public class FormaPagamentoService {
         return formaPagamento;
     }
 
+    @Transactional
     public FormaPagamentoEntity deletarFormaPagamento(Long codigo){
         FormaPagamentoEntity formaPagamento = buscarFormaPagamentoPorId(codigo);
 

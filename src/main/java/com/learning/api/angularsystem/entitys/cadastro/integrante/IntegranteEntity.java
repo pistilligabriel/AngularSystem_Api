@@ -56,7 +56,7 @@ public class IntegranteEntity implements Serializable {
 
     @Column(name = "STATUS")
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private Status status = Status.ATIVO;
 
     @Column(name = "CEP")
     private String cep;

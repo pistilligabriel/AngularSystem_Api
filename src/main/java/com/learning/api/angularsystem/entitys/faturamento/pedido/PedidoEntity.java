@@ -58,7 +58,7 @@ public class PedidoEntity implements Serializable {
     @ManyToOne
     private IntegranteEntity integrante;
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "item", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private Set<ItemEntity> produtos = new HashSet<>();
 

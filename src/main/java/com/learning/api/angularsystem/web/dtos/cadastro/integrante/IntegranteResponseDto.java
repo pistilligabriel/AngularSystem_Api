@@ -1,6 +1,7 @@
 package com.learning.api.angularsystem.web.dtos.cadastro.integrante;
 
 import com.learning.api.angularsystem.entitys.cadastro.integrante.IntegranteEntity;
+import jakarta.persistence.Enumerated;
 import lombok.*;
 
 @Getter
@@ -10,6 +11,7 @@ import lombok.*;
 @ToString
 public class IntegranteResponseDto {
     private Long codigo;
+    private String tipo;
     private String status;
     private String nome;
     private String sobrenome;

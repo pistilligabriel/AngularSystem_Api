@@ -4,14 +4,15 @@ import com.learning.api.angularsystem.enums.Status;
 import com.learning.api.angularsystem.enums.integrante.TipoIntegrante;
 import com.learning.api.angularsystem.entitys.cadastro.integrante.IntegranteEntity;
 import jakarta.persistence.Enumerated;
+import lombok.*;
 
 import java.time.LocalDateTime;
-
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class IntegranteDto {
-
-    private Long CODIGO;
-
-    private String tipoIntegrante;
 
     private String nome;
 
@@ -38,13 +39,5 @@ public class IntegranteDto {
     private String uf;
 
     private String complemento;
-
-    private LocalDateTime dataCriacao;
-
-    private String status;
-
-    private Long empresa;
-
-    private LocalDateTime versao;
 
 }
