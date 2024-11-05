@@ -1,6 +1,6 @@
 package com.learning.api.angularsystem.entitys.cadastro.item;
 
-import com.learning.api.angularsystem.web.dtos.cadastro.item.FabricanteDto;
+
 import com.learning.api.angularsystem.enums.Status;
 import jakarta.persistence.*;
 import lombok.*;

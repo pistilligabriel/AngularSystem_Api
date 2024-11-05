@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.learning.api.angularsystem.entitys.cadastro.usuario.UsuarioEntity;
 import com.learning.api.angularsystem.entitys.faturamento.pedido.PedidoEntity;
 import com.learning.api.angularsystem.enums.integrante.TipoDocumento;
-import com.learning.api.angularsystem.web.dtos.cadastro.integrante.IntegranteDto;
 import com.learning.api.angularsystem.enums.Status;
 import com.learning.api.angularsystem.enums.integrante.TipoIntegrante;
 import jakarta.persistence.*;
@@ -14,7 +13,6 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Set;
 
 @Entity

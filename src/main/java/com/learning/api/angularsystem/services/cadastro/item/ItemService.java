@@ -1,12 +1,23 @@
 package com.learning.api.angularsystem.services.cadastro.item;
 
 import com.learning.api.angularsystem.entitys.cadastro.item.ItemEntity;
+import com.learning.api.angularsystem.enums.Status;
+import com.learning.api.angularsystem.repositories.cadastro.item.ItemRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class ItemService {
 
+    @Autowired
+    private ItemRepository itemRepository;
+
+    @Transactional()
     public ItemEntity criarItem(ItemEntity item){
+        return itemRepository.save(item);
 //        ItemEntity itemEntity = new ItemEntity(itemDto);
 //
 //        if (itemDto.grupoItem() != null) {
@@ -28,9 +39,44 @@ public class ItemService {
 //
 //
 //        return new ResponseEntity<>(HttpStatus.CREATED);
-        return null;
+    }
+    @Transactional(readOnly = true)
+    public List<ItemEntity> listarProdutos(){
+        return itemRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
+    public ItemEntity buscarProduto(Long codigo){
+        return itemRepository.findById(codigo).orElseThrow(
+                () -> new RuntimeException("Produto não encontrado!")
+        );
+    }
+
+    @Transactional()
+    public ItemEntity alterarStatus(Long codigo){
+        ItemEntity item = buscarProduto(codigo);
+        if(item.getStatus().equals(Status.ATIVO) && item.getEstoque() == 0){
+            item.setStatusInativo();
+        } else if(item.getStatus().equals(Status.ATIVO) && item.getEstoque() > 0){
+            throw new RuntimeException("Não é possível desativar produto com estoque!");
+        } else {
+            item.setStatusAtivo();
+        }
+        return item;
+    }
+
+    @Transactional()
+    public ItemEntity deletarProduto(Long codigo){
+        ItemEntity item = buscarProduto(codigo);
+        if(item.getStatus().equals(Status.DESATIVADO)){
+            itemRepository.deleteById(item.getCODIGO());
+        } else{
+            throw new RuntimeException("Produto não pode ser deletado!");
+        }
+        return item;
+    }
+
+    @Transactional()
     public ItemEntity editarItem(){
 //        ItemEntity item = itemRepository.findById(itemDto.CODIGO())
 //                .orElseThrow(() -> new RuntimeException("Item não encontrado"));

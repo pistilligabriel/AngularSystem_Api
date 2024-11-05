@@ -49,8 +49,8 @@ public class IntegranteController {
     }
 */
     @DeleteMapping("/{codigo}")
-    public ResponseEntity<Void> deletarIntegrante(@PathVariable Long codigo,IntegranteEntity integrante) {
-        integranteService.deletarIntegrante(integrante);
+    public ResponseEntity<IntegranteResponseDto> deletarIntegrante(@PathVariable Long codigo) {
+        integranteService.deletarIntegrante(codigo);
         return ResponseEntity.noContent().build();
     }
 
