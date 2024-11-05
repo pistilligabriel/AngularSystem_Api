@@ -1,19 +1,18 @@
 package com.learning.api.angularsystem.web.controllers.cadastro.item;
 
-import com.learning.api.angularsystem.web.dtos.cadastro.item.ItemDto;
+import com.learning.api.angularsystem.entitys.cadastro.item.ItemEntity;
 import com.learning.api.angularsystem.services.cadastro.item.ItemService;
+import com.learning.api.angularsystem.web.dtos.cadastro.item.ItemDto;
+import com.learning.api.angularsystem.web.dtos.cadastro.item.ItemResponseDto;
+import com.learning.api.angularsystem.web.dtos.cadastro.item.mapper.ItemMapper;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/produtos")
@@ -25,35 +24,37 @@ public class ItemController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<Void> cadastrarItem(@RequestBody @Valid ItemDto itemDto) {
-        return null;
+    public ResponseEntity<ItemResponseDto> cadastrarProduto(@RequestBody @Valid ItemDto itemDto) {
+        ItemEntity item = itemService.criarItem(ItemMapper.toItem(itemDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(ItemMapper.toDto(item));
     }
 
     @GetMapping
-    public Iterable<ItemDto> listarItens() {
-        return null;
+    public List<ItemResponseDto> listarProdutos() {
+        List<ItemEntity> itens = itemService.listarProdutos();
+        return ResponseEntity.status(HttpStatus.OK).body(ItemMapper.toListDto(itens)).getBody();
     }
 
-    @GetMapping("/{CODIGO}")
-    public ResponseEntity<ItemDto> buscarItem(@PathVariable Long CODIGO) {
-        return null;
+    @GetMapping("/{codigo}")
+    public ResponseEntity<ItemResponseDto> buscarProduto(@PathVariable Long codigo) {
+        ItemEntity item = itemService.buscarProduto(codigo);
+        return ResponseEntity.status(HttpStatus.OK).body(ItemMapper.toDto(item));
     }
 
     @PutMapping
-    @Transactional
-    public ResponseEntity<ItemDto> atualizarItem(@RequestBody @Valid ItemDto itemDto) {
+    public ResponseEntity<ItemDto> atualizarProduto(@RequestBody @Valid ItemDto itemDto) {
       return null;
     }
 
-    @PostMapping("/desativar/{CODIGO}")
-    @Transactional
-    public ResponseEntity<ItemDto> desativarItem(@PathVariable Long CODIGO) {
-        return null;
+    @PostMapping("/status/{codigo}")
+    public ResponseEntity<ItemResponseDto> alterarStatusProduto(@PathVariable Long codigo) {
+        ItemEntity item = itemService.alterarStatus(codigo);
+        return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/{CODIGO}")
-    @Transactional
-    public ResponseEntity<Void> deletarItem(@PathVariable Long CODIGO) {
-        return null;
+    @DeleteMapping("/{codigo}")
+    public ResponseEntity<ItemResponseDto> deletarProduto(@PathVariable Long codigo) {
+        ItemEntity item = itemService.deletarProduto(codigo);
+        return ResponseEntity.noContent().build();
     }
 }

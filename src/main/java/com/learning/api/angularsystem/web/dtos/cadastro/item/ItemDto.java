@@ -1,10 +1,7 @@
 package com.learning.api.angularsystem.web.dtos.cadastro.item;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
-
-import java.time.LocalDateTime;
 @Getter
 @Setter
 @AllArgsConstructor
@@ -22,10 +19,6 @@ public class ItemDto {
     private String unidadeVenda;
 
     private String fabricante;
-
-    private String codigoBarras;
-
-    private String codigoOriginal;
 
     private Double precoCusto;
 

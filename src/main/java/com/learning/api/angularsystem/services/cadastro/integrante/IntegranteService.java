@@ -3,7 +3,6 @@ package com.learning.api.angularsystem.services.cadastro.integrante;
 import com.learning.api.angularsystem.entitys.cadastro.integrante.IntegranteEntity;
 import com.learning.api.angularsystem.enums.Status;
 import com.learning.api.angularsystem.repositories.cadastro.integrante.IntegranteRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,13 +41,14 @@ public class IntegranteService {
         }else{
             integrante.setStatusAtivo();
         }
-
         return integrante;
     }
 
     @Transactional
-    public void deletarIntegrante(IntegranteEntity integrante){
+    public IntegranteEntity deletarIntegrante(Long codigo){
+        IntegranteEntity integrante = getIntegranteById(codigo);
         integranteRepository.deleteById(integrante.getCODIGO());
+        return integrante;
     }
 
 
