@@ -1,8 +1,7 @@
 package com.learning.api.angularsystem.entitys.financeiro.titulo;
 
 
-import com.learning.api.angularsystem.web.dtos.financeiro.titulo.TituloDto;
-import com.learning.api.angularsystem.entitys.cadastro.integrante.IntegranteEntity;
+import com.learning.api.angularsystem.entitys.cadastro.integrante.Cliente;
 import com.learning.api.angularsystem.enums.Status;
 import com.learning.api.angularsystem.enums.titulo.StatusTitulo;
 import com.learning.api.angularsystem.enums.titulo.TipoTitulo;
@@ -28,7 +27,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TituloEntity implements Serializable {
+public class Titulo implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,11 +49,11 @@ public class TituloEntity implements Serializable {
 
     @JoinColumn(name = "INTEGRANTE")
     @ManyToOne
-    private IntegranteEntity integrante;
+    private Cliente integrante;
 
     @JoinColumn(name = "FUNCIONARIO")
     @ManyToOne
-    private IntegranteEntity funcionario;
+    private Cliente funcionario;
 
     @Column(name = "DATA_LANCAMENTO")
     private LocalDateTime dataLancamento;

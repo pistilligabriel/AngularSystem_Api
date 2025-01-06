@@ -2,12 +2,9 @@ package com.learning.api.angularsystem.web.controllers.financeiro.movimentacao;
 
 import com.learning.api.angularsystem.services.financeiro.FormaPagamentoService;
 import com.learning.api.angularsystem.web.dtos.financeiro.movimentacao.FormaPagamentoDto;
-import com.learning.api.angularsystem.enums.Status;
 import com.learning.api.angularsystem.entitys.financeiro.movimentacao.*;
-import com.learning.api.angularsystem.repositories.financeiro.movimentacao.FormaPagamentoRepository;
 import com.learning.api.angularsystem.web.dtos.financeiro.movimentacao.ResponseFormaPagamentoDto;
 import com.learning.api.angularsystem.web.dtos.financeiro.movimentacao.mapper.FormaPagamentoMapper;
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,19 +29,19 @@ public class FormaPagamentoController {
 
     @PostMapping
     public ResponseEntity<ResponseFormaPagamentoDto> cadastrarFormaPagamento(@RequestBody @Valid FormaPagamentoDto formaPagamentoDto) {
-        FormaPagamentoEntity formaPagamento = formaPagamentoService.criarFormaPagamento(FormaPagamentoMapper.toFormaPagamento(formaPagamentoDto));
+        FormaPagamento formaPagamento = formaPagamentoService.criarFormaPagamento(FormaPagamentoMapper.toFormaPagamento(formaPagamentoDto));
         return ResponseEntity.status(HttpStatus.CREATED).body(FormaPagamentoMapper.toDto(formaPagamento));
     }
 
     @GetMapping
     public ResponseEntity<List<ResponseFormaPagamentoDto>> listarFormasPagamento() {
-        List<FormaPagamentoEntity> formaPagamento = formaPagamentoService.buscarFormasPagamento();
+        List<FormaPagamento> formaPagamento = formaPagamentoService.buscarFormasPagamento();
         return ResponseEntity.status(HttpStatus.OK).body(FormaPagamentoMapper.toListDto(formaPagamento));
     }
 
     @GetMapping("/{codigo}")
     public ResponseEntity<ResponseFormaPagamentoDto> buscarFormaPagamento(Long codigo) {
-        FormaPagamentoEntity formaPagamento = formaPagamentoService.buscarFormaPagamentoPorId(codigo);
+        FormaPagamento formaPagamento = formaPagamentoService.buscarFormaPagamentoPorId(codigo);
         return ResponseEntity.status(HttpStatus.OK).body(FormaPagamentoMapper.toDto(formaPagamento));
     }
 
@@ -55,14 +52,14 @@ public class FormaPagamentoController {
 
     @PostMapping("/status/{codigo}")
     public ResponseEntity<ResponseFormaPagamentoDto> ativarFormaPagamento(@PathVariable Long codigo) {
-        FormaPagamentoEntity formaPagamento = formaPagamentoService.alterarStatus(codigo);
+        FormaPagamento formaPagamento = formaPagamentoService.alterarStatus(codigo);
 
         return ResponseEntity.status(HttpStatus.OK).body(FormaPagamentoMapper.toDto(formaPagamento));
     }
 
     @DeleteMapping("/{codigo}")
     public ResponseEntity<ResponseFormaPagamentoDto> deletarFormaPagamento(@PathVariable Long codigo) {
-        FormaPagamentoEntity formaPagamento = formaPagamentoService.deletarFormaPagamento(codigo);
+        FormaPagamento formaPagamento = formaPagamentoService.deletarFormaPagamento(codigo);
         return ResponseEntity.status(HttpStatus.OK).body(FormaPagamentoMapper.toDto(formaPagamento));
     }
 }

@@ -1,8 +1,8 @@
 package com.learning.api.angularsystem.entitys.cadastro.integrante;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.learning.api.angularsystem.entitys.cadastro.usuario.UsuarioEntity;
-import com.learning.api.angularsystem.entitys.faturamento.pedido.PedidoEntity;
+import com.learning.api.angularsystem.entitys.cadastro.usuario.Usuario;
+import com.learning.api.angularsystem.entitys.faturamento.pedido.Pedido;
 import com.learning.api.angularsystem.enums.integrante.TipoDocumento;
 import com.learning.api.angularsystem.enums.Status;
 import com.learning.api.angularsystem.enums.integrante.TipoIntegrante;
@@ -16,11 +16,11 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
-@Table(name = "integrante")
+@Table(name = "cliente")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class IntegranteEntity implements Serializable {
+public class Cliente implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -76,14 +76,10 @@ public class IntegranteEntity implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "integrante", fetch = FetchType.LAZY)
     @JsonIgnore
-    private Set<PedidoEntity> pedidos;
+    private Set<Pedido> pedidos;
 
     @Column(name = "COMPLEMENTO")
     private String complemento;
-
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "integrante", fetch = FetchType.LAZY)
-    @JsonIgnore
-    private Set<UsuarioEntity> usuario;
 
     @Column(name = "EMPRESA")
     private Long empresa = 1L;

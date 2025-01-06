@@ -1,9 +1,9 @@
 package com.learning.api.angularsystem.entitys.faturamento.estoque;
 
-import com.learning.api.angularsystem.entitys.cadastro.integrante.IntegranteEntity;
-import com.learning.api.angularsystem.entitys.cadastro.item.ItemEntity;
-import com.learning.api.angularsystem.entitys.cadastro.item.UnidadeMedidaEntity;
-import com.learning.api.angularsystem.entitys.faturamento.pedido.PedidoDetalheEntity;
+import com.learning.api.angularsystem.entitys.cadastro.integrante.Cliente;
+import com.learning.api.angularsystem.entitys.cadastro.item.Item;
+import com.learning.api.angularsystem.entitys.cadastro.item.UnidadeMedida;
+import com.learning.api.angularsystem.entitys.faturamento.pedido.PedidoDetalhe;
 import com.learning.api.angularsystem.enums.estoque.TipoEstoque;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EstoqueEntity implements Serializable {
+public class Estoque implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,11 +33,11 @@ public class EstoqueEntity implements Serializable {
 
     @JoinColumn(name = "ITEM")
     @ManyToOne
-    private ItemEntity item;
+    private Item item;
 
     @JoinColumn(name = "UNDIADE_MEDIDA")
     @ManyToOne
-    private UnidadeMedidaEntity unidadeMedida;
+    private UnidadeMedida unidadeMedida;
 
     @Column(name = "QUANTIDADE")
     private Double quantidade;
@@ -50,14 +50,14 @@ public class EstoqueEntity implements Serializable {
 
     @JoinColumn(name = "FUNCIONARIO")
     @ManyToOne
-    private IntegranteEntity funcionario;
+    private Cliente funcionario;
 
     @Column(name = "OBSERVACAO")
     private String observacao;
 
     @JoinColumn(name = "PEDIDO_DETALHE")
     @ManyToOne
-    private PedidoDetalheEntity pedidoDetalhe;
+    private PedidoDetalhe pedidoDetalhe;
 
     @Column(name = "EMPRESA")
     private Long empresa = 1L;

@@ -1,6 +1,6 @@
 package com.learning.api.angularsystem.web.dtos.financeiro.titulo;
 
-import com.learning.api.angularsystem.entitys.cadastro.integrante.IntegranteEntity;
+import com.learning.api.angularsystem.entitys.cadastro.integrante.Cliente;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -16,8 +16,8 @@ public class TituloResponseDto {
     private String tipo;
     private String descricao;
     private String observacao;
-    private IntegranteEntity integrante;
-    private IntegranteEntity funcionario;
+    private Cliente integrante;
+    private Cliente funcionario;
     private LocalDateTime dataLancamento;
     private LocalDateTime dataVencimento;
     private LocalDateTime dataUltimoPagamento;

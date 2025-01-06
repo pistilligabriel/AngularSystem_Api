@@ -1,8 +1,7 @@
 package com.learning.api.angularsystem.web.dtos.financeiro.titulo;
 
-import com.learning.api.angularsystem.entitys.cadastro.integrante.IntegranteEntity;
+import com.learning.api.angularsystem.entitys.cadastro.integrante.Cliente;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -19,8 +18,8 @@ public class TituloDto {
     @NotBlank(message = "O campo descrição é obrigatório")
     private String descricao;
     private String observacao;
-    private IntegranteEntity integrante;
-    private IntegranteEntity funcionario;
+    private Cliente integrante;
+    private Cliente funcionario;
     private LocalDateTime dataLancamento;
     private LocalDateTime dataVencimento;
     private LocalDateTime dataUltimoPagamento;

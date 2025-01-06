@@ -1,8 +1,8 @@
 package com.learning.api.angularsystem.web.dtos.faturamento.pedido;
 
-import com.learning.api.angularsystem.entitys.cadastro.item.ItemEntity;
-import com.learning.api.angularsystem.entitys.cadastro.item.UnidadeMedidaEntity;
-import com.learning.api.angularsystem.entitys.faturamento.pedido.PedidoEntity;
+import com.learning.api.angularsystem.entitys.cadastro.item.Item;
+import com.learning.api.angularsystem.entitys.cadastro.item.UnidadeMedida;
+import com.learning.api.angularsystem.entitys.faturamento.pedido.Pedido;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
@@ -12,13 +12,13 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class PedidoDetalheDto {
-    private PedidoEntity pedido;
-    private ItemEntity item;
+    private Pedido pedido;
+    private Item item;
     private Boolean cancelado;
     private Long ordem;
     @NotBlank(message = "O campo descrição é obrigatório")
     private String descricao;
-    private UnidadeMedidaEntity unidadeMedida;
+    private UnidadeMedida unidadeMedida;
     private Double quantidade;
     private Double valorUnitario;
     private Double valorDesconto;

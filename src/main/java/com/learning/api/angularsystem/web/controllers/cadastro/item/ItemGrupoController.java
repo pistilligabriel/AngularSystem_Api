@@ -1,10 +1,16 @@
 package com.learning.api.angularsystem.web.controllers.cadastro.item;
 
+import com.learning.api.angularsystem.entitys.cadastro.item.Item;
+import com.learning.api.angularsystem.entitys.cadastro.item.ItemGrupo;
 import com.learning.api.angularsystem.web.dtos.cadastro.item.ItemGrupoDto;
 import com.learning.api.angularsystem.services.cadastro.item.ItemGrupoService;
+import com.learning.api.angularsystem.web.dtos.cadastro.item.ItemGrupoResponseDto;
+import com.learning.api.angularsystem.web.dtos.cadastro.item.mapper.ItemGrupoMapper;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,44 +21,47 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/item-grupos")
 public class ItemGrupoController {
 
     @Autowired
-    private ItemGrupoService itemGrupoService;
+    private ItemGrupoService service;
 
     @PostMapping
-    @Transactional
-    public void cadastrarItemGrupo(@RequestBody @Valid ItemGrupoDto itemGrupoDto) {
-
+    public ResponseEntity<ItemGrupoResponseDto> cadastrarItemGrupo(@RequestBody @Valid ItemGrupoDto itemGrupoDto) {
+        ItemGrupo itemGrupo = service.createItemGrupo(ItemGrupoMapper.toItemGrupo(itemGrupoDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(ItemGrupoMapper.toDto(itemGrupo));
     }
 
     @GetMapping
-    public Iterable<ItemGrupoDto> listarItemGrupos() {
-        return null;
+    public ResponseEntity<List<ItemGrupoResponseDto>> listarItemGrupos() {
+        List<ItemGrupo> itensGrupo = service.getAllItemGrupos();
+        return ResponseEntity.status(HttpStatus.OK).body(ItemGrupoMapper.toListDto(itensGrupo));
     }
 
-    @GetMapping("/{CODIGO}")
-    public ResponseEntity<ItemGrupoDto> buscarItemGrupo(@PathVariable Long CODIGO) {
-        return null;
+    @GetMapping("/{codigo}")
+    public ResponseEntity<ItemGrupoResponseDto> buscarItemGrupo(@PathVariable Long codigo) {
+        ItemGrupo itemGrupo = service.getById(codigo);
+        return ResponseEntity.status(HttpStatus.OK).body(ItemGrupoMapper.toDto(itemGrupo));
     }
 
     @PutMapping
-    @Transactional
-    public ResponseEntity<ItemGrupoDto> atualizarItemGrupo(@RequestBody @Valid ItemGrupoDto itemGrupoDto) {
+    public ResponseEntity<ItemGrupoResponseDto> atualizarItemGrupo(@RequestBody @Valid ItemGrupoDto itemGrupoDto) {
         return null;
     }
 
-    @PostMapping("/desativar/{CODIGO}")
-    @Transactional
-    public ResponseEntity<ItemGrupoDto> desativarItemGrupo(@PathVariable Long CODIGO) {
-        return null;
+    @PostMapping("/alterar-status/{codigo}")
+    public ResponseEntity<ItemGrupoResponseDto> desativarItemGrupo(@PathVariable Long codigo) {
+        service.alterarStatus(codigo);
+        return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/{CODIGO}")
-    @Transactional
-    public ResponseEntity<Void> deletarItemGrupo(@PathVariable Long CODIGO) {
-        return null;
+    @DeleteMapping("/{codigo}")
+    public ResponseEntity<ItemGrupoResponseDto> deletarItemGrupo(@PathVariable Long codigo) {
+        service.deletarItemGrupo(codigo);
+        return ResponseEntity.noContent().build();
     }
 }

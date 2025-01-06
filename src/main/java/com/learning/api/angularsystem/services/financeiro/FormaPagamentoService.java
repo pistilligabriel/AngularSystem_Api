@@ -1,9 +1,8 @@
 package com.learning.api.angularsystem.services.financeiro;
 
-import com.learning.api.angularsystem.entitys.financeiro.movimentacao.FormaPagamentoEntity;
+import com.learning.api.angularsystem.entitys.financeiro.movimentacao.FormaPagamento;
 import com.learning.api.angularsystem.enums.Status;
 import com.learning.api.angularsystem.repositories.financeiro.movimentacao.FormaPagamentoRepository;
-import com.learning.api.angularsystem.web.dtos.financeiro.movimentacao.FormaPagamentoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,25 +16,25 @@ public class FormaPagamentoService {
     private FormaPagamentoRepository formaPagamentoRepository;
 
     @Transactional
-    public FormaPagamentoEntity criarFormaPagamento(FormaPagamentoEntity formaPagamento){
+    public FormaPagamento criarFormaPagamento(FormaPagamento formaPagamento){
         return formaPagamentoRepository.save(formaPagamento);
     }
 
     @Transactional(readOnly = true)
-    public List<FormaPagamentoEntity> buscarFormasPagamento(){
+    public List<FormaPagamento> buscarFormasPagamento(){
         return formaPagamentoRepository.findAll();
     }
 
     @Transactional(readOnly = true)
-    public FormaPagamentoEntity buscarFormaPagamentoPorId(Long codigo){
+    public FormaPagamento buscarFormaPagamentoPorId(Long codigo){
         return formaPagamentoRepository.findById(codigo).orElseThrow(
                 () -> new RuntimeException("Forma Pagamento não encontrada!")
         );
     }
 
     @Transactional
-    public FormaPagamentoEntity alterarStatus(Long codigo){
-        FormaPagamentoEntity formaPagamento = buscarFormaPagamentoPorId(codigo);
+    public FormaPagamento alterarStatus(Long codigo){
+        FormaPagamento formaPagamento = buscarFormaPagamentoPorId(codigo);
 
         if (formaPagamento.getStatus().equals(Status.ATIVO)) {
             formaPagamento.setStatusInativo();
@@ -46,8 +45,8 @@ public class FormaPagamentoService {
     }
 
     @Transactional
-    public FormaPagamentoEntity deletarFormaPagamento(Long codigo){
-        FormaPagamentoEntity formaPagamento = buscarFormaPagamentoPorId(codigo);
+    public FormaPagamento deletarFormaPagamento(Long codigo){
+        FormaPagamento formaPagamento = buscarFormaPagamentoPorId(codigo);
 
         if(!formaPagamento.getStatus().equals(Status.DESATIVADO)){
             throw new RuntimeException("Forma de pagamento não pode ser removida devido não estar desativado!");

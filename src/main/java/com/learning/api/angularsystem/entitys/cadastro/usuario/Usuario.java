@@ -1,6 +1,6 @@
 package com.learning.api.angularsystem.entitys.cadastro.usuario;
 
-import com.learning.api.angularsystem.entitys.cadastro.integrante.IntegranteEntity;
+import com.learning.api.angularsystem.entitys.cadastro.integrante.Cliente;
 import com.learning.api.angularsystem.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -18,15 +18,14 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UsuarioEntity implements UserDetails {
+public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long CODIGO;
 
-    @ManyToOne
-    @JoinColumn(name = "INTEGRANTE")
-    private IntegranteEntity integrante;
+    @Column(name = "NOME")
+    private String nome;
 
     @Column(name = "LOGIN", unique = true)
     private String login;

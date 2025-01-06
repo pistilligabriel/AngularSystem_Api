@@ -1,13 +1,11 @@
 package com.learning.api.angularsystem.entitys.faturamento.pedido;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.learning.api.angularsystem.entitys.cadastro.item.ItemEntity;
-import com.learning.api.angularsystem.web.dtos.faturamento.pedido.PedidoDto;
-import com.learning.api.angularsystem.entitys.cadastro.integrante.IntegranteEntity;
+import com.learning.api.angularsystem.entitys.cadastro.item.Item;
+import com.learning.api.angularsystem.entitys.cadastro.integrante.Cliente;
 import com.learning.api.angularsystem.enums.Status;
 import com.learning.api.angularsystem.enums.pedido.FinalidadePedido;
 import com.learning.api.angularsystem.enums.pedido.StatusPedido;
-import com.learning.api.angularsystem.enums.pedido.TipoMovimentacaoPedido;
 import com.learning.api.angularsystem.enums.pedido.TipoPedido;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -17,9 +15,7 @@ import org.hibernate.annotations.Formula;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -27,7 +23,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PedidoEntity implements Serializable {
+public class Pedido implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,11 +52,11 @@ public class PedidoEntity implements Serializable {
 
     @JoinColumn(name = "INTEGRANTE")
     @ManyToOne
-    private IntegranteEntity integrante;
+    private Cliente integrante;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
-    private Set<ItemEntity> produtos = new HashSet<>();
+    private Set<Item> produtos = new HashSet<>();
 
     @Column(name = "TOTAL_PRODUTO")
     private Double totalProduto;

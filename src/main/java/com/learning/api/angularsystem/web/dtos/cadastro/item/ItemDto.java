@@ -9,16 +9,16 @@ import lombok.*;
 @ToString
 public class ItemDto {
 
-    private String grupoItem;
+    private int grupoItem;
 
     @NotBlank(message = "O campo descrição é obrigatório")
     private String descricao;
 
     private String observacao;
 
-    private String unidadeVenda;
+    private int unidadeVenda;
 
-    private String fabricante;
+    private int fabricante;
 
     private Double precoCusto;
 

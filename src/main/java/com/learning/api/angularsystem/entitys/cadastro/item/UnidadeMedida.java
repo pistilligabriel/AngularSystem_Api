@@ -1,6 +1,5 @@
 package com.learning.api.angularsystem.entitys.cadastro.item;
 
-import com.learning.api.angularsystem.web.dtos.cadastro.item.UnidadeMedidaDto;
 import com.learning.api.angularsystem.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -16,7 +15,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UnidadeMedidaEntity implements Serializable {
+public class UnidadeMedida implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,17 +28,17 @@ public class UnidadeMedidaEntity implements Serializable {
     private String simbolo;
 
     @OneToMany(mappedBy = "unidadeVenda",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ItemEntity> produtos;
+    private List<Item> produtos;
 
     @Column(name = "STATUS")
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private Status status = Status.ATIVO;
 
     @Column(name = "EMPRESA")
-    private Long empresa;
+    private Long empresa = 1L;
 
     @Column(name = "VERSAO")
-    private LocalDateTime versao;
+    private LocalDateTime versao = LocalDateTime.now();
 
     public void setStatusAtivo() {
         this.status = Status.ATIVO;

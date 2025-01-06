@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ItemEntity {
+public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,7 +35,7 @@ public class ItemEntity {
 
     @ManyToOne
     @JoinColumn(name = "GRUPO_ITEM")
-    private ItemGrupoEntity grupoItem;
+    private ItemGrupo grupoItem;
 
     @Column(name = "DESCRICAO")
     private String descricao;
@@ -45,11 +45,11 @@ public class ItemEntity {
 
     @ManyToOne
     @JoinColumn(name = "UNIDADE_VENDA")
-    private UnidadeMedidaEntity unidadeVenda;
+    private UnidadeMedida unidadeVenda;
 
     @ManyToOne
     @JoinColumn(name = "FABRICANTE")
-    private FabricanteEntity fabricante;
+    private Fabricante fabricante;
 
     @Column(name = "CODIGO_BARRAS", unique = true)
     private String codigoBarras;

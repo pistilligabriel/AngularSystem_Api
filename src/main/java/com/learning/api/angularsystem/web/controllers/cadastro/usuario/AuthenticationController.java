@@ -1,12 +1,14 @@
 package com.learning.api.angularsystem.web.controllers.cadastro.usuario;
 
+import com.learning.api.angularsystem.entitys.cadastro.usuario.Usuario;
 import com.learning.api.angularsystem.web.dtos.cadastro.usuario.AuthenticationDto;
 import com.learning.api.angularsystem.infra.security.TokenService;
-import com.learning.api.angularsystem.services.cadastro.usuario.UsuarioService;
+import com.learning.api.angularsystem.web.dtos.cadastro.usuario.LoginResponseDto;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,12 +24,12 @@ public class AuthenticationController {
     @Autowired
     private TokenService tokenService;
 
-    @Autowired
-    private UsuarioService usuarioService;
-
     @PostMapping
     public ResponseEntity login(@RequestBody @Valid AuthenticationDto authenticationDto)  {
-             return null;
+        var usernamePassword = new UsernamePasswordAuthenticationToken(authenticationDto.getLogin(), authenticationDto.getPassword());
+        var authentication = authenticationManager.authenticate(usernamePassword);
+        var token = tokenService.generateToken((Usuario) authentication.getPrincipal());
+        return ResponseEntity.ok(new LoginResponseDto(token));
     }
 
    

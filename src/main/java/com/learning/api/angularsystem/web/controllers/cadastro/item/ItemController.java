@@ -1,6 +1,6 @@
 package com.learning.api.angularsystem.web.controllers.cadastro.item;
 
-import com.learning.api.angularsystem.entitys.cadastro.item.ItemEntity;
+import com.learning.api.angularsystem.entitys.cadastro.item.Item;
 import com.learning.api.angularsystem.services.cadastro.item.ItemService;
 import com.learning.api.angularsystem.web.dtos.cadastro.item.ItemDto;
 import com.learning.api.angularsystem.web.dtos.cadastro.item.ItemResponseDto;
@@ -25,19 +25,19 @@ public class ItemController {
     @PostMapping
     @Transactional
     public ResponseEntity<ItemResponseDto> cadastrarProduto(@RequestBody @Valid ItemDto itemDto) {
-        ItemEntity item = itemService.criarItem(ItemMapper.toItem(itemDto));
+        Item item = itemService.criarItem(ItemMapper.toItem(itemDto));
         return ResponseEntity.status(HttpStatus.CREATED).body(ItemMapper.toDto(item));
     }
 
     @GetMapping
     public List<ItemResponseDto> listarProdutos() {
-        List<ItemEntity> itens = itemService.listarProdutos();
+        List<Item> itens = itemService.listarProdutos();
         return ResponseEntity.status(HttpStatus.OK).body(ItemMapper.toListDto(itens)).getBody();
     }
 
     @GetMapping("/{codigo}")
     public ResponseEntity<ItemResponseDto> buscarProduto(@PathVariable Long codigo) {
-        ItemEntity item = itemService.buscarProduto(codigo);
+        Item item = itemService.buscarProduto(codigo);
         return ResponseEntity.status(HttpStatus.OK).body(ItemMapper.toDto(item));
     }
 
@@ -46,15 +46,15 @@ public class ItemController {
       return null;
     }
 
-    @PostMapping("/status/{codigo}")
+    @PostMapping("/alterar-status/{codigo}")
     public ResponseEntity<ItemResponseDto> alterarStatusProduto(@PathVariable Long codigo) {
-        ItemEntity item = itemService.alterarStatus(codigo);
+        itemService.alterarStatus(codigo);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{codigo}")
     public ResponseEntity<ItemResponseDto> deletarProduto(@PathVariable Long codigo) {
-        ItemEntity item = itemService.deletarProduto(codigo);
+        itemService.deletarProduto(codigo);
         return ResponseEntity.noContent().build();
     }
 }

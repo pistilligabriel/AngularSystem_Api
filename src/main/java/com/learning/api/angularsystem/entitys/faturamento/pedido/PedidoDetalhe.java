@@ -1,8 +1,7 @@
 package com.learning.api.angularsystem.entitys.faturamento.pedido;
 
-import com.learning.api.angularsystem.web.dtos.faturamento.pedido.PedidoDetalheDto;
-import com.learning.api.angularsystem.entitys.cadastro.item.ItemEntity;
-import com.learning.api.angularsystem.entitys.cadastro.item.UnidadeMedidaEntity;
+import com.learning.api.angularsystem.entitys.cadastro.item.Item;
+import com.learning.api.angularsystem.entitys.cadastro.item.UnidadeMedida;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,14 +9,13 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Formula;
 
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 @Table(name = "pedido_detalhe")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PedidoDetalheEntity implements Serializable {
+public class PedidoDetalhe implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,11 +23,11 @@ public class PedidoDetalheEntity implements Serializable {
 
     @JoinColumn(name = "PEDIDO")
     @OneToOne
-    private PedidoEntity pedido;
+    private Pedido pedido;
 
     @ManyToOne
     @JoinColumn(name = "pedido_codigo")
-    private ItemEntity item;
+    private Item item;
 
     @Column(name = "CANCELADO")
     private Boolean cancelado;
@@ -42,7 +40,7 @@ public class PedidoDetalheEntity implements Serializable {
 
     @JoinColumn(name = "UNIDADE_MEDIDA")
     @ManyToOne
-    private UnidadeMedidaEntity unidadeMedida;
+    private UnidadeMedida unidadeMedida;
 
     @Column(name = "QUANTIDADE")
     private Double quantidade;
