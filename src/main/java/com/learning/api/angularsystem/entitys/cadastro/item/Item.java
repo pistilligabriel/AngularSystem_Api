@@ -27,11 +27,13 @@ public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long CODIGO;
+    private Long codigo;
 
     @Column(name = "DATA_CADASTRO")
     private LocalDateTime dataCadastro;
 
+    @Column(name="MODELO")
+    private String modelo;
 
     @ManyToOne
     @JoinColumn(name = "GRUPO_ITEM")
@@ -50,12 +52,6 @@ public class Item {
     @ManyToOne
     @JoinColumn(name = "FABRICANTE")
     private Fabricante fabricante;
-
-    @Column(name = "CODIGO_BARRAS", unique = true)
-    private String codigoBarras;
-
-    @Column(name = "CODIGO_ORIGINAL", unique = true)
-    private String codigoOriginal;
 
     @Column(name = "PRECO_CUSTO")
     private Double precoCusto;

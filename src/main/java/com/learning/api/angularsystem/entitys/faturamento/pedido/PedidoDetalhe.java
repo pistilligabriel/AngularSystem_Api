@@ -19,7 +19,7 @@ public class PedidoDetalhe implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long CODIGO;
+    private Long codigo;
 
     @JoinColumn(name = "PEDIDO")
     @OneToOne

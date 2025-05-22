@@ -16,7 +16,7 @@ public class ClienteResponseDto {
     private String email;
     private String cep;
     private String logradouro;
-    private Integer numero;
+    private int numero;
     private String bairro;
     private String municipio;
     private String uf;

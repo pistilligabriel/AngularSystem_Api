@@ -22,7 +22,7 @@ public class Estoque implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long CODIGO;
+    private Long codigo;
 
     @Column(name = "TIPO")
     @Enumerated(EnumType.STRING)

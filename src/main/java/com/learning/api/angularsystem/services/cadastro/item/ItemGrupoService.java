@@ -47,7 +47,7 @@ public class ItemGrupoService {
     public ItemGrupo deletarItemGrupo(Long codigo){
         ItemGrupo itemGrupo = getById(codigo);
         if(itemGrupo.getStatus().equals(Status.DESATIVADO)){
-            repository.deleteById(itemGrupo.getCODIGO());
+            repository.deleteById(itemGrupo.getCodigo());
         } else{
             throw new RuntimeException("Item Grupo não pode ser deletado!");
         }

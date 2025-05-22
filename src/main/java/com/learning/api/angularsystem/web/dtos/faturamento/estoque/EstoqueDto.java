@@ -14,17 +14,17 @@ public class EstoqueDto {
 
     private String tipo;
     private LocalDateTime dataOperacao;
-    private Boolean reservado;
-    private Object item;
-    private String unidadeMedida;
-    private Double quantidade;
+    private boolean reservado;
+    private int item;
+    private int unidadeMedida;
+    private int quantidade;
     private Double valorUnitario;
     private Double valorTotal;
     private String lote;
     private String numeroSerie;
     private LocalDateTime dataValidade;
     private LocalDateTime dataFabricacao;
-    private Object funcionario;
+    private int funcionario;
     private String observacao;
     private String motivoAcerto;
 }

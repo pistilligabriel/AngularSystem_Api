@@ -47,7 +47,7 @@ public class UnidadeMedidaService {
     public UnidadeMedida deletarUnidadeMedida(Long codigo){
         UnidadeMedida unidadeMedida = getById(codigo);
         if(unidadeMedida.getStatus().equals(Status.DESATIVADO)){
-            repository.deleteById(unidadeMedida.getCODIGO());
+            repository.deleteById(unidadeMedida.getCodigo());
         } else{
             throw new RuntimeException("Unidade Medida não pode ser deletado!");
         }

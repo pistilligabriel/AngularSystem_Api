@@ -12,13 +12,13 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class PedidoDetalheDto {
-    private Pedido pedido;
-    private Item item;
-    private Boolean cancelado;
-    private Long ordem;
+    private int pedido;
+    private int item;
+    private boolean cancelado;
+    private int ordem;
     @NotBlank(message = "O campo descrição é obrigatório")
     private String descricao;
-    private UnidadeMedida unidadeMedida;
+    private int unidadeMedida;
     private Double quantidade;
     private Double valorUnitario;
     private Double valorDesconto;

@@ -47,7 +47,7 @@ public class IntegranteService {
     @Transactional
     public Cliente deletarIntegrante(Long codigo){
         Cliente integrante = getIntegranteById(codigo);
-        integranteRepository.deleteById(integrante.getCODIGO());
+        integranteRepository.deleteById(integrante.getCodigo());
         return integrante;
     }
 

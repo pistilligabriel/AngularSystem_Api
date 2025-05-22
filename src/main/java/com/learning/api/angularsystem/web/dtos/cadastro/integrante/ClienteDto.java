@@ -25,7 +25,7 @@ public class ClienteDto {
 
     private String logradouro;
 
-    private Integer numero;
+    private int numero;
 
     private String bairro;
 

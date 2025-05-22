@@ -22,7 +22,7 @@ public class TokenService {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             String token = JWT.create()
-                    .withIssuer("MiniSys")
+                    .withIssuer("Angular System")
                     .withSubject(usuario.getLogin())
                     .withExpiresAt(genExpirationDate())
                     .sign(algorithm);
@@ -36,7 +36,7 @@ public class TokenService {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.require(algorithm)
-                    .withIssuer("MiniSys")
+                    .withIssuer("Angular System")
                     .build()
                     .verify(token)
                     .getSubject();

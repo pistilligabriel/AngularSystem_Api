@@ -34,7 +34,7 @@ public class SysSellAplication {
 	public OpenAPI customOpenAPI() {
 		return new OpenAPI()
 				.info(new Info()
-						.title("SysSell API")
+						.title("Angular System")
 						.version("1.0.0"));
 	}
 

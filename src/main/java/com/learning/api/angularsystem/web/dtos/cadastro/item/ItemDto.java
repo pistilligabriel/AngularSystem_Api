@@ -16,9 +16,9 @@ public class ItemDto {
 
     private String observacao;
 
-    private int unidadeVenda;
+    private String unidadeVenda;
 
-    private int fabricante;
+    private String fabricante;
 
     private Double precoCusto;
 

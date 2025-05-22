@@ -18,7 +18,7 @@ public class Fabricante implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long CODIGO;
+    private Long codigo;
 
     @OneToMany(mappedBy = "fabricante",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Item> produtos;

@@ -69,7 +69,7 @@ public class ItemService {
     public Item deletarProduto(Long codigo){
         Item item = buscarProduto(codigo);
         if(item.getStatus().equals(Status.DESATIVADO)){
-            itemRepository.deleteById(item.getCODIGO());
+            itemRepository.deleteById(item.getCodigo());
         } else{
             throw new RuntimeException("Produto não pode ser deletado!");
         }

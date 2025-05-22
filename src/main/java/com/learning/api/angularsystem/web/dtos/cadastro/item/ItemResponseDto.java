@@ -12,8 +12,8 @@ public class ItemResponseDto {
     private String grupoItem;
     private String descricao;
     private String observacao;
-    private UnidadeMedidaDto unidadeVenda;
-    private FabricanteDto fabricante;
+    private int unidadeVenda;
+    private int fabricante;
     private Double precoVenda;
     private Double estoque;
 }

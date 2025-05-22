@@ -1,6 +1,5 @@
 package com.learning.api.angularsystem.entitys.cadastro.usuario;
 
-import com.learning.api.angularsystem.entitys.cadastro.integrante.Cliente;
 import com.learning.api.angularsystem.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,7 +21,7 @@ public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long CODIGO;
+    private Long codigo;
 
     @Column(name = "NOME")
     private String nome;

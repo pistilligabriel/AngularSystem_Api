@@ -60,7 +60,7 @@ public class UsuarioService {
     public Usuario deletarUsuario(Long codigo){
         Usuario usuario = getById(codigo);
         if(usuario.getStatus().equals(Status.DESATIVADO)){
-            repository.deleteById(usuario.getCODIGO());
+            repository.deleteById(usuario.getCodigo());
         } else{
             throw new RuntimeException("Usuario não pode ser deletado!");
         }

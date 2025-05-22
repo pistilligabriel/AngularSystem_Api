@@ -1,7 +1,6 @@
 package com.learning.api.angularsystem.services.cadastro.item;
 
 import com.learning.api.angularsystem.entitys.cadastro.item.Fabricante;
-import com.learning.api.angularsystem.entitys.cadastro.item.Item;
 import com.learning.api.angularsystem.enums.Status;
 import com.learning.api.angularsystem.repositories.cadastro.item.FabricanteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +47,7 @@ public class FabricanteService {
     public Fabricante deletarFabricante(Long codigo){
         Fabricante fabricante = getById(codigo);
         if(fabricante.getStatus().equals(Status.DESATIVADO)){
-            repository.deleteById(fabricante.getCODIGO());
+            repository.deleteById(fabricante.getCodigo());
         } else{
             throw new RuntimeException("Fabricante não pode ser deletado, pois não está desativado!");
         }

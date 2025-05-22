@@ -1,7 +1,6 @@
 package com.learning.api.angularsystem.entitys.cadastro.integrante;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.learning.api.angularsystem.entitys.cadastro.usuario.Usuario;
 import com.learning.api.angularsystem.entitys.faturamento.pedido.Pedido;
 import com.learning.api.angularsystem.enums.integrante.TipoDocumento;
 import com.learning.api.angularsystem.enums.Status;
@@ -24,7 +23,7 @@ public class Cliente implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long CODIGO;
+    private Long codigo;
 
     @Column(name = "TIPO")
     @Enumerated(EnumType.STRING)

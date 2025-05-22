@@ -31,7 +31,7 @@ public class Titulo implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long CODIGO;
+    private Long codigo;
 
     @Column(name = "STATUS_TITULO")
     @Enumerated(EnumType.STRING)
