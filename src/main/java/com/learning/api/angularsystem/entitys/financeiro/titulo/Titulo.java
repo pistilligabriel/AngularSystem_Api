@@ -1,6 +1,7 @@
 package com.learning.api.angularsystem.entitys.financeiro.titulo;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.learning.api.angularsystem.entitys.cadastro.integrante.Cliente;
 import com.learning.api.angularsystem.enums.Status;
 import com.learning.api.angularsystem.enums.titulo.StatusTitulo;
@@ -56,13 +57,12 @@ public class Titulo implements Serializable {
     private Cliente funcionario;
 
     @Column(name = "DATA_LANCAMENTO")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime dataLancamento;
 
     @Column(name = "DATA_VENCIMENTO")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime dataVencimento;
-
-    @Column(name = "DATA_ULTIMO_PAGAMENTO")
-    private LocalDateTime dataUltimoPagamento;
 
     @Column(name = "VALOR")
     private Double valor;
@@ -90,6 +90,7 @@ public class Titulo implements Serializable {
     private Long empresa = 1L;
 
     @Column(name = "VERSAO")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime versao = LocalDateTime.now();
 
 

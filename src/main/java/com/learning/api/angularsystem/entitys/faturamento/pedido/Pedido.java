@@ -1,5 +1,6 @@
 package com.learning.api.angularsystem.entitys.faturamento.pedido;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.learning.api.angularsystem.entitys.cadastro.integrante.Cliente;
 import com.learning.api.angularsystem.entitys.cadastro.item.Item;
@@ -33,6 +34,7 @@ public class Pedido implements Serializable {
     private Long numero;
 
     @Column(name = "DATA_EMISSAO")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime dataEmissao;
 
     @JoinColumn(name = "INTEGRANTE")
@@ -50,6 +52,7 @@ public class Pedido implements Serializable {
     private Long empresa = 1L;
 
     @Column(name = "VERSAO")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime versao = LocalDateTime.now();
 
 

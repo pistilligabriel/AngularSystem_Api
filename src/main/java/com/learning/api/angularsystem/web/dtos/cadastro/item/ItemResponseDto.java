@@ -1,8 +1,11 @@
 package com.learning.api.angularsystem.web.dtos.cadastro.item;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.learning.api.angularsystem.entitys.cadastro.item.Fabricante;
 import com.learning.api.angularsystem.entitys.cadastro.item.UnidadeMedida;
 import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -20,4 +23,6 @@ public class ItemResponseDto {
     private Fabricante fabricante;
     private Double precoVenda;
     private Double estoque;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
+    private LocalDateTime versao;
 }

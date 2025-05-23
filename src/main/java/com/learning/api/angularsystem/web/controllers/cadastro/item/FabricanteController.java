@@ -41,8 +41,9 @@ public class FabricanteController {
     }
 
     @PutMapping
-    public ResponseEntity<FabricanteDto> atualizarFabricante(@RequestBody @Valid FabricanteDto fabricanteDto) {
-        return null;
+    public ResponseEntity<FabricanteResponseDto> editarFabricante(@RequestBody @Valid FabricanteDto fabricanteDto) {
+        Fabricante fabricante = service.editarFabricante(FabricanteMapper.toFabricante(fabricanteDto));
+        return ResponseEntity.status(HttpStatus.OK).body(FabricanteMapper.toDto(fabricante));
     }
 
     @PostMapping("/alterar-status/{codigo}")

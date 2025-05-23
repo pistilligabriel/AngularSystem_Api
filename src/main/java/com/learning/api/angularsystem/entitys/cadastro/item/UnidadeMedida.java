@@ -1,5 +1,6 @@
 package com.learning.api.angularsystem.entitys.cadastro.item;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.learning.api.angularsystem.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -38,6 +39,7 @@ public class UnidadeMedida implements Serializable {
     private Long empresa = 1L;
 
     @Column(name = "VERSAO")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime versao = LocalDateTime.now();
 
     public void setStatusAtivo() {

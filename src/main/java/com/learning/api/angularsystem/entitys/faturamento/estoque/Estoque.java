@@ -1,5 +1,6 @@
 package com.learning.api.angularsystem.entitys.faturamento.estoque;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.learning.api.angularsystem.entitys.cadastro.item.Item;
 import com.learning.api.angularsystem.entitys.cadastro.item.UnidadeMedida;
 import com.learning.api.angularsystem.enums.estoque.TipoEstoque;
@@ -27,6 +28,7 @@ public class Estoque implements Serializable {
     private TipoEstoque tipo;
 
     @Column(name = "DATA_OPERACAO")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime dataOperacao;
 
     @JoinColumn(name = "ITEM")
@@ -50,6 +52,7 @@ public class Estoque implements Serializable {
     private Long empresa = 1L;
 
     @Column(name = "VERSAO")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime versao = LocalDateTime.now();
 
 

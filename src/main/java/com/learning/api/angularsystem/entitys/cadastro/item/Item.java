@@ -1,6 +1,7 @@
 package com.learning.api.angularsystem.entitys.cadastro.item;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.learning.api.angularsystem.enums.Status;
 import jakarta.persistence.*;
@@ -22,7 +23,8 @@ public class Item {
     private Long codigo;
 
     @Column(name = "DATA_CADASTRO")
-    private LocalDateTime dataCadastro;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
+    private LocalDateTime dataCadastro = LocalDateTime.now();
 
     @Column(name="MODELO")
     private String modelo;
@@ -67,6 +69,7 @@ public class Item {
     private Long empresa = 1L;
 
     @Column(name = "VERSAO")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime versao = LocalDateTime.now();
 
 

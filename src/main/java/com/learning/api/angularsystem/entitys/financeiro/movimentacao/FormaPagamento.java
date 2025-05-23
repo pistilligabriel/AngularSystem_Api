@@ -1,5 +1,6 @@
 package com.learning.api.angularsystem.entitys.financeiro.movimentacao;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.learning.api.angularsystem.enums.Status;
 import com.learning.api.angularsystem.enums.movimentacao.TipoFormaPagamento;
 import jakarta.persistence.*;
@@ -29,6 +30,7 @@ public class FormaPagamento implements Serializable {
     private Long empresa = 1L;
 
     @Column(name = "VERSAO")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime versao = LocalDateTime.now();
 
     @Column(name = "TIPO")

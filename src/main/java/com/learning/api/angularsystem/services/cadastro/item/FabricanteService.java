@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -52,5 +53,15 @@ public class FabricanteService {
             throw new RuntimeException("Fabricante não pode ser deletado, pois não está desativado!");
         }
         return fabricante;
+    }
+
+    public Fabricante editarFabricante(Fabricante fabricante){
+        Fabricante fabricanteAtual = getById(fabricante.getCodigo());
+        if(!fabricanteAtual.getStatus().equals(Status.ATIVO)){
+            throw new RuntimeException("Fabricante não pode ser alterado, pois está desativado!");
+        }
+        fabricanteAtual.setDescricao(fabricante.getDescricao());
+        fabricanteAtual.setVersao(LocalDateTime.now());
+        return repository.save(fabricanteAtual);
     }
 }

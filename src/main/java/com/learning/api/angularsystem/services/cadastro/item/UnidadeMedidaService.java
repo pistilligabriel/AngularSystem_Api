@@ -1,5 +1,6 @@
 package com.learning.api.angularsystem.services.cadastro.item;
 
+import com.learning.api.angularsystem.entitys.cadastro.item.Fabricante;
 import com.learning.api.angularsystem.entitys.cadastro.item.UnidadeMedida;
 import com.learning.api.angularsystem.enums.Status;
 import com.learning.api.angularsystem.repositories.cadastro.item.UnidadeMedidaRepository;
@@ -54,5 +55,16 @@ public class UnidadeMedidaService {
             throw new RuntimeException("Unidade Medida não pode ser deletado!");
         }
         return unidadeMedida;
+    }
+
+    public UnidadeMedida editarUnidade(UnidadeMedida unidade){
+        UnidadeMedida unidadeAtual = getById(unidade.getCodigo());
+        if(!unidadeAtual.getStatus().equals(Status.ATIVO)){
+            throw new RuntimeException("Unidade não pode ser alterada, pois está desativada!");
+        }
+        unidadeAtual.setDescricao(unidade.getDescricao());
+        unidadeAtual.setSimbolo(unidade.getSimbolo());
+        unidadeAtual.setVersao(LocalDateTime.now());
+        return repository.save(unidadeAtual);
     }
 }

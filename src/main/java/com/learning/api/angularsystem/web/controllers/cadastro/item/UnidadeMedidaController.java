@@ -40,7 +40,8 @@ public class UnidadeMedidaController {
 
     @PutMapping
     public ResponseEntity<UnidadeMedidaResponseDto> atualizarUnidadeMedida(@RequestBody @Valid UnidadeMedidaDto unidadeMedidaDto) {
-        return null;
+        UnidadeMedida unidadeMedida = service.editarUnidade(UnidadeMedidaMapper.toUnidadeMedida(unidadeMedidaDto));
+        return ResponseEntity.status(HttpStatus.OK).body(UnidadeMedidaMapper.toDto(unidadeMedida));
     }
 
     @PostMapping("/alterar-status/{codigo}")

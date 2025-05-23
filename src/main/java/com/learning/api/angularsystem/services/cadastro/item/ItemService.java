@@ -44,27 +44,6 @@ public class ItemService {
         UnidadeMedida unidade = unidadeService.getById(item.getUnidadeVenda());
         itemEntity.setUnidadeVenda(unidade);
         return itemRepository.save(itemEntity);
-//        ItemEntity itemEntity = new ItemEntity(itemDto);
-//
-//        if (itemDto.grupoItem() != null) {
-//            itemGrupoRepository.findById(itemDto.grupoItem().getCODIGO())
-//                    .ifPresent(itemEntity::setGrupoItem);
-//        }
-//        // if (itemDto.fabricante() != null) {
-//        //     fabricanteRepository.findById(itemDto.fabricante().getCODIGO())
-//        //             .ifPresent(itemEntity::setFabricante);
-//        // }
-//        if (itemDto.unidadeVenda() != null) {
-//            unidadeMedidaRepository.findById(itemDto.unidadeVenda().getCODIGO())
-//                    .ifPresent(itemEntity::setUnidadeVenda);
-//        }
-//
-//        itemEntity.calcularMargemLucro();
-//
-//        itemRepository.save(itemEntity);
-//
-//
-//        return new ResponseEntity<>(HttpStatus.CREATED);
     }
     @Transactional(readOnly = true)
     public List<Item> listarProdutos(){

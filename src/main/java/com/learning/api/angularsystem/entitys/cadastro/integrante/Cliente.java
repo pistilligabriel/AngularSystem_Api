@@ -1,5 +1,6 @@
 package com.learning.api.angularsystem.entitys.cadastro.integrante;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.learning.api.angularsystem.entitys.faturamento.pedido.Pedido;
 import com.learning.api.angularsystem.enums.integrante.TipoDocumento;
@@ -49,7 +50,8 @@ public class Cliente implements Serializable {
     private String documento;
 
     @Column(name = "DATA_CRIACAO")
-    private LocalDateTime dataCriacao;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
+    private LocalDateTime dataCriacao = LocalDateTime.now();
 
     @Column(name = "STATUS")
     @Enumerated(EnumType.STRING)
@@ -84,7 +86,8 @@ public class Cliente implements Serializable {
     private Long empresa = 1L;
 
     @Column(name = "VERSAO")
-    private LocalDateTime versao;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
+    private LocalDateTime versao = LocalDateTime.now();
 
 
     public void setStatusAtivo() {
