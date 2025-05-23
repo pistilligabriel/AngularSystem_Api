@@ -48,12 +48,6 @@ public class PedidoDetalhe implements Serializable {
     @Column(name = "VALOR_UNITARIO")
     private Double valorUnitario;
 
-    @Column(name = "VALOR_DESCONTO")
-    private Double valorDesconto;
-
-    @Column(name = "VALOR_ACRESCIMO")
-    private Double valorAcrescimo;
-
     @Column(name = "VALOR_TOTAL")
     @Formula("(valorUnitario * quantidade)")
     private Double valorTotal;

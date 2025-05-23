@@ -5,7 +5,6 @@ import com.learning.api.angularsystem.services.cadastro.item.ItemService;
 import com.learning.api.angularsystem.web.dtos.cadastro.item.ItemDto;
 import com.learning.api.angularsystem.web.dtos.cadastro.item.ItemResponseDto;
 import com.learning.api.angularsystem.web.dtos.cadastro.item.mapper.ItemMapper;
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,9 +22,8 @@ public class ItemController {
 
 
     @PostMapping
-    @Transactional
     public ResponseEntity<ItemResponseDto> cadastrarProduto(@RequestBody @Valid ItemDto itemDto) {
-        Item item = itemService.criarItem(ItemMapper.toItem(itemDto));
+        Item item = itemService.criarItem(itemDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(ItemMapper.toDto(item));
     }
 

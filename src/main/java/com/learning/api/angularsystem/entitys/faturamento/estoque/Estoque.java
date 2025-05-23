@@ -1,9 +1,7 @@
 package com.learning.api.angularsystem.entitys.faturamento.estoque;
 
-import com.learning.api.angularsystem.entitys.cadastro.integrante.Cliente;
 import com.learning.api.angularsystem.entitys.cadastro.item.Item;
 import com.learning.api.angularsystem.entitys.cadastro.item.UnidadeMedida;
-import com.learning.api.angularsystem.entitys.faturamento.pedido.PedidoDetalhe;
 import com.learning.api.angularsystem.enums.estoque.TipoEstoque;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -47,17 +45,6 @@ public class Estoque implements Serializable {
 
     @Column(name = "VALOR_TOTAL")
     private Double valorTotal;
-
-    @JoinColumn(name = "FUNCIONARIO")
-    @ManyToOne
-    private Cliente funcionario;
-
-    @Column(name = "OBSERVACAO")
-    private String observacao;
-
-    @JoinColumn(name = "PEDIDO_DETALHE")
-    @ManyToOne
-    private PedidoDetalhe pedidoDetalhe;
 
     @Column(name = "EMPRESA")
     private Long empresa = 1L;

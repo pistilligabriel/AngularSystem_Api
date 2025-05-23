@@ -1,9 +1,8 @@
 package com.learning.api.angularsystem.web.controllers.cadastro.item;
 
-import com.learning.api.angularsystem.entitys.cadastro.item.Item;
-import com.learning.api.angularsystem.web.dtos.cadastro.item.FabricanteDto;
 import com.learning.api.angularsystem.entitys.cadastro.item.Fabricante;
 import com.learning.api.angularsystem.services.cadastro.item.FabricanteService;
+import com.learning.api.angularsystem.web.dtos.cadastro.item.FabricanteDto;
 import com.learning.api.angularsystem.web.dtos.cadastro.item.FabricanteResponseDto;
 import com.learning.api.angularsystem.web.dtos.cadastro.item.mapper.FabricanteMapper;
 import jakarta.transaction.Transactional;
@@ -11,14 +10,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -54,9 +46,9 @@ public class FabricanteController {
     }
 
     @PostMapping("/alterar-status/{codigo}")
-    public ResponseEntity<FabricanteDto> desativarFabricante(@PathVariable Long codigo) {
-        service.alterarStatus(codigo);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<FabricanteResponseDto> desativarFabricante(@PathVariable Long codigo) {
+        Fabricante fabricante = service.alterarStatus(codigo);
+        return ResponseEntity.ok().body(FabricanteMapper.toDto(fabricante));
     }
 
     @DeleteMapping("/{codigo}")

@@ -7,5 +7,6 @@ public enum Status {
     ATIVO,
     DESATIVADO,
     NORMAL,
-    CANCELADO
+    CANCELADO,
+    FATURADO
 }

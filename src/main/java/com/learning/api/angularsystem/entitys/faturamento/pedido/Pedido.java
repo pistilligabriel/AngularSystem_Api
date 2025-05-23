@@ -1,17 +1,13 @@
 package com.learning.api.angularsystem.entitys.faturamento.pedido;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.learning.api.angularsystem.entitys.cadastro.item.Item;
 import com.learning.api.angularsystem.entitys.cadastro.integrante.Cliente;
+import com.learning.api.angularsystem.entitys.cadastro.item.Item;
 import com.learning.api.angularsystem.enums.Status;
-import com.learning.api.angularsystem.enums.pedido.FinalidadePedido;
-import com.learning.api.angularsystem.enums.pedido.StatusPedido;
-import com.learning.api.angularsystem.enums.pedido.TipoPedido;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Formula;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -29,26 +25,15 @@ public class Pedido implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long codigo;
 
-    @Column(name = "TIPO")
+    @Column(name = "STATUS")
     @Enumerated(EnumType.STRING)
-    private TipoPedido tipo;
-
-    @Column(name = "FINALIDADE")
-    @Enumerated(EnumType.STRING)
-    private FinalidadePedido finalidade = FinalidadePedido.NORMAL;
-
-    @Column(name = "STATUS_PEDIDO")
-    @Enumerated(EnumType.STRING)
-    private StatusPedido statusPedido = StatusPedido.PEDIDO;
+    private Status status = Status.NORMAL;
 
     @Column(name = "NUMERO")
     private Long numero;
 
     @Column(name = "DATA_EMISSAO")
     private LocalDateTime dataEmissao;
-
-    @Column(name = "DATA_VALIDADE")
-    private LocalDateTime dataValidade;
 
     @JoinColumn(name = "INTEGRANTE")
     @ManyToOne
@@ -58,22 +43,8 @@ public class Pedido implements Serializable {
     @JsonIgnore
     private Set<Item> produtos = new HashSet<>();
 
-    @Column(name = "TOTAL_PRODUTO")
-    private Double totalProduto;
-
-    @Column(name = "TOTAL_DESCONTO")
-    private Double totalDesconto;
-
-    @Column(name = "TOTAL_ACRESCIMO")
-    private Double totalAcrescimo;
-
     @Column(name = "TOTAL")
-    @Formula("totalProduto - totalDesconto + totalAcrescimo")
     private Double total;
-
-    @Column(name = "STATUS")
-    @Enumerated(EnumType.STRING)
-    private Status status = Status.NORMAL;
 
     @Column(name = "EMPRESA")
     private Long empresa = 1L;
@@ -89,6 +60,11 @@ public class Pedido implements Serializable {
 
     public void setStatusCancelado() {
         this.status = Status.CANCELADO;
+        this.versao = LocalDateTime.now();
+    }
+
+    public void setStatusFaturado(){
+        this.status = Status.FATURADO;
         this.versao = LocalDateTime.now();
     }
 }

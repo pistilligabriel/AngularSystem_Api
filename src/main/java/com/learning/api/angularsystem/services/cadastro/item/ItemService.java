@@ -1,12 +1,16 @@
 package com.learning.api.angularsystem.services.cadastro.item;
 
+import com.learning.api.angularsystem.entitys.cadastro.item.Fabricante;
 import com.learning.api.angularsystem.entitys.cadastro.item.Item;
+import com.learning.api.angularsystem.entitys.cadastro.item.UnidadeMedida;
 import com.learning.api.angularsystem.enums.Status;
 import com.learning.api.angularsystem.repositories.cadastro.item.ItemRepository;
+import com.learning.api.angularsystem.web.dtos.cadastro.item.ItemDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -15,9 +19,31 @@ public class ItemService {
     @Autowired
     private ItemRepository itemRepository;
 
+    @Autowired
+    private FabricanteService fabricanteService;
+
+    @Autowired
+    private UnidadeMedidaService unidadeService;
+
     @Transactional()
-    public Item criarItem(Item item){
-        return itemRepository.save(item);
+    public Item criarItem(ItemDto item){
+        Item itemEntity = new Item();
+
+        itemEntity.setDataCadastro(LocalDateTime.now());
+        itemEntity.setDescricao(item.getDescricao());
+        itemEntity.setObservacao(item.getObservacao());
+        itemEntity.setPrecoCusto(item.getPrecoCusto());
+        itemEntity.setPrecoVenda(item.getPrecoVenda());
+        itemEntity.setEstoque(item.getEstoque());
+        itemEntity.setMargemLucro(itemEntity.calcularMargemLucro());
+        itemEntity.setModelo(item.getModelo());
+        Fabricante fabricante = fabricanteService.getById( item.getFabricante());
+        itemEntity.setFabricante(fabricante);
+
+
+        UnidadeMedida unidade = unidadeService.getById(item.getUnidadeVenda());
+        itemEntity.setUnidadeVenda(unidade);
+        return itemRepository.save(itemEntity);
 //        ItemEntity itemEntity = new ItemEntity(itemDto);
 //
 //        if (itemDto.grupoItem() != null) {

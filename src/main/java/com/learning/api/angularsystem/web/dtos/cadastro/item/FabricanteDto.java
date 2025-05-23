@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class FabricanteDto {
-
+    private Long codigo;
     @NotBlank(message = "O campo descrição é obrigatório")
     private String descricao;
 

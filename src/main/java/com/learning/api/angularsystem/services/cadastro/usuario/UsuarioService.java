@@ -1,12 +1,14 @@
 package com.learning.api.angularsystem.services.cadastro.usuario;
+
 import com.learning.api.angularsystem.entitys.cadastro.usuario.Usuario;
 import com.learning.api.angularsystem.enums.Status;
-import com.learning.api.angularsystem.web.dtos.cadastro.usuario.AuthenticationDto;
 import com.learning.api.angularsystem.infra.security.TokenService;
 import com.learning.api.angularsystem.repositories.cadastro.usuario.UsuarioRepository;
+import com.learning.api.angularsystem.web.dtos.cadastro.usuario.AuthenticationDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,20 +18,12 @@ import java.util.List;
 public class UsuarioService {
 
     @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private TokenService tokenService;
-
-    @Autowired
     private UsuarioRepository repository;
 
-    public ResponseEntity login(AuthenticationDto authenticationDto){
-        return null;
-    }
 
     @Transactional
     public Usuario createUsuario(Usuario usuario){
+        usuario.setPassword(new BCryptPasswordEncoder().encode(usuario.getPassword()));
         return repository.save(usuario);
     }
 
