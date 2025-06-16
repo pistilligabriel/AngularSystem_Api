@@ -1,10 +1,16 @@
 package com.learning.api.angularsystem.web.controllers.faturamento.pedido;
 
-import com.learning.api.angularsystem.web.dtos.faturamento.pedido.PedidoDto;
+import com.learning.api.angularsystem.entitys.faturamento.pedido.Pedido;
+import com.learning.api.angularsystem.entitys.faturamento.pedido.PedidoDetalhe;
 import com.learning.api.angularsystem.services.faturamento.pedido.PedidoService;
-import jakarta.transaction.Transactional;
+import com.learning.api.angularsystem.web.dtos.faturamento.pedido.DetalheResponseDto;
+import com.learning.api.angularsystem.web.dtos.faturamento.pedido.PedidoDetalheDto;
+import com.learning.api.angularsystem.web.dtos.faturamento.pedido.PedidoDto;
+import com.learning.api.angularsystem.web.dtos.faturamento.pedido.ResponsePedidoDto;
+import com.learning.api.angularsystem.web.dtos.faturamento.pedido.mapper.PedidoMapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,9 +24,9 @@ public class PedidoController {
 
 
     @PostMapping
-    @Transactional
-    public ResponseEntity<Void> cadastrarPedido(@RequestBody @Valid PedidoDto pedidoDto) {
-        return null;
+    public ResponseEntity<ResponsePedidoDto> cadastrarPedido(@RequestBody @Valid PedidoDto pedidoDto) {
+        Pedido pedido = pedidoService.criarPedido(pedidoDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(PedidoMapper.toDto(pedido));
     }
 
     @GetMapping
@@ -34,20 +40,24 @@ public class PedidoController {
     }
 
     @PutMapping
-    @Transactional
     public ResponseEntity<PedidoDto> atualizarPedido(@RequestBody @Valid PedidoDto pedidoDto) {
        return null;
     }
 
     @PostMapping("/cancelar/{CODIGO}")
-    @Transactional
     public ResponseEntity<Void> cancelarPedido(@PathVariable Long CODIGO) {
         return null;
     }
 
     @DeleteMapping("/{CODIGO}")
-    @Transactional
     public ResponseEntity<Void> deletarPedido(@PathVariable Long CODIGO) {
         return null;
+    }
+
+    @PatchMapping("{codigo}/detalhe")
+    public ResponseEntity<DetalheResponseDto> adicionarNota(@PathVariable Long codigo,
+                                                            @RequestBody PedidoDetalheDto dto) {
+        PedidoDetalhe detalhe = pedidoService.salvarDetalhe(codigo, PedidoMapper.toDetalhe(dto) );
+        return ResponseEntity.ok(PedidoMapper.toDto(detalhe));
     }
 }

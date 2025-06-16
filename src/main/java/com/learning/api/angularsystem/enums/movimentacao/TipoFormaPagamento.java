@@ -1,16 +1,15 @@
 package com.learning.api.angularsystem.enums.movimentacao;
 
+import lombok.Getter;
+
+@Getter
 public enum TipoFormaPagamento {
 
     DINHEIRO("Dinheiro"),
-    CARTAO_CREDITO("Cartão de Crédito"),
+    CARTAO_CREDITO_A_VISTA("Cartão de Crédito à Vista"),
+    CARTAO_PARCELADO("Cartão Crédito Parcelado"),
     CARTAO_DEBITO("Cartão de Débito"),
-    CHEQUE("Cheque"),
-    BOLETO("Boleto"),
-    TRANSFERENCIA("Transferência"),
-    DEPOSITO("Depósito"),
-    PIX("Pix"),
-    OUTROS("Outros");
+    PIX("Pix");
 
     private final String descricao;
 

@@ -1,28 +1,74 @@
 package com.learning.api.angularsystem.services.faturamento.pedido;
 
+import com.learning.api.angularsystem.entitys.cadastro.integrante.Cliente;
+import com.learning.api.angularsystem.entitys.cadastro.item.Item;
+import com.learning.api.angularsystem.entitys.faturamento.pedido.Pedido;
+import com.learning.api.angularsystem.entitys.faturamento.pedido.PedidoDetalhe;
+import com.learning.api.angularsystem.repositories.faturamento.pedido.PedidoDetalheRepository;
+import com.learning.api.angularsystem.repositories.faturamento.pedido.PedidoRepository;
 import com.learning.api.angularsystem.services.cadastro.integrante.IntegranteService;
+import com.learning.api.angularsystem.services.cadastro.item.ItemService;
+import com.learning.api.angularsystem.web.dtos.cadastro.item.ItemDto;
+import com.learning.api.angularsystem.web.dtos.faturamento.pedido.PedidoDto;
+import com.learning.api.angularsystem.web.dtos.faturamento.pedido.mapper.PedidoMapper;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 @Service
 public class PedidoService {
 
     @Autowired
+    private PedidoRepository pedidoRepository;
+
+    @Autowired
     private IntegranteService integranteService;
 
-    public ResponseEntity<Void> criarPedido(){
-//        PedidoEntity pedidoEntity = new PedidoEntity(pedidoDto);
-//
-//        if (pedidoDto.integrante() != null) {
-//            integranteRepository.findById(pedidoDto.integrante().getCODIGO())
-//                    .ifPresent(pedidoEntity::setIntegrante);
-//        }
-//
-//        pedidoRepository.save(pedidoEntity);
-//
-//        return new ResponseEntity<>(HttpStatus.CREATED);
-        return null;
+    @Autowired
+    private ItemService itemService;
+
+    @Autowired
+    private PedidoDetalheRepository detalheRepository;
+
+    @Transactional
+    public Pedido criarPedido(PedidoDto pedidoDto) {
+        Cliente cliente = integranteService.getIntegranteById(pedidoDto.getIntegrante());
+
+
+
+        Pedido pedido = new Pedido();
+        pedido.setIntegrante(cliente);
+        pedido.setDataEmissao(LocalDateTime.now());
+        pedido.setFormaPagamento(pedidoDto.getFormaPagamento());
+        pedido.setParcelas(pedidoDto.getParcelas());
+        pedido.setDesconto(pedidoDto.getDesconto());
+        pedido.setTotal(pedidoDto.getTotal());
+
+        Pedido pedidoSalvo = pedidoRepository.save(pedido);
+
+        int ordem = 1;
+
+        for (ItemDto itemDto : pedidoDto.getProdutos()) {
+            // ⚠️ Buscar o item existente pelo código
+            Item itemExistente = itemService.buscarProduto(itemDto.getCodigo());
+
+            PedidoDetalhe detalhe = new PedidoDetalhe();
+            detalhe.setPedido(pedidoSalvo);
+            detalhe.setItem(itemExistente);
+            detalhe.setDescricao(itemExistente.getDescricao()); // ou itemDto.getDescricao()
+            detalhe.setOrdem(ordem++);
+            detalhe.setQuantidade(itemDto.getQuantidade());
+            detalhe.setValorUnitario(itemDto.getPrecoVenda());
+            detalhe.setValorTotal(itemDto.getPrecoVenda()*itemDto.getQuantidade());
+
+            detalheRepository.save(detalhe);
+        }
+
+        return pedidoSalvo;
     }
 
     public ResponseEntity<Void> atualizarPedido(){
@@ -44,5 +90,24 @@ public class PedidoService {
 //
 //        return ResponseEntity.ok(new PedidoDto(pedido));
         return null;
+    }
+
+    public Pedido buscarPedidoPorId(Long id) {
+        return pedidoRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("Pedido não encontrado")
+        );
+    }
+
+    @Transactional
+    public PedidoDetalhe salvarDetalhe(Long codigo, PedidoDetalhe detalhe) {
+        Pedido pedido = buscarPedidoPorId(codigo);
+
+        Item item = itemService.buscarProduto(detalhe.getItem().getCodigo());
+
+        PedidoDetalhe pedidoDetalhe = new PedidoDetalhe();
+        pedidoDetalhe.setPedido(pedido);
+        pedidoDetalhe.setItem(item);
+        pedidoDetalhe.setDescricao(item.getDescricao());
+        return detalheRepository.save(pedidoDetalhe);
     }
 }

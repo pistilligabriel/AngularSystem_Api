@@ -5,10 +5,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.learning.api.angularsystem.entitys.cadastro.integrante.Cliente;
 import com.learning.api.angularsystem.entitys.cadastro.item.Item;
 import com.learning.api.angularsystem.enums.Status;
+import com.learning.api.angularsystem.enums.movimentacao.TipoFormaPagamento;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Formula;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -30,9 +32,6 @@ public class Pedido implements Serializable {
     @Enumerated(EnumType.STRING)
     private Status status = Status.NORMAL;
 
-    @Column(name = "NUMERO")
-    private Long numero;
-
     @Column(name = "DATA_EMISSAO")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime dataEmissao;
@@ -41,12 +40,22 @@ public class Pedido implements Serializable {
     @ManyToOne
     private Cliente integrante;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Enumerated(EnumType.STRING)
+    private TipoFormaPagamento formaPagamento;
+
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
-    private Set<Item> produtos = new HashSet<>();
+    private Set<PedidoDetalhe> detalhes = new HashSet<>();
+
+    @Column(name = "DESCONTO")
+    private int desconto;
 
     @Column(name = "TOTAL")
+    @Formula("(valorUnitario * quantidade)")
     private Double total;
+
+    @Column(name = "PARCELAS")
+    private int parcelas;
 
     @Column(name = "EMPRESA")
     private Long empresa = 1L;

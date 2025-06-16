@@ -13,6 +13,8 @@ public class ClienteResponseDto {
     private String nome;
     private String sobrenome;
     private String telefone;
+    private String documento;
+    private String tipoDocumento;
     private String email;
     private String cep;
     private String logradouro;

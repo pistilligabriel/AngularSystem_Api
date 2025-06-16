@@ -9,6 +9,8 @@ import lombok.*;
 @ToString
 public class ItemDto {
 
+    private Long codigo;
+
     private int grupoItem;
 
     @NotBlank(message = "O campo descrição é obrigatório")
@@ -28,7 +30,8 @@ public class ItemDto {
 
     private Double estoque;
 
-    private Double margemLucro;
+    private int quantidade;
 
+    private Double margemLucro;
 
 }

@@ -5,6 +5,7 @@ import com.learning.api.angularsystem.entitys.cadastro.item.UnidadeMedida;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Formula;
 
@@ -15,35 +16,30 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class PedidoDetalhe implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long codigo;
 
+    @ManyToOne
     @JoinColumn(name = "PEDIDO")
-    @OneToOne
     private Pedido pedido;
 
     @ManyToOne
-    @JoinColumn(name = "pedido_codigo")
+    @JoinColumn(name = "ITEM")
     private Item item;
 
-    @Column(name = "CANCELADO")
-    private Boolean cancelado;
-
     @Column(name = "ORDEM")
-    private Long ordem;
+    private int ordem;
 
     @Column(name = "DESCRICAO")
     private String descricao;
 
-    @JoinColumn(name = "UNIDADE_MEDIDA")
-    @ManyToOne
-    private UnidadeMedida unidadeMedida;
 
     @Column(name = "QUANTIDADE")
-    private Double quantidade;
+    private int quantidade;
 
     @Column(name = "VALOR_UNITARIO")
     private Double valorUnitario;
