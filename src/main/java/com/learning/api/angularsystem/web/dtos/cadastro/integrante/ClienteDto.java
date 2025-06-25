@@ -8,6 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class ClienteDto {
+    private long codigo;
 
     private String nome;
 

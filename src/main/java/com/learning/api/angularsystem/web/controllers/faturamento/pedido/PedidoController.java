@@ -14,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/pedidos")
 public class PedidoController {
@@ -30,32 +32,33 @@ public class PedidoController {
     }
 
     @GetMapping
-    public Iterable<PedidoDto> listarPedidos() {
-        return null;
+    public ResponseEntity<List<ResponsePedidoDto>> listarPedidos() {
+        List<Pedido> pedidos = pedidoService.buscarPedidos();
+        return ResponseEntity.status(HttpStatus.OK).body(PedidoMapper.toResponseListDto(pedidos));
     }
 
     @GetMapping("/{CODIGO}")
-    public ResponseEntity<PedidoDto> buscarPedido(Long CODIGO) {
+    public ResponseEntity<ResponsePedidoDto> buscarPedido(Long CODIGO) {
         return null;
     }
 
     @PutMapping
-    public ResponseEntity<PedidoDto> atualizarPedido(@RequestBody @Valid PedidoDto pedidoDto) {
+    public ResponseEntity<ResponsePedidoDto> atualizarPedido(@RequestBody @Valid PedidoDto pedidoDto) {
        return null;
     }
 
     @PostMapping("/cancelar/{CODIGO}")
-    public ResponseEntity<Void> cancelarPedido(@PathVariable Long CODIGO) {
+    public ResponseEntity<ResponsePedidoDto> cancelarPedido(@PathVariable Long CODIGO) {
         return null;
     }
 
     @DeleteMapping("/{CODIGO}")
-    public ResponseEntity<Void> deletarPedido(@PathVariable Long CODIGO) {
+    public ResponseEntity<ResponsePedidoDto> deletarPedido(@PathVariable Long CODIGO) {
         return null;
     }
 
     @PatchMapping("{codigo}/detalhe")
-    public ResponseEntity<DetalheResponseDto> adicionarNota(@PathVariable Long codigo,
+    public ResponseEntity<DetalheResponseDto> adicionarDetalhe(@PathVariable Long codigo,
                                                             @RequestBody PedidoDetalheDto dto) {
         PedidoDetalhe detalhe = pedidoService.salvarDetalhe(codigo, PedidoMapper.toDetalhe(dto) );
         return ResponseEntity.ok(PedidoMapper.toDto(detalhe));

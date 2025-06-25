@@ -48,14 +48,24 @@ public class Pedido implements Serializable {
     private Set<PedidoDetalhe> detalhes = new HashSet<>();
 
     @Column(name = "DESCONTO")
-    private int desconto;
+    private Double desconto;
+
+    @Column(name = "PORCENTAGEM_DESCONTO")
+    private Double porcentagemDesconto;
 
     @Column(name = "TOTAL")
     @Formula("(valorUnitario * quantidade)")
     private Double total;
 
+    @Column(name = "TOTAL_BRUTO")
+    @Formula("(valorUnitario * quantidade)")
+    private Double totalSemDesconto;
+
     @Column(name = "PARCELAS")
     private int parcelas;
+
+    @Column(name = "LUCRO")
+    private Double lucro;
 
     @Column(name = "EMPRESA")
     private Long empresa = 1L;

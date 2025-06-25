@@ -10,14 +10,13 @@ import com.learning.api.angularsystem.services.cadastro.integrante.IntegranteSer
 import com.learning.api.angularsystem.services.cadastro.item.ItemService;
 import com.learning.api.angularsystem.web.dtos.cadastro.item.ItemDto;
 import com.learning.api.angularsystem.web.dtos.faturamento.pedido.PedidoDto;
-import com.learning.api.angularsystem.web.dtos.faturamento.pedido.mapper.PedidoMapper;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class PedidoService {
@@ -36,16 +35,19 @@ public class PedidoService {
 
     @Transactional
     public Pedido criarPedido(PedidoDto pedidoDto) {
-        Cliente cliente = integranteService.getIntegranteById(pedidoDto.getIntegrante());
+        Cliente cliente = integranteService.getIntegranteById(pedidoDto.getIntegrante().getCodigo());
 
 
-
+        // Inserção de informações do pedido geral
         Pedido pedido = new Pedido();
         pedido.setIntegrante(cliente);
         pedido.setDataEmissao(LocalDateTime.now());
         pedido.setFormaPagamento(pedidoDto.getFormaPagamento());
         pedido.setParcelas(pedidoDto.getParcelas());
+        pedido.setPorcentagemDesconto(pedidoDto.getPorcentagemDesconto());
         pedido.setDesconto(pedidoDto.getDesconto());
+        pedido.setLucro(pedidoDto.getLucro());
+        pedido.setTotalSemDesconto(pedidoDto.getTotalSemDesconto());
         pedido.setTotal(pedidoDto.getTotal());
 
         Pedido pedidoSalvo = pedidoRepository.save(pedido);
@@ -56,14 +58,17 @@ public class PedidoService {
             // ⚠️ Buscar o item existente pelo código
             Item itemExistente = itemService.buscarProduto(itemDto.getCodigo());
 
+            // Inserção das informações do detalhe (Produtos) do pedido.
             PedidoDetalhe detalhe = new PedidoDetalhe();
             detalhe.setPedido(pedidoSalvo);
             detalhe.setItem(itemExistente);
-            detalhe.setDescricao(itemExistente.getDescricao()); // ou itemDto.getDescricao()
+            detalhe.setDescricao(itemDto.getDescricao());
             detalhe.setOrdem(ordem++);
             detalhe.setQuantidade(itemDto.getQuantidade());
             detalhe.setValorUnitario(itemDto.getPrecoVenda());
             detalhe.setValorTotal(itemDto.getPrecoVenda()*itemDto.getQuantidade());
+            itemDto.setEstoque(itemDto.getEstoque() - itemDto.getQuantidade());
+
 
             detalheRepository.save(detalhe);
         }
@@ -109,5 +114,10 @@ public class PedidoService {
         pedidoDetalhe.setItem(item);
         pedidoDetalhe.setDescricao(item.getDescricao());
         return detalheRepository.save(pedidoDetalhe);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Pedido> buscarPedidos() {
+        return pedidoRepository.findAll();
     }
 }

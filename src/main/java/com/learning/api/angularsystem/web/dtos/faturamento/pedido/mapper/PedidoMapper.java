@@ -1,10 +1,12 @@
 package com.learning.api.angularsystem.web.dtos.faturamento.pedido.mapper;
 
 import com.learning.api.angularsystem.entitys.cadastro.integrante.Cliente;
+import com.learning.api.angularsystem.entitys.cadastro.item.Item;
 import com.learning.api.angularsystem.entitys.faturamento.pedido.Pedido;
 import com.learning.api.angularsystem.entitys.faturamento.pedido.PedidoDetalhe;
 import com.learning.api.angularsystem.web.dtos.cadastro.integrante.ClienteDto;
 import com.learning.api.angularsystem.web.dtos.cadastro.integrante.ClienteResponseDto;
+import com.learning.api.angularsystem.web.dtos.cadastro.item.ItemDto;
 import com.learning.api.angularsystem.web.dtos.faturamento.pedido.DetalheResponseDto;
 import com.learning.api.angularsystem.web.dtos.faturamento.pedido.PedidoDetalheDto;
 import com.learning.api.angularsystem.web.dtos.faturamento.pedido.PedidoDto;
@@ -25,10 +27,52 @@ public class PedidoMapper {
         return new ModelMapper().map(pedido,ResponsePedidoDto.class);
     }
 
-    public static List<ResponsePedidoDto> toListDto(List<Pedido> pedidos){
+    public static PedidoDto toPedidoDto(Pedido pedido) {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setAmbiguityIgnored(true);
-        return pedidos.stream().map(pedido -> toDto(pedido)).collect(Collectors.toList());
+
+        PedidoDto dto = modelMapper.map(pedido, PedidoDto.class);
+
+        // Mapeando apenas os itens do pedido atual
+        if (pedido.getDetalhes() != null) {
+            List<ItemDto> produtos = pedido.getDetalhes().stream()
+                    .map(detalhe -> {
+                        Item item = detalhe.getItem();
+                        ItemDto itemDto = new ItemDto();
+
+                        itemDto.setCodigo(item.getCodigo());
+                        itemDto.setDescricao(item.getDescricao());
+                        itemDto.setModelo(item.getModelo());
+                        itemDto.setObservacao(item.getObservacao());
+                        itemDto.setPrecoVenda(detalhe.getValorUnitario());
+                        itemDto.setQuantidade(detalhe.getQuantidade());
+                        itemDto.setUnidadeVenda(
+                                item.getUnidadeVenda() != null ? item.getUnidadeVenda().getCodigo() : null
+                        );
+                        itemDto.setFabricante(
+                                item.getFabricante() != null ? item.getFabricante().getCodigo() : null
+                        );
+                        itemDto.setEstoque(item.getEstoque());
+                        itemDto.setPrecoCusto(item.getPrecoCusto());
+                        itemDto.setMargemLucro(item.getMargemLucro());
+
+                        return itemDto;
+                    })
+                    .collect(Collectors.toList());
+
+            dto.setProdutos(produtos);
+        }
+
+        return dto;
+    }
+
+    public static List<ResponsePedidoDto> toResponseListDto(List<Pedido> pedidos) {
+        return pedidos.stream()
+                .map(pedido -> {
+                    PedidoDto dto = toPedidoDto(pedido); // Usa o método correto
+                    return new ResponsePedidoDto(pedido.getCodigo(), dto);
+                })
+                .collect(Collectors.toList());
     }
 
     public static PedidoDetalhe toDetalhe(PedidoDetalheDto dto) {
