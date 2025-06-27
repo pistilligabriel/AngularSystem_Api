@@ -67,7 +67,7 @@ public class PedidoService {
             detalhe.setQuantidade(itemDto.getQuantidade());
             detalhe.setValorUnitario(itemDto.getPrecoVenda());
             detalhe.setValorTotal(itemDto.getPrecoVenda()*itemDto.getQuantidade());
-            itemDto.setEstoque(itemDto.getEstoque() - itemDto.getQuantidade());
+            itemExistente.setEstoque(itemDto.getEstoque() - itemDto.getQuantidade());
 
 
             detalheRepository.save(detalhe);
@@ -103,7 +103,7 @@ public class PedidoService {
         );
     }
 
-    @Transactional
+    @Transactional()
     public PedidoDetalhe salvarDetalhe(Long codigo, PedidoDetalhe detalhe) {
         Pedido pedido = buscarPedidoPorId(codigo);
 
@@ -118,6 +118,6 @@ public class PedidoService {
 
     @Transactional(readOnly = true)
     public List<Pedido> buscarPedidos() {
-        return pedidoRepository.findAll();
+        return pedidoRepository.findAllWithDetalhes();
     }
 }

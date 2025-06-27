@@ -14,7 +14,9 @@ import org.hibernate.annotations.Formula;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -44,8 +46,7 @@ public class Pedido implements Serializable {
     private TipoFormaPagamento formaPagamento;
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private Set<PedidoDetalhe> detalhes = new HashSet<>();
+    private List<PedidoDetalhe> detalhes = new ArrayList<>();
 
     @Column(name = "DESCONTO")
     private Double desconto;

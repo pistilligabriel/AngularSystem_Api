@@ -33,7 +33,6 @@ public class PedidoMapper {
 
         PedidoDto dto = modelMapper.map(pedido, PedidoDto.class);
 
-        // Mapeando apenas os itens do pedido atual
         if (pedido.getDetalhes() != null) {
             List<ItemDto> produtos = pedido.getDetalhes().stream()
                     .map(detalhe -> {
@@ -68,10 +67,10 @@ public class PedidoMapper {
 
     public static List<ResponsePedidoDto> toResponseListDto(List<Pedido> pedidos) {
         return pedidos.stream()
-                .map(pedido -> {
-                    PedidoDto dto = toPedidoDto(pedido); // Usa o método correto
-                    return new ResponsePedidoDto(pedido.getCodigo(), dto);
-                })
+                .map(pedido -> new ResponsePedidoDto(
+                        pedido.getCodigo(),
+                        toPedidoDto(pedido) // <-- usa o método manual, não o do ModelMapper direto
+                ))
                 .collect(Collectors.toList());
     }
 
