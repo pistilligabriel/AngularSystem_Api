@@ -6,6 +6,7 @@ import com.learning.api.angularsystem.entitys.faturamento.pedido.Pedido;
 import com.learning.api.angularsystem.enums.integrante.TipoDocumento;
 import com.learning.api.angularsystem.enums.Status;
 import com.learning.api.angularsystem.enums.integrante.TipoIntegrante;
+import com.learning.api.angularsystem.enums.integrante.Uf;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -43,8 +44,7 @@ public class Cliente implements Serializable {
     private String email;
 
     @Column(name = "TIPO_DOCUMENTO")
-    @Enumerated(EnumType.STRING)
-    private TipoDocumento tipoDocumento;
+    private String tipoDocumento;
 
     @Column(name = "DOCUMENTO", unique = true)
     private String documento;
@@ -73,7 +73,8 @@ public class Cliente implements Serializable {
     private String municipio;
 
     @Column(name = "UF")
-    private String uf;
+    @Enumerated(EnumType.STRING)
+    private Uf uf;
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "integrante", fetch = FetchType.LAZY)
     @JsonIgnore

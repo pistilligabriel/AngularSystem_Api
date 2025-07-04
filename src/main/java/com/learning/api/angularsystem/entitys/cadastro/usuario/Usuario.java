@@ -26,8 +26,24 @@ public class Usuario implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long codigo;
 
+    @Column(name = "DATA_CADASTRO")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
+    private LocalDateTime dataCadastro = LocalDateTime.now();
+
     @Column(name = "NOME")
     private String nome;
+
+    @Column(name="SOBRENOME")
+    private String sobrenome;
+
+    @Column(name = "TELEFONE")
+    private String telefone;
+
+    @Column(name="DOCUMENTO")
+    private String documento;
+
+    @Column(name = "EMAIL")
+    private String email;
 
     @Column(name = "LOGIN", unique = true)
     private String login;

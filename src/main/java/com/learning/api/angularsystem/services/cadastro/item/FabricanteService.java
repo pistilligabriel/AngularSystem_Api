@@ -55,6 +55,7 @@ public class FabricanteService {
         return fabricante;
     }
 
+    @Transactional
     public Fabricante editarFabricante(Fabricante fabricante){
         Fabricante fabricanteAtual = getById(fabricante.getCodigo());
         if(!fabricanteAtual.getStatus().equals(Status.ATIVO)){

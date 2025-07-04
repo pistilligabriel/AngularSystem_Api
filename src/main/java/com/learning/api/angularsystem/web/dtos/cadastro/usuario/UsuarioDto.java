@@ -9,9 +9,18 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class UsuarioDto {
+    private Long codigo;
 
     @NotBlank(message = "O campo nome é obrigatório")
     private String nome;
+
+    private String sobrenome;
+
+    private String email;
+
+    private String documento;
+
+    private String telefone;
 
     @NotBlank(message = "O campo login é obrigatório")
     private String login;

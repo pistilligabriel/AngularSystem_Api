@@ -82,38 +82,26 @@ public class ItemService {
     }
 
     @Transactional()
-    public Item editarItem(){
-//        ItemEntity item = itemRepository.findById(itemDto.CODIGO())
-//                .orElseThrow(() -> new RuntimeException("Item não encontrado"));
-//
-//        item.atualizarItem(itemDto);
-//
-//        if (itemDto.grupoItem() != null) {
-//            itemGrupoRepository.findById(itemDto.grupoItem().getCODIGO())
-//                    .ifPresent(item::setGrupoItem);
-//        } else {
-//            item.setGrupoItem(null);
-//        }
-//        // if (itemDto.fabricante() != null) {
-//        //     fabricanteRepository.findById(itemDto.fabricante().getCODIGO())
-//        //             .ifPresent(item::setFabricante);
-//        // } else {
-//        //     item.setFabricante(null);
-//        // }
-//        if (itemDto.unidadeVenda() != null) {
-//            unidadeMedidaRepository.findById(itemDto.unidadeVenda().getCODIGO())
-//                    .ifPresent(item::setUnidadeVenda);
-//        } else {
-//            item.setUnidadeVenda(null);
-//        }
-//
-//
-//        itemRepository.save(item);
-//
-//        item.calcularMargemLucro();
-//
-//        return ResponseEntity.ok(new ItemDto(item));
-        return null;
+    public Item editarItem(Item item){
+        Item itemAtualizar = buscarProduto(item.getCodigo());
+
+        if(!itemAtualizar.getStatus().equals(Status.ATIVO)){
+            throw new RuntimeException("Unidade não pode ser alterada, pois está desativada!");
+        }
+
+        itemAtualizar.setDescricao(item.getDescricao());
+        itemAtualizar.setModelo(item.getModelo());
+        itemAtualizar.setGrupoItem(item.getGrupoItem());
+        itemAtualizar.setObservacao(item.getObservacao());
+        itemAtualizar.setUnidadeVenda(item.getUnidadeVenda());
+        itemAtualizar.setFabricante(item.getFabricante());
+        itemAtualizar.setPrecoCusto(item.getPrecoCusto());
+        itemAtualizar.setPrecoVenda(item.getPrecoVenda());
+        itemAtualizar.setVersao(LocalDateTime.now());
+
+        itemAtualizar.calcularMargemLucro();
+
+        return itemRepository.save(itemAtualizar);
     }
 
 }

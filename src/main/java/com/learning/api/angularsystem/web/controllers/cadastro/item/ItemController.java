@@ -40,8 +40,9 @@ public class ItemController {
     }
 
     @PutMapping
-    public ResponseEntity<ItemDto> atualizarProduto(@RequestBody @Valid ItemDto itemDto) {
-      return null;
+    public ResponseEntity<ItemResponseDto> atualizarProduto(@RequestBody @Valid ItemDto itemDto) {
+        Item item = itemService.editarItem(ItemMapper.toItem(itemDto));
+        return ResponseEntity.status(HttpStatus.OK).body(ItemMapper.toDto(item));
     }
 
     @PostMapping("/alterar-status/{codigo}")

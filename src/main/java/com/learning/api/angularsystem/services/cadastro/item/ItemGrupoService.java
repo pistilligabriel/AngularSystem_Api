@@ -1,5 +1,6 @@
 package com.learning.api.angularsystem.services.cadastro.item;
 
+import com.learning.api.angularsystem.entitys.cadastro.item.Fabricante;
 import com.learning.api.angularsystem.entitys.cadastro.item.ItemGrupo;
 import com.learning.api.angularsystem.enums.Status;
 import com.learning.api.angularsystem.repositories.cadastro.item.ItemGrupoRepository;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -52,5 +54,16 @@ public class ItemGrupoService {
             throw new RuntimeException("Item Grupo não pode ser deletado!");
         }
         return itemGrupo;
+    }
+
+    @Transactional
+    public ItemGrupo editarItemGrupo(ItemGrupo itemGrupo){
+        ItemGrupo itemGrupoAtualizar = getById(itemGrupo.getCodigo());
+        if(!itemGrupoAtualizar.getStatus().equals(Status.ATIVO)){
+            throw new RuntimeException("Item Grupo não pode ser alterado, pois está desativado!");
+        }
+        itemGrupoAtualizar.setDescricao(itemGrupo.getDescricao());
+        itemGrupoAtualizar.setVersao(LocalDateTime.now());
+        return repository.save(itemGrupoAtualizar);
     }
 }

@@ -23,7 +23,7 @@ public class UsuarioController {
 
     @PostMapping
     public ResponseEntity<UsuarioResponseDto> cadastrarUsuario(@RequestBody @Valid UsuarioDto usuarioDto) {
-        Usuario usuario = service.createUsuario(UsuarioMapper.toUsuario(usuarioDto));
+        Usuario usuario = service.createUsuario(usuarioDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(UsuarioMapper.toDto(usuario));
     }
 
@@ -41,8 +41,8 @@ public class UsuarioController {
 
     @PutMapping
     public ResponseEntity<UsuarioResponseDto> atualizarUsuario(@RequestBody @Valid UsuarioDto usuarioDto) {
-
-        return null;
+        Usuario usuario = service.atualizarUsuario(UsuarioMapper.toUsuario(usuarioDto));
+        return ResponseEntity.status(HttpStatus.OK).body(UsuarioMapper.toDto(usuario));
     }
 
 
@@ -52,7 +52,7 @@ public class UsuarioController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/alterar-status/{codigo}")
+    @PutMapping("/alterar-status/{codigo}")
     public ResponseEntity<UsuarioResponseDto> alterarStatusUsuario(@PathVariable Long codigo) {
         service.alterarStatus(codigo);
         return ResponseEntity.noContent().build();

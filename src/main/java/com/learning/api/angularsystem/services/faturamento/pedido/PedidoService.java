@@ -35,8 +35,8 @@ public class PedidoService {
 
     @Transactional
     public Pedido criarPedido(PedidoDto pedidoDto) {
-        Cliente cliente = integranteService.getIntegranteById(pedidoDto.getIntegrante().getCodigo());
 
+        Cliente cliente = integranteService.getIntegranteById(pedidoDto.getIntegrante().getCodigo());
 
         // Inserção de informações do pedido geral
         Pedido pedido = new Pedido();

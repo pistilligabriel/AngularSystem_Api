@@ -34,6 +34,7 @@ public class PedidoController {
     @GetMapping
     public ResponseEntity<List<ResponsePedidoDto>> listarPedidos() {
         List<Pedido> pedidos = pedidoService.buscarPedidos();
+        pedidos.forEach(p -> System.out.println("Integrante: " + p.getIntegrante()));
         return ResponseEntity.status(HttpStatus.OK).body(PedidoMapper.toResponseListDto(pedidos));
     }
 

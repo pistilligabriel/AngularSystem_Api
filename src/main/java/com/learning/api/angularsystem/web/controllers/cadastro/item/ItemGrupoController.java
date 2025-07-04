@@ -50,7 +50,8 @@ public class ItemGrupoController {
 
     @PutMapping
     public ResponseEntity<ItemGrupoResponseDto> atualizarItemGrupo(@RequestBody @Valid ItemGrupoDto itemGrupoDto) {
-        return null;
+        ItemGrupo itemGrupo = service.editarItemGrupo(ItemGrupoMapper.toItemGrupo(itemGrupoDto));
+        return ResponseEntity.status(HttpStatus.OK).body(ItemGrupoMapper.toDto(itemGrupo));
     }
 
     @PostMapping("/alterar-status/{codigo}")

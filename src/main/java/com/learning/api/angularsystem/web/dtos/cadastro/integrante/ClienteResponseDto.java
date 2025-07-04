@@ -1,6 +1,9 @@
 package com.learning.api.angularsystem.web.dtos.cadastro.integrante;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -22,4 +25,7 @@ public class ClienteResponseDto {
     private String bairro;
     private String municipio;
     private String uf;
+    private int empresa;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
+    private LocalDateTime versao;
 }

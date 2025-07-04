@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -51,17 +52,30 @@ public class IntegranteService {
         return integrante;
     }
 
-
-
-    /*
-    public IntegranteEntity atualizarIntegrante(IntegranteEntity integrante){
+    @Transactional
+    public Cliente atualizarIntegrante(Cliente cliente){
         // Busca a entidade existente no banco de dados
-        getIntegranteById(integrante.getCODIGO());
+        Cliente clienteAtualizar = getIntegranteById(cliente.getCodigo());
 
+        if(!clienteAtualizar.getStatus().equals(Status.ATIVO)){
+            throw new RuntimeException("Cliente não pode ser alterado, pois está desativado!");
+        }
         // Atualiza os dados da entidade existente com base nos dados recebidos no DTO
-        this.atualizarIntegrante(integrante);
-
+        clienteAtualizar.setNome(cliente.getNome());
+        clienteAtualizar.setSobrenome(cliente.getSobrenome());
+        clienteAtualizar.setTelefone(cliente.getTelefone());
+        clienteAtualizar.setEmail(cliente.getEmail());
+        clienteAtualizar.setTipoDocumento(cliente.getTipoDocumento());
+        clienteAtualizar.setDocumento(cliente.getDocumento());
+        clienteAtualizar.setCep(cliente.getCep());
+        clienteAtualizar.setLogradouro(cliente.getLogradouro());
+        clienteAtualizar.setNumero(cliente.getNumero());
+        clienteAtualizar.setBairro(cliente.getBairro());
+        clienteAtualizar.setMunicipio(cliente.getMunicipio());
+        clienteAtualizar.setUf(cliente.getUf());
+        clienteAtualizar.setComplemento(cliente.getComplemento());
+        clienteAtualizar.setVersao(LocalDateTime.now()); //Salva data e hora do momento que edita o registro
         // Salva as alterações no banco de dados
-        integranteRepository.save(integrante);
-    } */
+        return integranteRepository.save(clienteAtualizar);
+    }
 }

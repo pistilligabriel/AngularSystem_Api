@@ -40,14 +40,13 @@ public class IntegranteController {
         return ResponseEntity.ok().body(ClienteMapper.toDto(integrante));
     }
 
-   /* @PutMapping
-    public ResponseEntity<IntegranteDto> atualizarIntegrante(@RequestBody @Valid IntegranteDto integranteDto) {
-
-
+    @PutMapping
+    public ResponseEntity<ClienteResponseDto> atualizarIntegrante(@RequestBody @Valid ClienteDto integranteDto) {
+        Cliente cliente = integranteService.atualizarIntegrante(ClienteMapper.toCliente(integranteDto));
         // Retorna a resposta com o DTO atualizado
-        return ResponseEntity.ok(new IntegranteDto(integrante));
+        return ResponseEntity.status(HttpStatus.OK).body(ClienteMapper.toDto(cliente));
     }
-*/
+
     @DeleteMapping("/{codigo}")
     public ResponseEntity<ClienteResponseDto> deletarIntegrante(@PathVariable Long codigo) {
         integranteService.deletarIntegrante(codigo);
