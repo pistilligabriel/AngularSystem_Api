@@ -2,6 +2,7 @@ package com.learning.api.angularsystem.entitys.faturamento.pedido;
 
 import com.learning.api.angularsystem.entitys.cadastro.item.Item;
 import com.learning.api.angularsystem.entitys.cadastro.item.UnidadeMedida;
+import com.learning.api.angularsystem.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,6 +27,10 @@ public class PedidoDetalhe implements Serializable {
     @ManyToOne
     @JoinColumn(name = "PEDIDO")
     private Pedido pedido;
+
+    @Column(name = "STATUS")
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     @ManyToOne
     @JoinColumn(name = "ITEM")

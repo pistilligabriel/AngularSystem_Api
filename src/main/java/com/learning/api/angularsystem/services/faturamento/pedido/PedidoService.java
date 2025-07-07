@@ -4,6 +4,7 @@ import com.learning.api.angularsystem.entitys.cadastro.integrante.Cliente;
 import com.learning.api.angularsystem.entitys.cadastro.item.Item;
 import com.learning.api.angularsystem.entitys.faturamento.pedido.Pedido;
 import com.learning.api.angularsystem.entitys.faturamento.pedido.PedidoDetalhe;
+import com.learning.api.angularsystem.enums.Status;
 import com.learning.api.angularsystem.repositories.faturamento.pedido.PedidoDetalheRepository;
 import com.learning.api.angularsystem.repositories.faturamento.pedido.PedidoRepository;
 import com.learning.api.angularsystem.services.cadastro.integrante.IntegranteService;
@@ -66,7 +67,7 @@ public class PedidoService {
             detalhe.setOrdem(ordem++);
             detalhe.setQuantidade(itemDto.getQuantidade());
             detalhe.setValorUnitario(itemDto.getPrecoVenda());
-            detalhe.setValorTotal(itemDto.getPrecoVenda()*itemDto.getQuantidade());
+            detalhe.setValorTotal(itemDto.getPrecoVenda() * itemDto.getQuantidade());
             itemExistente.setEstoque(itemDto.getEstoque() - itemDto.getQuantidade());
 
 
@@ -97,6 +98,7 @@ public class PedidoService {
         return null;
     }
 
+    @Transactional(readOnly = true)
     public Pedido buscarPedidoPorId(Long id) {
         return pedidoRepository.findById(id).orElseThrow(
                 () -> new RuntimeException("Pedido não encontrado")
@@ -111,6 +113,7 @@ public class PedidoService {
 
         PedidoDetalhe pedidoDetalhe = new PedidoDetalhe();
         pedidoDetalhe.setPedido(pedido);
+        pedidoDetalhe.setStatus(Status.ATIVO);
         pedidoDetalhe.setItem(item);
         pedidoDetalhe.setDescricao(item.getDescricao());
         return detalheRepository.save(pedidoDetalhe);
@@ -119,5 +122,35 @@ public class PedidoService {
     @Transactional(readOnly = true)
     public List<Pedido> buscarPedidos() {
         return pedidoRepository.findAllWithDetalhes();
+    }
+
+    @Transactional(readOnly = true)
+    public Pedido buscarPedidoComRelacionamentos(Long id) {
+        Pedido pedido = pedidoRepository.findByIdComRelacionamentos(id)
+                .orElseThrow(() -> new RuntimeException("Pedido não encontrado"));
+
+
+        // Aqui os detalhes já estão carregados e prontos para uso
+        pedido.getDetalhes().forEach(d -> {
+            Item itemExistente = itemService.buscarProduto(d.getCodigo());
+            System.out.println(d.getCodigo() + " " + d.getDescricao() + " " + itemExistente.getEstoque());
+        });
+
+
+
+        return pedido;
+    }
+
+    @Transactional
+    public Pedido cancelarPedido(Long id){
+        Pedido pedido = buscarPedidoComRelacionamentos(id);
+        pedido.setStatus(Status.CANCELADO);
+        // Aqui os detalhes já estão carregados e prontos para uso
+        pedido.getDetalhes().forEach(d -> {
+            Item itemExistente = itemService.buscarProduto(d.getCodigo());
+            d.setStatus(Status.CANCELADO);
+            itemExistente.setEstoque(itemExistente.getEstoque() + d.getQuantidade());
+        });
+        return pedidoRepository.save(pedido);
     }
 }

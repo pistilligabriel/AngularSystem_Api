@@ -8,5 +8,5 @@ public enum Status {
     DESATIVADO,
     NORMAL,
     CANCELADO,
-    FATURADO
+    FINALIZADO
 }

@@ -32,7 +32,7 @@ public class Pedido implements Serializable {
 
     @Column(name = "STATUS")
     @Enumerated(EnumType.STRING)
-    private Status status = Status.NORMAL;
+    private Status status = Status.FINALIZADO;
 
     @Column(name = "DATA_EMISSAO")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
@@ -86,8 +86,4 @@ public class Pedido implements Serializable {
         this.versao = LocalDateTime.now();
     }
 
-    public void setStatusFaturado(){
-        this.status = Status.FATURADO;
-        this.versao = LocalDateTime.now();
-    }
 }

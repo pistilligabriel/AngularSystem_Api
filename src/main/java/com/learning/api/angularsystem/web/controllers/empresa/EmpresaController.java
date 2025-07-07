@@ -38,7 +38,8 @@ public class EmpresaController {
     public ResponseEntity<byte[]> getLogo(@PathVariable Long id) {
         byte[] image = empresaService.getLogoById(id); // retorna o array de bytes da imagem
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.IMAGE_PNG); // ou IMAGE_JPEG conforme o tipo
+        headers.setContentType(MediaType.IMAGE_PNG);
+        headers.setContentType(MediaType.IMAGE_JPEG);
         return new ResponseEntity<>(image, headers, HttpStatus.OK);
     }
 
