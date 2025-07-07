@@ -5,6 +5,9 @@ import com.learning.api.angularsystem.web.dtos.cadastro.usuario.AuthenticationDt
 import com.learning.api.angularsystem.infra.security.TokenService;
 import com.learning.api.angularsystem.web.dtos.cadastro.usuario.LoginResponseDto;
 import jakarta.validation.Valid;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/autenticar")
 public class AuthenticationController {
 
+    private static final Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
+
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -26,10 +31,18 @@ public class AuthenticationController {
 
     @PostMapping
     public ResponseEntity login(@RequestBody @Valid AuthenticationDto authenticationDto)  {
+       logger.info("Iniciando autenticação para o login: {}", authenticationDto.getLogin());
         var usernamePassword = new UsernamePasswordAuthenticationToken(authenticationDto.getLogin(), authenticationDto.getPassword());
         var authentication = authenticationManager.authenticate(usernamePassword);
-        var token = tokenService.generateToken((Usuario) authentication.getPrincipal());
-        return ResponseEntity.ok(new LoginResponseDto(token));
+
+        logger.info("Autenticação bem-sucedida para o login: {}", authenticationDto.getLogin());
+        var usuario = (Usuario) authentication.getPrincipal();
+
+        logger.debug("Usuário autenticado: {}", usuario.getLogin());
+        var token = tokenService.generateToken(usuario);
+        
+        logger.info("Token gerado com sucesso para o login: {}", authenticationDto.getLogin());
+        return ResponseEntity.ok(new LoginResponseDto(token, usuario));
     }
 
    

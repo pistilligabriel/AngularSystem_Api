@@ -31,11 +31,8 @@ public class Cliente implements Serializable {
     @Enumerated(EnumType.STRING)
     private TipoIntegrante tipoIntegrante = TipoIntegrante.CLIENTE;
 
-    @Column(name = "NOME")
-    private String nome;
-
-    @Column(name = "SEGUNDO_NOME")
-    private String sobrenome;
+    @Column(name = "NOME_COMPLETO")
+    private String nomeCompleto;
 
     @Column(name = "TELEFONE")
     private String telefone;

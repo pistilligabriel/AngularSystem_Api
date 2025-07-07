@@ -27,8 +27,7 @@ public class UsuarioService {
     public Usuario createUsuario(UsuarioDto dto){
         Usuario usuario = new Usuario();
 
-        usuario.setNome(dto.getNome());
-        usuario.setSobrenome(dto.getSobrenome());
+        usuario.setNomeCompleto(dto.getNomeCompleto());
         usuario.setEmail(dto.getEmail());
         usuario.setDocumento(dto.getDocumento());
         usuario.setTelefone(dto.getTelefone());
@@ -79,8 +78,7 @@ public class UsuarioService {
             throw new RuntimeException("Usuário não pode ser alterado, pois está desativado!");
         }
 
-        usuarioAtualizar.setNome(usuario.getNome());
-        usuarioAtualizar.setSobrenome(usuario.getSobrenome());
+        usuarioAtualizar.setNomeCompleto(usuario.getNomeCompleto());
         usuarioAtualizar.setTelefone(usuario.getTelefone());
         usuarioAtualizar.setDocumento(usuario.getDocumento());
         usuarioAtualizar.setEmail(usuario.getEmail());
@@ -89,4 +87,13 @@ public class UsuarioService {
         usuarioAtualizar.setVersao(LocalDateTime.now());
         return repository.save(usuarioAtualizar);
     }
+
+    @Transactional(readOnly = true)
+    public Usuario buscarPorLogin(String login){
+        return repository.findByLogin(login).orElseThrow(
+                ()-> new RuntimeException("Usuário não encontrado.")
+                );
+    }
+
+
 }

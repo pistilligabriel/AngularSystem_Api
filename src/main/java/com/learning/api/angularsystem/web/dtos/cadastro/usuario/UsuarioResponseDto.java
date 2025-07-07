@@ -1,6 +1,8 @@
 package com.learning.api.angularsystem.web.dtos.cadastro.usuario;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.learning.api.angularsystem.enums.usuario.Tipo;
+
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -12,8 +14,8 @@ import java.time.LocalDateTime;
 @ToString
 public class UsuarioResponseDto {
     private Long codigo;
-    private String nome;
-    private String sobrenome;
+    private String nomeCompleto;
+    private Tipo tipo;
     private String email;
     private String telefone;
     private String documento;

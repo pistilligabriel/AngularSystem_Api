@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 public class ItemResponseDto {
     private Long codigo;
     private String status;
+    private int empresa;
     private String grupoItem;
     private String descricao;
     private String observacao;
@@ -22,7 +23,10 @@ public class ItemResponseDto {
     private UnidadeMedida unidadeVenda;
     private Fabricante fabricante;
     private Double precoVenda;
+    private Double precoCusto;
     private Double estoque;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
+    private LocalDateTime dataCadastro;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime versao;
 }

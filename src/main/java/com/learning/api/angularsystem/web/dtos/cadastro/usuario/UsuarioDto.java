@@ -1,5 +1,7 @@
 package com.learning.api.angularsystem.web.dtos.cadastro.usuario;
 
+import com.learning.api.angularsystem.enums.usuario.Tipo;
+
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
@@ -12,9 +14,9 @@ public class UsuarioDto {
     private Long codigo;
 
     @NotBlank(message = "O campo nome é obrigatório")
-    private String nome;
+    private String nomeCompleto;
 
-    private String sobrenome;
+    private Tipo tipo;
 
     private String email;
 

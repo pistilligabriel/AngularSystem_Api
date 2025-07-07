@@ -2,6 +2,8 @@ package com.learning.api.angularsystem.entitys.cadastro.usuario;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.learning.api.angularsystem.enums.Status;
+import com.learning.api.angularsystem.enums.usuario.Tipo;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,11 +32,12 @@ public class Usuario implements UserDetails {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime dataCadastro = LocalDateTime.now();
 
-    @Column(name = "NOME")
-    private String nome;
+    @Column(name = "NOME_COMPLETO")
+    private String nomeCompleto;
 
-    @Column(name="SOBRENOME")
-    private String sobrenome;
+    @Column(name = "TIPO")
+    @Enumerated(EnumType.STRING)
+    private Tipo tipo = Tipo.USUARIO;
 
     @Column(name = "TELEFONE")
     private String telefone;

@@ -10,6 +10,9 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -58,6 +61,31 @@ public class UsuarioController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/perfil")
+    public ResponseEntity<Usuario> getUsuarioPerfil() {
+        // Recuperando a autenticação
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
+        // Verificando se a autenticação está presente e se o principal é do tipo UserDetails
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            // Realizando o cast seguro para UserDetails
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+            // Acessando o nome de usuário (login)
+            String login = userDetails.getUsername();
+
+            // Agora, você pode usar o login para buscar o usuário no banco de dados
+            Usuario usuario = service.buscarPorLogin(login);
+
+            if (usuario != null) {
+                return ResponseEntity.ok(usuario);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+        } else {
+            // Caso a autenticação não seja válida ou o principal não seja um UserDetails
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
 
 }

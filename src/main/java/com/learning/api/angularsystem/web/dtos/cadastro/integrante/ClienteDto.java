@@ -10,9 +10,7 @@ import lombok.*;
 public class ClienteDto {
     private long codigo;
 
-    private String nome;
-
-    private String sobrenome;
+    private String nomeCompleto;
 
     private String telefone;
 

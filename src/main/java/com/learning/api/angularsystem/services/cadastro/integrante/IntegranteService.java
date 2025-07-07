@@ -61,8 +61,7 @@ public class IntegranteService {
             throw new RuntimeException("Cliente não pode ser alterado, pois está desativado!");
         }
         // Atualiza os dados da entidade existente com base nos dados recebidos no DTO
-        clienteAtualizar.setNome(cliente.getNome());
-        clienteAtualizar.setSobrenome(cliente.getSobrenome());
+        clienteAtualizar.setNomeCompleto(cliente.getNomeCompleto());
         clienteAtualizar.setTelefone(cliente.getTelefone());
         clienteAtualizar.setEmail(cliente.getEmail());
         clienteAtualizar.setTipoDocumento(cliente.getTipoDocumento());

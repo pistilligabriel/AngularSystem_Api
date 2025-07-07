@@ -1,6 +1,8 @@
 package com.learning.api.angularsystem.infra.security;
 
 import com.learning.api.angularsystem.repositories.cadastro.usuario.UsuarioRepository;
+import com.learning.api.angularsystem.services.cadastro.usuario.UsuarioService;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,7 +31,7 @@ public class SecurityFilter extends OncePerRequestFilter {
 
         if(token != null) {
             var login = tokenService.validateToken(token);
-            UserDetails usuario = usuarioRepository.findByLogin(login);
+            UserDetails usuario = usuarioRepository.findUserByLogin(login);
 
             var authentication = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);

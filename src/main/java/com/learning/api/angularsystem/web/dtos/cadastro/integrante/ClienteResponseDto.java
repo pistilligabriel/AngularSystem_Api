@@ -13,8 +13,7 @@ import java.time.LocalDateTime;
 public class ClienteResponseDto {
     private Long codigo;
     private String status;
-    private String nome;
-    private String sobrenome;
+    private String nomeCompleto;
     private String telefone;
     private String documento;
     private String tipoDocumento;
