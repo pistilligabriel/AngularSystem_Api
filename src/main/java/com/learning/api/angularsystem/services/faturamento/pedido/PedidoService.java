@@ -132,7 +132,7 @@ public class PedidoService {
 
         // Aqui os detalhes já estão carregados e prontos para uso
         pedido.getDetalhes().forEach(d -> {
-            Item itemExistente = itemService.buscarProduto(d.getCodigo());
+            Item itemExistente = itemService.buscarProduto(d.getItem().getCodigo());
             System.out.println(d.getCodigo() + " " + d.getDescricao() + " " + itemExistente.getEstoque());
         });
 
@@ -142,15 +142,28 @@ public class PedidoService {
     }
 
     @Transactional
-    public Pedido cancelarPedido(Long id){
+    public Pedido cancelarPedido(Long id) {
         Pedido pedido = buscarPedidoComRelacionamentos(id);
+
+        if (Status.CANCELADO.equals(pedido.getStatus())) {
+            throw new RuntimeException("Pedido já cancelado");
+        }
+
         pedido.setStatus(Status.CANCELADO);
-        // Aqui os detalhes já estão carregados e prontos para uso
+
         pedido.getDetalhes().forEach(d -> {
-            Item itemExistente = itemService.buscarProduto(d.getCodigo());
             d.setStatus(Status.CANCELADO);
-            itemExistente.setEstoque(itemExistente.getEstoque() + d.getQuantidade());
+
+            // Corrigido: buscar pelo código do item, não do detalhe
+            Item item = itemService.buscarProduto(d.getItem().getCodigo());
+
+            // Atualizar o estoque
+            item.setEstoque(item.getEstoque() + d.getQuantidade());
+
+            // Salvar item com novo estoque
+            itemService.salvar(item);
         });
+
         return pedidoRepository.save(pedido);
     }
 }

@@ -3,6 +3,7 @@ package com.learning.api.angularsystem.web.dtos.cadastro.item;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.learning.api.angularsystem.entitys.cadastro.item.Fabricante;
 import com.learning.api.angularsystem.entitys.cadastro.item.UnidadeMedida;
+import com.learning.api.angularsystem.enums.item.TipoItem;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ public class ItemResponseDto {
     private int empresa;
     private String grupoItem;
     private String descricao;
+    private TipoItem tipoProduto;
     private String observacao;
     private String modelo;
     private UnidadeMedida unidadeVenda;

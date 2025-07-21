@@ -1,5 +1,6 @@
 package com.learning.api.angularsystem.web.dtos.cadastro.item;
 
+import com.learning.api.angularsystem.enums.item.TipoItem;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 @Getter
@@ -15,6 +16,8 @@ public class ItemDto {
 
     @NotBlank(message = "O campo descrição é obrigatório")
     private String descricao;
+
+    private TipoItem tipoProduto;
 
     private String observacao;
 

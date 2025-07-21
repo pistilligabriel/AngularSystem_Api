@@ -2,6 +2,7 @@ package com.learning.api.angularsystem.services.cadastro.usuario;
 
 import com.learning.api.angularsystem.entitys.cadastro.usuario.Usuario;
 import com.learning.api.angularsystem.enums.Status;
+import com.learning.api.angularsystem.enums.usuario.Tipo;
 import com.learning.api.angularsystem.infra.security.TokenService;
 import com.learning.api.angularsystem.repositories.cadastro.usuario.UsuarioRepository;
 import com.learning.api.angularsystem.web.dtos.cadastro.usuario.AuthenticationDto;
@@ -95,5 +96,15 @@ public class UsuarioService {
                 );
     }
 
+    @Transactional
+    public Usuario alterarTipo(Long codigo, Tipo tipo){
+        Usuario usuario = getById(codigo);
+        if(usuario.getStatus().equals(Status.DESATIVADO)){
+            throw new RuntimeException("Não é possível alterar o tipo de usuário desativado");
+        }else{
+            usuario.setTipo(tipo);
+        }
+        return repository.save(usuario);
+    }
 
 }

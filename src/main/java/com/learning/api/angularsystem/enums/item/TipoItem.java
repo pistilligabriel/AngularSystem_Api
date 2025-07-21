@@ -5,8 +5,8 @@ import lombok.Getter;
 @Getter
 public enum TipoItem {
 
-    PRODUTO("Produto"),
-    SERVICO("Serviço");
+    NOVO("Novo"),
+    RECAPAGEM("Recapagem");
 
     private final String descricao;
 

@@ -26,11 +26,17 @@ public class ItemService {
     private UnidadeMedidaService unidadeService;
 
     @Transactional()
+    public Item salvar(Item item){
+        return itemRepository.save(item);
+    }
+
+    @Transactional()
     public Item criarItem(ItemDto item){
         Item itemEntity = new Item();
 
         itemEntity.setDataCadastro(LocalDateTime.now());
         itemEntity.setDescricao(item.getDescricao());
+        itemEntity.setTipoProduto(item.getTipoProduto());
         itemEntity.setObservacao(item.getObservacao());
         itemEntity.setPrecoCusto(item.getPrecoCusto());
         itemEntity.setPrecoVenda(item.getPrecoVenda());
@@ -90,6 +96,7 @@ public class ItemService {
         }
 
         itemAtualizar.setDescricao(item.getDescricao());
+        itemAtualizar.setTipoProduto(item.getTipoProduto());
         itemAtualizar.setModelo(item.getModelo());
         itemAtualizar.setGrupoItem(item.getGrupoItem());
         itemAtualizar.setObservacao(item.getObservacao());
@@ -102,6 +109,18 @@ public class ItemService {
         itemAtualizar.calcularMargemLucro();
 
         return itemRepository.save(itemAtualizar);
+    }
+
+    @Transactional
+    public Item acertoEstoqueProduto(Long codigo, Double estoque){
+        Item item = buscarProduto(codigo);
+        if(item.getStatus().equals(Status.ATIVO)){
+            if(item.getEstoque() + estoque < 0 ){
+                throw new RuntimeException("Quantidade não pode ser negativa");
+            }
+            item.setEstoque(item.getEstoque() + estoque);
+        }
+        return salvar(item);
     }
 
 }

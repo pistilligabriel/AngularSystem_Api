@@ -45,6 +45,12 @@ public class ItemController {
         return ResponseEntity.status(HttpStatus.OK).body(ItemMapper.toDto(item));
     }
 
+    @PatchMapping("/acerto/{codigo}")
+    public ResponseEntity<ItemResponseDto> acertoEstoqueProduto(@PathVariable Long codigo, @RequestBody ItemDto dto){
+        Item item = itemService.acertoEstoqueProduto(codigo, dto.getEstoque());
+        return ResponseEntity.status(HttpStatus.OK).body(ItemMapper.toDto(item));
+    }
+
     @PostMapping("/alterar-status/{codigo}")
     public ResponseEntity<ItemResponseDto> alterarStatusProduto(@PathVariable Long codigo) {
         itemService.alterarStatus(codigo);
