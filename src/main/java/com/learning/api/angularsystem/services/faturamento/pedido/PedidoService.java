@@ -42,14 +42,21 @@ public class PedidoService {
         // Inserção de informações do pedido geral
         Pedido pedido = new Pedido();
         pedido.setIntegrante(cliente);
+        pedido.setTipoVenda(pedidoDto.getTipoVenda());
         pedido.setDataEmissao(LocalDateTime.now());
         pedido.setFormaPagamento(pedidoDto.getFormaPagamento());
         pedido.setParcelas(pedidoDto.getParcelas());
         pedido.setPorcentagemDesconto(pedidoDto.getPorcentagemDesconto());
         pedido.setDesconto(pedidoDto.getDesconto());
-        pedido.setLucro(pedidoDto.getLucro());
+        pedido.setCusto(pedidoDto.getCusto());
         pedido.setTotalSemDesconto(pedidoDto.getTotalSemDesconto());
         pedido.setTotal(pedidoDto.getTotal());
+
+        if(pedidoDto.getParcelas() > 1){
+           pedido.setLucro((pedidoDto.getCusto() / pedidoDto.getTotal()*100) / pedido.getParcelas());
+        }else {
+            pedido.setLucro(pedidoDto.getCusto() / pedidoDto.getTotal() * 100);
+        }
 
         Pedido pedidoSalvo = pedidoRepository.save(pedido);
 

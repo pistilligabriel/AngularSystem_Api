@@ -6,6 +6,7 @@ import com.learning.api.angularsystem.entitys.cadastro.integrante.Cliente;
 import com.learning.api.angularsystem.entitys.cadastro.item.Item;
 import com.learning.api.angularsystem.enums.Status;
 import com.learning.api.angularsystem.enums.movimentacao.TipoFormaPagamento;
+import com.learning.api.angularsystem.enums.pedido.TipoPedido;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,6 +34,10 @@ public class Pedido implements Serializable {
     @Column(name = "STATUS")
     @Enumerated(EnumType.STRING)
     private Status status = Status.FINALIZADO;
+
+    @Column(name="TIPO_VENDA")
+    @Enumerated(EnumType.STRING)
+    private TipoPedido tipoVenda;
 
     @Column(name = "DATA_EMISSAO")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
@@ -67,6 +72,9 @@ public class Pedido implements Serializable {
 
     @Column(name = "LUCRO")
     private Double lucro;
+
+    @Column(name = "CUSTO")
+    private Double custo;
 
     @Column(name = "EMPRESA")
     private Long empresa = 1L;

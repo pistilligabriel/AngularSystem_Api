@@ -3,6 +3,7 @@ package com.learning.api.angularsystem.web.dtos.faturamento.pedido;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.learning.api.angularsystem.enums.Status;
 import com.learning.api.angularsystem.enums.movimentacao.TipoFormaPagamento;
+import com.learning.api.angularsystem.enums.pedido.TipoPedido;
 import com.learning.api.angularsystem.web.dtos.cadastro.integrante.ClienteDto;
 import com.learning.api.angularsystem.web.dtos.cadastro.item.ItemDto;
 import lombok.*;
@@ -20,12 +21,14 @@ public class PedidoDto {
     private LocalDateTime dataEmissao = LocalDateTime.now();
     private Status status;
     private ClienteDto integrante;
+    private TipoPedido tipoVenda;
     private Double porcentagemDesconto;
     private Double desconto;
     private TipoFormaPagamento formaPagamento;
     private int parcelas;
     private Double total;
     private Double lucro;
+    private Double custo;
     private Double totalSemDesconto;
     private List<ItemDto> produtos;
 

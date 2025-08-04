@@ -5,6 +5,6 @@ import lombok.Getter;
 @Getter
 public enum TipoPedido {
 
-    COMPRA,
-    VENDA
+    NOVO,
+    RECAPAGEM
 }

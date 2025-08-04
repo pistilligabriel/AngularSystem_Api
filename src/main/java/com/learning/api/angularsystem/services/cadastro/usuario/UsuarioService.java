@@ -3,13 +3,9 @@ package com.learning.api.angularsystem.services.cadastro.usuario;
 import com.learning.api.angularsystem.entitys.cadastro.usuario.Usuario;
 import com.learning.api.angularsystem.enums.Status;
 import com.learning.api.angularsystem.enums.usuario.Tipo;
-import com.learning.api.angularsystem.infra.security.TokenService;
 import com.learning.api.angularsystem.repositories.cadastro.usuario.UsuarioRepository;
-import com.learning.api.angularsystem.web.dtos.cadastro.usuario.AuthenticationDto;
 import com.learning.api.angularsystem.web.dtos.cadastro.usuario.UsuarioDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,6 +43,13 @@ public class UsuarioService {
         return repository.findById(codigo).orElseThrow(
                 () -> new RuntimeException("Usuario não encontrada")
         );
+    }
+
+    @Transactional()
+    public Usuario salvarToken(Long id,String token){
+            Usuario usuario = getById(id);
+            usuario.setToken(token);
+            return repository.save(usuario);
     }
 
     @Transactional()
@@ -104,6 +107,14 @@ public class UsuarioService {
         }else{
             usuario.setTipo(tipo);
         }
+        return repository.save(usuario);
+    }
+
+    @Transactional
+    public Usuario logout(Long id){
+        Usuario usuario = getById(id);
+        usuario.setToken(null);
+
         return repository.save(usuario);
     }
 

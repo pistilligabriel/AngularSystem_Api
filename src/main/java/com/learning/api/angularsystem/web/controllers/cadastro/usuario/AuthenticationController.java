@@ -1,6 +1,7 @@
 package com.learning.api.angularsystem.web.controllers.cadastro.usuario;
 
 import com.learning.api.angularsystem.entitys.cadastro.usuario.Usuario;
+import com.learning.api.angularsystem.services.cadastro.usuario.UsuarioService;
 import com.learning.api.angularsystem.web.dtos.cadastro.usuario.AuthenticationDto;
 import com.learning.api.angularsystem.infra.security.TokenService;
 import com.learning.api.angularsystem.web.dtos.cadastro.usuario.LoginResponseDto;
@@ -29,6 +30,9 @@ public class AuthenticationController {
     @Autowired
     private TokenService tokenService;
 
+    @Autowired
+    private UsuarioService usuarioService;
+
     @PostMapping
     public ResponseEntity login(@RequestBody @Valid AuthenticationDto authenticationDto)  {
        logger.info("Iniciando autenticação para o login: {}", authenticationDto.getLogin());
@@ -40,6 +44,8 @@ public class AuthenticationController {
 
         logger.debug("Usuário autenticado: {}", usuario.getLogin());
         var token = tokenService.generateToken(usuario);
+
+        usuarioService.salvarToken(usuario.getCodigo(), token);
         
         logger.info("Token gerado com sucesso para o login: {}", authenticationDto.getLogin());
         return ResponseEntity.ok(new LoginResponseDto(token, usuario));

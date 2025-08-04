@@ -95,4 +95,10 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.OK).body(UsuarioMapper.toDto(usuario));
     }
 
+    @PatchMapping("/logout/{id}")
+    public ResponseEntity<UsuarioResponseDto> logoutUser(@PathVariable Long id) {
+        Usuario usuario = service.logout(id);
+        return ResponseEntity.status(HttpStatus.OK).body(UsuarioMapper.toDto(usuario));
+    }
+
 }
