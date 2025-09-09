@@ -24,7 +24,8 @@ public class SysSellAplication {
 				registry.addMapping("/**")
 						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
 						.allowedHeaders("Origin","X-Requested-With", "Content-Type", "Accept", "Authorization")
-						.allowedOrigins("http://localhost:4200");
+						.allowedOrigins("http://localhost:4200")
+						.allowCredentials(true);
 			}
 		};	
 	}

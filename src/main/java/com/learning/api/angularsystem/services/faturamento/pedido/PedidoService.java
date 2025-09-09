@@ -48,19 +48,15 @@ public class PedidoService {
         pedido.setParcelas(pedidoDto.getParcelas());
         pedido.setPorcentagemDesconto(pedidoDto.getPorcentagemDesconto());
         pedido.setDesconto(pedidoDto.getDesconto());
-        pedido.setCusto(pedidoDto.getCusto());
         pedido.setTotalSemDesconto(pedidoDto.getTotalSemDesconto());
         pedido.setTotal(pedidoDto.getTotal());
 
-        if(pedidoDto.getParcelas() > 1){
-           pedido.setLucro((pedidoDto.getCusto() / pedidoDto.getTotal()*100) / pedido.getParcelas());
-        }else {
-            pedido.setLucro(pedidoDto.getCusto() / pedidoDto.getTotal() * 100);
-        }
 
         Pedido pedidoSalvo = pedidoRepository.save(pedido);
 
         int ordem = 1;
+
+        Double somaCusto = 0.0;
 
         for (ItemDto itemDto : pedidoDto.getProdutos()) {
             // ⚠️ Buscar o item existente pelo código
@@ -76,9 +72,17 @@ public class PedidoService {
             detalhe.setValorUnitario(itemDto.getPrecoVenda());
             detalhe.setValorTotal(itemDto.getPrecoVenda() * itemDto.getQuantidade());
             itemExistente.setEstoque(itemDto.getEstoque() - itemDto.getQuantidade());
-
+            somaCusto += itemDto.getPrecoCusto() * itemDto.getQuantidade();
 
             detalheRepository.save(detalhe);
+        }
+
+        pedido.setCusto(somaCusto);
+
+        if(pedidoDto.getParcelas() > 1){
+            pedido.setLucro((pedido.getCusto() / pedidoDto.getTotal()*100) / pedido.getParcelas());
+        }else {
+            pedido.setLucro(pedido.getCusto() / pedidoDto.getTotal() * 100);
         }
 
         return pedidoSalvo;

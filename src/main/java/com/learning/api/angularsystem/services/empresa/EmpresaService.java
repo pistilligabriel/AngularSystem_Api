@@ -31,6 +31,13 @@ public class EmpresaService {
         return empresaRepository.findById(1L).orElse(null);
     }
 
+    public String obterNomeEmpresa(Long id){
+        Empresa empresa = empresaRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Empresa não encontrada")
+        );
+        return empresa.getNomeEmpresa();
+    }
+
     public byte[] getLogoById(Long id) {
         Empresa empresa = empresaRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Empresa não encontrada"));
@@ -52,7 +59,6 @@ public class EmpresaService {
                 throw new RuntimeException("Erro ao processar o arquivo", e);
             }
         }
-
         return empresaRepository.save(empresa);
     }
 }
