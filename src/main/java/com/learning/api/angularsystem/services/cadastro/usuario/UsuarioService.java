@@ -4,6 +4,7 @@ import com.learning.api.angularsystem.entitys.cadastro.usuario.Usuario;
 import com.learning.api.angularsystem.enums.Status;
 import com.learning.api.angularsystem.enums.usuario.Tipo;
 import com.learning.api.angularsystem.repositories.cadastro.usuario.UsuarioRepository;
+import com.learning.api.angularsystem.web.dtos.cadastro.usuario.UsuarioAtualizarDto;
 import com.learning.api.angularsystem.web.dtos.cadastro.usuario.UsuarioDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -75,19 +76,21 @@ public class UsuarioService {
     }
 
     @Transactional
-    public Usuario atualizarUsuario(Usuario usuario){
-        Usuario usuarioAtualizar = getById(usuario.getCodigo());
+    public Usuario atualizarUsuario(UsuarioAtualizarDto dto){
+        Usuario usuarioAtualizar = getById(dto.getCodigo());
 
         if(!usuarioAtualizar.getStatus().equals(Status.ATIVO)){
             throw new RuntimeException("Usuário não pode ser alterado, pois está desativado!");
         }
 
-        usuarioAtualizar.setNomeCompleto(usuario.getNomeCompleto());
-        usuarioAtualizar.setTelefone(usuario.getTelefone());
-        usuarioAtualizar.setDocumento(usuario.getDocumento());
-        usuarioAtualizar.setEmail(usuario.getEmail());
-        usuarioAtualizar.setLogin(usuario.getLogin());
-        usuarioAtualizar.setPassword(new BCryptPasswordEncoder().encode(usuario.getPassword()));
+        usuarioAtualizar.setNomeCompleto(dto.getNomeCompleto());
+        usuarioAtualizar.setTelefone(dto.getTelefone());
+        usuarioAtualizar.setDocumento(dto.getDocumento());
+        usuarioAtualizar.setEmail(dto.getEmail());
+        usuarioAtualizar.setLogin(dto.getLogin());
+        if(dto.getPassword() != null) {
+            usuarioAtualizar.setPassword(new BCryptPasswordEncoder().encode(dto.getPassword()));
+        }
         usuarioAtualizar.setVersao(LocalDateTime.now());
         return repository.save(usuarioAtualizar);
     }

@@ -1,6 +1,7 @@
 package com.learning.api.angularsystem.web.dtos.cadastro.usuario.mapper;
 
 import com.learning.api.angularsystem.entitys.cadastro.usuario.Usuario;
+import com.learning.api.angularsystem.web.dtos.cadastro.usuario.UsuarioAtualizarDto;
 import com.learning.api.angularsystem.web.dtos.cadastro.usuario.UsuarioDto;
 import com.learning.api.angularsystem.web.dtos.cadastro.usuario.UsuarioResponseDto;
 import org.modelmapper.ModelMapper;
@@ -10,6 +11,10 @@ import java.util.stream.Collectors;
 
 public class UsuarioMapper {
     public static Usuario toUsuario(UsuarioDto usuarioDto){
+        return new ModelMapper().map(usuarioDto, Usuario.class);
+    }
+
+    public static Usuario toUsuario(UsuarioAtualizarDto usuarioDto){
         return new ModelMapper().map(usuarioDto, Usuario.class);
     }
 

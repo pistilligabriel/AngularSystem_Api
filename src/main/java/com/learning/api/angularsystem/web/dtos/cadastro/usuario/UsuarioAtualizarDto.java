@@ -1,7 +1,6 @@
 package com.learning.api.angularsystem.web.dtos.cadastro.usuario;
 
 import com.learning.api.angularsystem.enums.usuario.Tipo;
-
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
@@ -10,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class UsuarioDto {
+public class UsuarioAtualizarDto {
     private Long codigo;
 
     @NotBlank(message = "O campo nome é obrigatório")
@@ -27,9 +26,5 @@ public class UsuarioDto {
     @NotBlank(message = "O campo login é obrigatório")
     private String login;
 
-    @NotBlank(message = "O campo senha é obrigatório")
     private String password;
-
 }
-
-

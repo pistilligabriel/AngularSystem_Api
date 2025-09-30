@@ -3,6 +3,7 @@ package com.learning.api.angularsystem.web.controllers.cadastro.usuario;
 
 import com.learning.api.angularsystem.entitys.cadastro.usuario.Usuario;
 import com.learning.api.angularsystem.enums.usuario.Tipo;
+import com.learning.api.angularsystem.web.dtos.cadastro.usuario.UsuarioAtualizarDto;
 import com.learning.api.angularsystem.web.dtos.cadastro.usuario.UsuarioDto;
 import com.learning.api.angularsystem.services.cadastro.usuario.UsuarioService;
 import com.learning.api.angularsystem.web.dtos.cadastro.usuario.UsuarioResponseDto;
@@ -44,8 +45,8 @@ public class UsuarioController {
     }
 
     @PutMapping
-    public ResponseEntity<UsuarioResponseDto> atualizarUsuario(@RequestBody @Valid UsuarioDto usuarioDto) {
-        Usuario usuario = service.atualizarUsuario(UsuarioMapper.toUsuario(usuarioDto));
+    public ResponseEntity<UsuarioResponseDto> atualizarUsuario(@RequestBody @Valid UsuarioAtualizarDto usuarioDto) {
+        Usuario usuario = service.atualizarUsuario(usuarioDto);
         return ResponseEntity.status(HttpStatus.OK).body(UsuarioMapper.toDto(usuario));
     }
 
