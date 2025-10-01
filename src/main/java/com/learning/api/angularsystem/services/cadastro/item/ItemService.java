@@ -88,22 +88,23 @@ public class ItemService {
     }
 
     @Transactional()
-    public Item editarItem(Item item){
-        Item itemAtualizar = buscarProduto(item.getCodigo());
+    public Item editarItem(ItemDto dto){
+        Item itemAtualizar = buscarProduto(dto.getCodigo());
+
 
         if(!itemAtualizar.getStatus().equals(Status.ATIVO)){
-            throw new RuntimeException("Unidade não pode ser alterada, pois está desativada!");
+            throw new RuntimeException("Produto não pode ser alterado, pois está desativado!");
         }
 
-        itemAtualizar.setDescricao(item.getDescricao());
-        itemAtualizar.setTipoProduto(item.getTipoProduto());
-        itemAtualizar.setModelo(item.getModelo());
-        itemAtualizar.setGrupoItem(item.getGrupoItem());
-        itemAtualizar.setObservacao(item.getObservacao());
-        itemAtualizar.setUnidadeVenda(item.getUnidadeVenda());
-        itemAtualizar.setFabricante(item.getFabricante());
-        itemAtualizar.setPrecoCusto(item.getPrecoCusto());
-        itemAtualizar.setPrecoVenda(item.getPrecoVenda());
+        itemAtualizar.setDescricao(dto.getDescricao());
+        itemAtualizar.setTipoProduto(dto.getTipoProduto());
+        itemAtualizar.setModelo(dto.getModelo());
+//        itemAtualizar.setGrupoItem(dto.getGrupoItem());
+        itemAtualizar.setObservacao(dto.getObservacao());
+        itemAtualizar.setUnidadeVenda(unidadeService.getById(dto.getUnidadeVenda()));
+        itemAtualizar.setFabricante(fabricanteService.getById(dto.getFabricante()));
+        itemAtualizar.setPrecoCusto(dto.getPrecoCusto());
+        itemAtualizar.setPrecoVenda(dto.getPrecoVenda());
         itemAtualizar.setVersao(LocalDateTime.now());
 
         itemAtualizar.calcularMargemLucro();

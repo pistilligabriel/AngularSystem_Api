@@ -41,7 +41,7 @@ public class ItemController {
 
     @PutMapping
     public ResponseEntity<ItemResponseDto> atualizarProduto(@RequestBody @Valid ItemDto itemDto) {
-        Item item = itemService.editarItem(ItemMapper.toItem(itemDto));
+        Item item = itemService.editarItem(itemDto);
         return ResponseEntity.status(HttpStatus.OK).body(ItemMapper.toDto(item));
     }
 

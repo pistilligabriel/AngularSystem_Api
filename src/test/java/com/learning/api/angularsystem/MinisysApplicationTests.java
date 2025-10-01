@@ -1,10 +1,10 @@
-package com.learning.api.minisys;
+package com.learning.api.angularsystem;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MinisysApplicationTests {
+class SysSellAplication {
 
 	@Test
 	void contextLoads() {
